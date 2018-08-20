@@ -2,8 +2,9 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
-
+<div>
 <h1>My Dashboard User:${currentUser.userName}</h1>
+</div>
 
 
 
