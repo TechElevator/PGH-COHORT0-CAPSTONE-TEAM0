@@ -76,15 +76,6 @@ public class HomeController {
 
 
 	
-@RequestMapping(path = "/users/{currentUser.name}/settings", method = RequestMethod.GET)
-	public String showSettingsPage (HttpServletRequest request) {
-	HttpSession session = request.getSession();
-	session.getAttribute("currentUser");
-	
-	return "settings";
-	
-}
-
-
 
 }
+
