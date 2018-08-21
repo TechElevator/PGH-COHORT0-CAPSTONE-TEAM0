@@ -12,7 +12,6 @@ public class DailyForecast {
 	private ArrayList<String> shortDescription;
 	private ArrayList<String> longDescription;
 	
-	
 	public ArrayList<String> getForecastDay() {
 		return forecastDay;
 	}
