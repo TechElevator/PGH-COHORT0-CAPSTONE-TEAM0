@@ -8,14 +8,6 @@ BEGIN;
 DROP TABLE IF EXISTS app_user;
 DROP TABLE IF EXISTS city;
 
-CREATE TABLE app_user (
-  id SERIAL PRIMARY KEY,
-  user_name varchar(32) NOT NULL UNIQUE,
-  password varchar(32) NOT NULL,
-  role varchar(32),
-  salt varchar(255) NOT NULL
-);
-
 CREATE TABLE city(
    city              VARCHAR(46) NOT NULL
   ,city_ascii        VARCHAR(46) NOT NULL
@@ -33,6 +25,19 @@ CREATE TABLE city(
   ,timezone          VARCHAR(30)
   ,zips              VARCHAR(1859)
   ,id                INTEGER  NOT NULL PRIMARY KEY 
+);
+
+
+CREATE TABLE app_user (
+  id SERIAL PRIMARY KEY,
+  user_name varchar(32) NOT NULL UNIQUE,
+  password varchar(32) NOT NULL,
+  role varchar(32),
+  salt varchar(255) NOT NULL,
+  default_city_id INTEGER NOT NULL,
+  default_visualization VARCHAR(16) DEFAULT 'bar',
+  default_units CHAR DEFAULT 'F',
+  CONSTRAINT fk_default_city_id FOREIGN KEY (default_city_id) REFERENCES city (id)
 );
 
 COMMIT;
