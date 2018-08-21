@@ -21,6 +21,12 @@
 				confirmPassword : {
 					required : true,		
 					equalTo : "#password"  
+				},
+				defaultCity: {
+					required: true,
+				},
+				defaultViz: {
+					required: true,
 				}
 			},
 			messages : {			
@@ -30,7 +36,13 @@
 				},
 				confirmPassword : {
 					equalTo : "Passwords do not match"
-				}
+				},
+				defaultCity : {
+					required: "Please enter your home city."
+				},
+				defaultViz: {
+					required: "Please select a default weather viz"
+				},
 			},
 			errorClass : "error"
 		});
@@ -55,7 +67,29 @@
 				<label for="confirmPassword">Confirm Password: </label>
 				<input type="password" id="confirmPassword" name="confirmPassword" placeHolder="Re-Type Password" class="form-control" />	
 			</div>
+			<div class="form-group">
+				<label for="defaultCity">Default City: </label>
+				<input type="text" id="defaultCity" name="defaultCity" placeHolder="Pittsburgh, PA" class = "form-control" />	
+			</div>
+			<div class = "form-group">
+				<label for = "defaultViz">Select a  default visualization type:</label>
+				<div>
+					<select class="custom-select custom-select-lg mb-3">
+					 
+					  <option value="contourPlot" >Contour Plot</option>
+					  <option value="barChart">Bar Chart</option>
+					  
+					</select>
+					</div>
+			</div> 
+			
+			
+		
+			
+			
+			<div>
 			<button type="submit" class="btn btn-default">Create User</button>
+			</div>
 		</div>
 		<div class="col-sm-4"></div>
 	</div>

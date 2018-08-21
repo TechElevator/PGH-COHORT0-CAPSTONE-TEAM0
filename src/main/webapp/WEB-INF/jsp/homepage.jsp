@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:import url="/WEB-INF/jsp/header.jsp" />
+<c:import url="header.jsp" />
 <div>
 <div>
 <label for = "visualization_type">Enter a city:</label>

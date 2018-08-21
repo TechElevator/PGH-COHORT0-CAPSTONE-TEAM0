@@ -28,7 +28,7 @@ public class JDBCCityDAOIntegrationTest extends DAOIntegrationTest {
 		Assert.assertEquals(3541236, seattleTest.getPopulation());
 		Assert.assertEquals(3243.0, seattleTest.getDensity(), 0.0);
 		Assert.assertEquals("America/Los_Angeles", seattleTest.getTimezone());
-
+		Assert.assertEquals("47.6217,-122.3238", seattleTest.getLatLon());
 	}
 	
 	@Test
@@ -42,6 +42,7 @@ public class JDBCCityDAOIntegrationTest extends DAOIntegrationTest {
 		Assert.assertEquals(3541236, seattleTest.getPopulation());
 		Assert.assertEquals(3243.0, seattleTest.getDensity(), 0.0);
 		Assert.assertEquals("America/Los_Angeles", seattleTest.getTimezone());
+		Assert.assertEquals("47.6217,-122.3238", seattleTest.getLatLon());
 	}
 
 }

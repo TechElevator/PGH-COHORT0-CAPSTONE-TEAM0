@@ -69,8 +69,9 @@ public class City {
 		this.timezone = timezone;
 	}
 	
-	
-	
+	public String getLatLon() {
+		return "" + this.getLatitude() + "," + this.getLongitude();
+	}	
 	
 	
 	
