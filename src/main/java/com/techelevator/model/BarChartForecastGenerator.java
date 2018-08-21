@@ -38,48 +38,48 @@ import java.util.ArrayList;
 	
 	public class BarChartForecastGenerator extends ApplicationFrame {
 
-		public BarChartForecastGenerator(final String title) {
+		//private DailyForecast dailyForecast;
+		
+		
+		public BarChartForecastGenerator(final String title, DailyForecast dailyForecast) {
 
 			super(title);
-			final CategoryDataset dataset = createDataset();
+			final CategoryDataset dataset = createDataset(dailyForecast);
 			final JFreeChart chart = createChart(dataset);
 			final ChartPanel chartPanel = new ChartPanel(chart);
 			chartPanel.setPreferredSize(new Dimension(500, 270));
 			setContentPane(chartPanel);
+			//this.dailyForecast = dailyForecast;
 
 		}
 
-		private CategoryDataset createDataset() {
-
+		private CategoryDataset createDataset(DailyForecast dailyForecast) {
+			ArrayList<Integer> highTemps = dailyForecast.getHighs();
+			ArrayList<String> forecastDays = dailyForecast.getForecastDay();
+			
 			final String series1 = "First";
 			final String series2 = "Second";
 			final String series3 = "Third";
 
-			final String category1 = "Category 1";
-			final String category2 = "Category 2";
-			final String category3 = "Category 3";
-			final String category4 = "Category 4";
-			final String category5 = "Category 5";
+			final String category1 = forecastDays.get(0);
+			final String category2 = forecastDays.get(1);
+			final String category3 = forecastDays.get(2);
+			final String category4 = forecastDays.get(3);
+			final String category5 = forecastDays.get(4);
+			final String category6 = forecastDays.get(5);
+			final String category7 = forecastDays.get(6);
 
 			final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-			dataset.addValue(1.0, series1, category1);
-			dataset.addValue(4.0, series1, category2);
-			dataset.addValue(10.0, series1, category3);
-			dataset.addValue(5.0, series1, category4);
-			dataset.addValue(5.0, series1, category5);
-
-			dataset.addValue(5.0, series2, category1);
-			dataset.addValue(7.0, series2, category2);
-			dataset.addValue(6.0, series2, category3);
-			dataset.addValue(8.0, series2, category4);
-			dataset.addValue(4.0, series2, category5);
-
-			dataset.addValue(4.0, series3, category1);
-			dataset.addValue(3.0, series3, category2);
-			dataset.addValue(2.0, series3, category3);
-			dataset.addValue(3.0, series3, category4);
-			dataset.addValue(6.0, series3, category5);
+			
+			
+			dataset.addValue(highTemps.get(0), series1, category1);
+			dataset.addValue(highTemps.get(1), series1, category2);
+			dataset.addValue(highTemps.get(2), series1, category3);
+			dataset.addValue(highTemps.get(3), series1, category4);
+			dataset.addValue(highTemps.get(4), series1, category5);
+			dataset.addValue(highTemps.get(5), series1, category6);
+			dataset.addValue(highTemps.get(6), series1, category7);
 
 			return dataset;
 
@@ -87,10 +87,10 @@ import java.util.ArrayList;
 
 		private JFreeChart createChart(final CategoryDataset dataset) {
 
-			final JFreeChart chart = ChartFactory.createBarChart("Bar Chart Demo", // chart
+			final JFreeChart chart = ChartFactory.createBarChart("Test Bar Chart: Daily Forecast", // chart
 																					// title
-					"Category", // domain axis label
-					"Value", // range axis label
+					"Day", // domain axis label
+					"Temperature (Fahrenheit)", // range axis label
 					dataset, // data
 					PlotOrientation.VERTICAL, // orientation
 					true, // include legend
@@ -124,19 +124,14 @@ import java.util.ArrayList;
 			return chart;
 		}
 
-		public static void generateForecastBarChart() {
+		public void generateForecastBarChart(BarChartForecastGenerator barChartGenerator) {
 
-			final BarChartForecastGenerator barChart = new BarChartForecastGenerator("Bar Chart Example");
-			barChart.pack();
-			RefineryUtilities.centerFrameOnScreen(barChart);
-			barChart.setVisible(true);
+			//final BarChartForecastGenerator barChart = new BarChartForecastGenerator("Demo Chart: Daily Forecast", dailyForecast);
+			barChartGenerator.pack();
+			RefineryUtilities.centerFrameOnScreen(barChartGenerator);
+			barChartGenerator.setVisible(true);
 		}
 		
-		public static void main(final String[] args) {
-
-			generateForecastBarChart();
-			
-		}
 	}
 
 
