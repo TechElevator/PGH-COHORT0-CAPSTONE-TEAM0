@@ -20,8 +20,10 @@ import org.jfree.ui.RefineryUtilities;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 	
-	public class BarChartForecastGenerator extends ApplicationFrame {
+	public class BarChartForecastGenerator extends JFrame {
 
 		//private DailyForecast dailyForecast;
 		
