@@ -13,6 +13,9 @@ public class User {
 	})
 	private String password;
 	private String role;
+	private long defaultCityId;
+	private String defaultVisualization;
+	private String defaultUnits;
 	
 	private String confirmPassword;
 	public String getUserName() {
@@ -45,4 +48,23 @@ public class User {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+	public long getDefaultCityId() {
+		return defaultCityId;
+	}
+	public void setDefaultCityId(long defaultCityId) {
+		this.defaultCityId = defaultCityId;
+	}
+	public String getDefaultVisualization() {
+		return defaultVisualization;
+	}
+	public void setDefaultVisualization(String defaultVisualization) {
+		this.defaultVisualization = defaultVisualization;
+	}
+	public String getDefaultUnits() {
+		return defaultUnits;
+	}
+	public void setDefaultUnits(String defaultUnits) {
+		this.defaultUnits = defaultUnits;
+	}
+	
 }
