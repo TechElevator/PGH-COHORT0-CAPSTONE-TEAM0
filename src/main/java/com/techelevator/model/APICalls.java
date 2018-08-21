@@ -8,9 +8,12 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.omg.CORBA.portable.InputStream;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -94,7 +97,7 @@ public class APICalls {
 		*/
 	}
 	
-	public void retrieveDailyForecast(String latLon) {
+	public DailyForecast retrieveDailyForecast(String latLon, DailyForecast dailyForecast) {
 		System.out.println("Now starting API call test for forecast: ");
 		
 		URL obj = null;
@@ -144,6 +147,75 @@ public class APICalls {
 			e.printStackTrace();
 		}
 		System.out.println(response.toString());
+		
+		JSONParser parser = new JSONParser();
+		JSONObject jsonObj = null;
+		JSONArray jsonArr = null;
+		try {
+			jsonObj = (JSONObject) parser.parse(response.toString());
+			System.out.println("SUCCESSFULLY GOT PAST JSON OBJ");
+			System.out.println(jsonObj.get("properties"));
+			
+			JSONObject jsonObjNested = (JSONObject) jsonObj.get("properties");
+			jsonArr = (JSONArray) jsonObjNested.get("periods");
+			
+			
+			System.out.println("SUCCESSFULLY GOT PAST JSON Arr");
+			if (jsonArr == null) {
+				System.out.println("nested object is null");
+			} else {
+				System.out.println("nested object IS NOT NULL!");
+			}
+			System.out.println(jsonArr.toJSONString());
+			
+		} catch (ParseException e) {
+			System.out.println("Parse exception");
+			e.printStackTrace();
+		}
+		
+		
+		ArrayList<Integer> highTemps = new ArrayList<Integer>();
+		ArrayList<Integer> lowTemps = new ArrayList<Integer>();
+		ArrayList<String> forecastDays = new ArrayList<String>();
+		
+		
+		//Iterate through forecast days
+		for (int i = 0; i < jsonArr.size(); i ++) {
+			System.out.println(i);
+			JSONObject currentForecast = (JSONObject) jsonArr.get(i);
+			//System.out.println(currentForecast.toJSONString());
+			String test = (String) currentForecast.get("detailedForecast");
+			System.out.println(test);
+			
+			System.out.println("before if statements, i is: " + i);
+			if (i == 0) {
+				System.out.println("i is 0");
+				forecastDays.add("Today");			
+				Long temperature = (Long) currentForecast.get("temperature");
+				highTemps.add((int) (long) temperature);
+			} else if (i % 2 == 0) {
+				System.out.println("(even) i is: " + i);
+				forecastDays.add((String) currentForecast.get("name"));
+				Long temperature = (Long) currentForecast.get("temperature");
+				highTemps.add((int) (long) temperature);
+			} else {
+				System.out.println("(odd) i is " + i);
+				Long temperature = (Long) currentForecast.get("temperature");
+				lowTemps.add((int) (long) temperature);
+			}
+			
+			System.out.println("-------------------------------------");
+			
+		}
+		
+		System.out.println("IN API CALLS, FORECASTDAYS LENGTH: " + forecastDays.size());
+		
+		dailyForecast.setForecastDay(forecastDays);
+		dailyForecast.setHighs(highTemps);
+		dailyForecast.setLow(lowTemps);
+		
+		return dailyForecast;
+		
 		
 		
 	/*

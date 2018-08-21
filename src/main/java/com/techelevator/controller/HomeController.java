@@ -41,6 +41,8 @@ public class HomeController {
 		//making a call to the weather api to get an actual 7 day forecast
 		String chartTitle = "Test Chart: Daily Forecast";
 		DailyForecast dailyForecast = new DailyForecast();
+		
+		/*
 		ArrayList<Integer> highTemps = new ArrayList<Integer>();
 		ArrayList<String> forecastDays = new ArrayList<String>();
 		highTemps.add(60);
@@ -60,12 +62,16 @@ public class HomeController {
 		
 		dailyForecast.setForecastDay(forecastDays);
 		dailyForecast.setHighs(highTemps);
+		*/
+		
 		//BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast);
 		//barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
 		//Call to an API. Convert from JSON to Java object. Print from that java object.
 		APICalls apiCalls = new APICalls();
-		apiCalls.retrieveStationID("40.4406,-79.9959");
+		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
+		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
+		barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
 		//END DEMO PURPOSES-----------------------------------------------------
 		
