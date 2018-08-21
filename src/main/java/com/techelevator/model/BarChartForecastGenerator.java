@@ -20,21 +20,6 @@ import org.jfree.ui.RefineryUtilities;
 
 import java.util.ArrayList;
 
-
-	/*
-	//Make a bar chart
-	public void generateBarChart(DailyForecast dailyForecast) {
-		
-		super("Test Plot: Dummy Forecast");
-		final CategoryDataset dataset = createDataset();
-		final JFreeChart chart = createChart(dataset);
-		final ChartPanel chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new Dimension(500, 270));
-		setContentPane(chartPanel);
-		
-		
-	}
-	*/
 	
 	public class BarChartForecastGenerator extends ApplicationFrame {
 
@@ -49,13 +34,18 @@ import java.util.ArrayList;
 			final ChartPanel chartPanel = new ChartPanel(chart);
 			chartPanel.setPreferredSize(new Dimension(500, 270));
 			setContentPane(chartPanel);
-			//this.dailyForecast = dailyForecast;
 
 		}
 
 		private CategoryDataset createDataset(DailyForecast dailyForecast) {
 			ArrayList<Integer> highTemps = dailyForecast.getHighs();
 			ArrayList<String> forecastDays = dailyForecast.getForecastDay();
+			
+			System.out.println("IN CREATEDATASET ---------------------------");
+			System.out.println("Hightemps length: " + highTemps.size());
+			System.out.println("ForecastDays length: " + forecastDays.size());
+			System.out.println("------");
+			
 			
 			final String series1 = "First";
 			final String series2 = "Second";
