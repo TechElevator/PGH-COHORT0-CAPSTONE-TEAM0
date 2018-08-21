@@ -44,8 +44,8 @@ public class HomeController {
 		
 		dailyForecast.setForecastDay(forecastDays);
 		dailyForecast.setHighs(highTemps);
-		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast);
-		barChartGenerator.generateForecastBarChart(barChartGenerator);
+		//BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast);
+		//barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
 		//END DEMO PURPOSES-----------------------------------------------------
 		
