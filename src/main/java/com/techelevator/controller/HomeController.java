@@ -39,8 +39,8 @@ public class HomeController {
 		//Create a dummy daily forecast object, pass to BarChartForecastGenerator
 		//In the real application, this forecast object will be created after
 		//making a call to the weather api to get an actual 7 day forecast
-		String chartTitle = "Test Chart: Daily Forecast";
-		DailyForecast dailyForecast = new DailyForecast();
+		//String chartTitle = "Test Chart: Daily Forecast";
+		//DailyForecast dailyForecast = new DailyForecast();
 		
 		/*
 		ArrayList<Integer> highTemps = new ArrayList<Integer>();
@@ -68,9 +68,9 @@ public class HomeController {
 		//barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
 		//Call to an API. Parse JSON data into Java DailyForecast object. Make a bar chart.
-		APICalls apiCalls = new APICalls();
-		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
-		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
+		//APICalls apiCalls = new APICalls();
+		//DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
+		//BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
 		//barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
 		//END DEMO PURPOSES-----------------------------------------------------

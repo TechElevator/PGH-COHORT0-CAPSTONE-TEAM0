@@ -57,15 +57,13 @@ public class AuthenticationController {
 		session.getAttribute("currentUser");
 		
 		//Call to an API. Parse JSON data into Java DailyForecast object. Make a bar chart.
+		/*COMMENTED OUT FOR WEDNESDAY AUG22 DEMO BECAUSE API SERVICE IS DOWN
 		String chartTitle = "Daily Forecast: High Temperatures";
 		DailyForecast dailyForecast = new DailyForecast();
 		APICalls apiCalls = new APICalls();
 		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
 		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
-		
-		
-		
-		
+		 */
 		return "userDashboard";
 	}
 	

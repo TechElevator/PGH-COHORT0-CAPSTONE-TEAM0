@@ -8,7 +8,7 @@
 
 <div>
 	<h2>Forecast for Pittsburgh, PA</h2>
-	<img src = "testChart3.png" alt = "Forecast visualization">
+	<img src = "<c:url value = "/img/testChart3.png" />" alt = "Forecast visualization">
 </div>
 
 
