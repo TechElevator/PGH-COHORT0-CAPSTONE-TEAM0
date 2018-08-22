@@ -62,7 +62,7 @@ public class AuthenticationController {
 		APICalls apiCalls = new APICalls();
 		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
 		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
-		barChartGenerator.generateForecastBarChart(barChartGenerator);
+		
 		
 		
 		

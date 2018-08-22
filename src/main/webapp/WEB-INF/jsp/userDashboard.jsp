@@ -8,7 +8,7 @@
 
 <div>
 	<h2>Forecast for Pittsburgh, PA</h2>
-	<img src = "/Users/timjohnston/workspace/PGH-COHORT0-CAPSTONE-TEAM0/etc/testChart3.png" alt = "Forecast visualization">
+	<img src = "testChart3.png" alt = "Forecast visualization">
 </div>
 
 
