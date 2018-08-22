@@ -14,3 +14,7 @@ footer{
 	border-radius:7px;
 	border: 2px solid #929093;
 }
+
+div.container {
+	min-height: 400px;
+}

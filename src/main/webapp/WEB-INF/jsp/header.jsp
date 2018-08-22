@@ -52,9 +52,9 @@
 					<c:choose>
 						<c:when test="${empty currentUser}">
 							<c:url var="newUserHref" value="/users/new" />
-							<li><a href="${newUserHref}">Sign Up</a></li>
+							<li><a href="${newUserHref}"><i class="fas fa-user-plus"></i> Sign Up</a></li>
 							<c:url var="loginHref" value="/login" />
-							<li><a href="${loginHref}">Log In</a></li>
+							<li><a href="${loginHref}"> <i class="fas fa-sign-in-alt"></i> Log In</a></li>
 						</c:when>
 						<c:otherwise>
 							<c:url var="logoutAction" value="/logout" />
