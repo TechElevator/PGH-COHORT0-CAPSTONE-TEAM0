@@ -22,7 +22,7 @@
 					required : true,		
 					equalTo : "#password"  
 				},
-				defaultCity: {
+				defaultCityId: {
 					required: true,
 				},
 				defaultViz: {
@@ -37,7 +37,7 @@
 				confirmPassword : {
 					equalTo : "Passwords do not match"
 				},
-				defaultCity : {
+				defaultCityId : {
 					required: "Please enter your home city."
 				},
 				defaultViz: {
@@ -68,8 +68,8 @@
 				<input type="password" id="confirmPassword" name="confirmPassword" placeHolder="Re-Type Password" class="form-control" />	
 			</div>
 			<div class="form-group">
-				<label for="defaultCity">Default City: </label>
-				<input type="text" id="defaultCity" name="defaultCity" placeHolder="Pittsburgh, PA" class = "form-control" />	
+				<label for="defaultCityId">Default City: </label>
+				<input type="text" id="defaultCityId" name="defaultCityId" placeHolder="Pittsburgh, PA" class = "form-control" />	
 			</div>
 			<div class = "form-group">
 				<label for = "defaultViz">Select a  default visualization type:</label>
