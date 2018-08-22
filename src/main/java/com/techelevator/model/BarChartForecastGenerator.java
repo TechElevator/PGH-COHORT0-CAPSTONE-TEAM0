@@ -3,8 +3,14 @@ package com.techelevator.model;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -34,8 +40,16 @@ import javax.swing.JFrame;
 			final CategoryDataset dataset = createDataset(dailyForecast);
 			final JFreeChart chart = createChart(dataset);
 			final ChartPanel chartPanel = new ChartPanel(chart);
-			chartPanel.setPreferredSize(new Dimension(500, 270));
+			chartPanel.setPreferredSize(new Dimension(900, 270));
 			setContentPane(chartPanel);
+			try {
+				OutputStream out = new FileOutputStream("/PGH-COHORT0-CAPSTONE-TEAM0/etc/testChart.png");
+				ChartUtilities.writeChartAsPNG(out, chart, 800, 450);
+				System.out.println("tried to save chart");
+			} catch (IOException e) {
+				System.out.println("couldn't save image!");
+				e.printStackTrace();
+			}
 
 		}
 
@@ -85,7 +99,7 @@ import javax.swing.JFrame;
 					"Temperature (Fahrenheit)", // range axis label
 					dataset, // data
 					PlotOrientation.VERTICAL, // orientation
-					true, // include legend
+					false, // do or do not include legend
 					true, // tooltips?
 					false // URLs?
 			);

@@ -67,7 +67,7 @@ public class HomeController {
 		//BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast);
 		//barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
-		//Call to an API. Convert from JSON to Java object. Print from that java object.
+		//Call to an API. Parse JSON data into Java DailyForecast object. Make a bar chart.
 		APICalls apiCalls = new APICalls();
 		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
 		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);

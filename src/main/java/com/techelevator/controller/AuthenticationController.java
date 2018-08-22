@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.techelevator.model.APICalls;
+import com.techelevator.model.BarChartForecastGenerator;
+import com.techelevator.model.DailyForecast;
 import com.techelevator.model.UserDAO;
 
 @Controller
@@ -53,6 +56,13 @@ public class AuthenticationController {
 		HttpSession session = request.getSession();
 		session.getAttribute("currentUser");
 		
+		//Call to an API. Parse JSON data into Java DailyForecast object. Make a bar chart.
+		String chartTitle = "Daily Forecast: High Temperatures";
+		DailyForecast dailyForecast = new DailyForecast();
+		APICalls apiCalls = new APICalls();
+		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
+		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
+		barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
 		
 		
