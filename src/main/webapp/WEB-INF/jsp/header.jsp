@@ -11,6 +11,7 @@
 	    <script src="https://cdn.jsdelivr.net/jquery.timeago/1.4.1/jquery.timeago.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/site.css"/>">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		
 		
 		<script type="text/javascript">
@@ -40,10 +41,10 @@
 			<div class="container-fluid">
 				<ul class="nav navbar-nav">
 					<c:url var="homePageHref" value="/" />
-					<li><a href="${homePageHref}">Home</a></li>
+					<li><a href="${homePageHref}"><i class="fas fa-home"></i> Home</a></li>
 					<c:if test="${not empty currentUser}">
 						<c:url var="dashboardHref" value="/users/${currentUser.userName}" />
-						<li><a href="${dashboardHref}">My Dashboard</a></li>
+						<li><a href="${dashboardHref}"><i class="fas fa-bolt"></i> My Dashboard</a></li>
 					
 					</c:if>
 				</ul>
@@ -61,14 +62,14 @@
 							<input type="hidden" name="CSRF_TOKEN" value="${CSRF_TOKEN}"/>
 							</form>
 							<c:url var = "settingsHref" value = "/users/${currentUser.userName}/settings"/>
-							<li><a id = "settingsLink" href = "${settingsHref}">Settings</a><li>
-							<li><a id="logoutLink" href="#">Log Out</a></li>
+							<li><a id = "settingsLink" href = "${settingsHref}"><i class="fas fa-sliders-h"></i> Settings</a><li>
+							<li><a id="logoutLink" href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
 			</div>
 		</nav>
 		<c:if test="${not empty currentUser}">
-			<p id="currentUser">Current User: ${currentUser.userName}</p>
+			<p id="currentUser text-center">Current User: ${currentUser.userName}</p>
 		</c:if>		
 		<div class="container">
