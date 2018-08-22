@@ -43,7 +43,7 @@ import javax.swing.JFrame;
 			chartPanel.setPreferredSize(new Dimension(900, 270));
 			setContentPane(chartPanel);
 			try {
-				OutputStream out = new FileOutputStream("/PGH-COHORT0-CAPSTONE-TEAM0/etc/testChart.png");
+				OutputStream out = new FileOutputStream("/Users/timjohnston/workspace/PGH-COHORT0-CAPSTONE-TEAM0/etc/testChart2.png");
 				ChartUtilities.writeChartAsPNG(out, chart, 800, 450);
 				System.out.println("tried to save chart");
 			} catch (IOException e) {
@@ -107,9 +107,9 @@ import javax.swing.JFrame;
 			chart.setBackgroundPaint(Color.white);
 
 			final CategoryPlot plot = chart.getCategoryPlot();
-			plot.setBackgroundPaint(Color.lightGray);
+			plot.setBackgroundPaint(Color.white);
 			plot.setDomainGridlinePaint(Color.white);
-			plot.setRangeGridlinePaint(Color.white);
+			plot.setRangeGridlinePaint(Color.lightGray);
 
 			final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 			rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
