@@ -106,20 +106,20 @@ public class APICalls {
 			obj = new URL(url);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("You messed up - malformed url exception");
+			System.out.println("Malformed url exception");
 			e.printStackTrace();
 		}
 		HttpURLConnection con = null;
 		try {
 			con = (HttpURLConnection) obj.openConnection();
 		} catch (IOException e) {
-			System.out.println("You messed up - IOE exception");
+			System.out.println("IOE exception");
 			e.printStackTrace();
 		}
 		try {
 			con.setRequestMethod("GET");
 		} catch (ProtocolException e) {
-			System.out.println("You messed up - Protocol exception");
+			System.out.println("Protocol exception");
 			e.printStackTrace();
 		}
 		
@@ -127,7 +127,6 @@ public class APICalls {
 		try {
 			in = new BufferedReader( new InputStreamReader(con.getInputStream()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String inputLine;
@@ -137,34 +136,34 @@ public class APICalls {
 				response.append(inputLine);
 			}
 		} catch (IOException e1) {
-			System.out.println("messed up, IOException when tyring while inputline = in.readline");
+			System.out.println("OException when tyring while inputline = in.readline");
 			e1.printStackTrace();
 		}
 		try {
 			in.close();
 		} catch (IOException e) {
-			System.out.println("Messed up, IOexception when trying to close in");
+			System.out.println("IOexception when trying to close in");
 			e.printStackTrace();
 		}
-		System.out.println(response.toString());
+		//System.out.println(response.toString());
 		
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObj = null;
 		JSONArray jsonArr = null;
 		try {
 			jsonObj = (JSONObject) parser.parse(response.toString());
-			System.out.println("SUCCESSFULLY GOT PAST JSON OBJ");
-			System.out.println(jsonObj.get("properties"));
+			//System.out.println("SUCCESSFULLY GOT PAST JSON OBJ");
+			//System.out.println(jsonObj.get("properties"));
 			
 			JSONObject jsonObjNested = (JSONObject) jsonObj.get("properties");
 			jsonArr = (JSONArray) jsonObjNested.get("periods");
 			
 			
-			System.out.println("SUCCESSFULLY GOT PAST JSON Arr");
+			//System.out.println("SUCCESSFULLY GOT PAST JSON Arr");
 			if (jsonArr == null) {
-				System.out.println("nested object is null");
+				//System.out.println("nested object is null");
 			} else {
-				System.out.println("nested object IS NOT NULL!");
+				//System.out.println("nested object IS NOT NULL!");
 			}
 			System.out.println(jsonArr.toJSONString());
 			
@@ -181,65 +180,40 @@ public class APICalls {
 		
 		//Iterate through forecast days
 		for (int i = 0; i < jsonArr.size(); i ++) {
-			System.out.println(i);
+			//System.out.println(i);
 			JSONObject currentForecast = (JSONObject) jsonArr.get(i);
 			//System.out.println(currentForecast.toJSONString());
 			String test = (String) currentForecast.get("detailedForecast");
-			System.out.println(test);
+			//System.out.println(test);
 			
-			System.out.println("before if statements, i is: " + i);
+			//System.out.println("before if statements, i is: " + i);
 			if (i == 0) {
-				System.out.println("i is 0");
+				//System.out.println("i is 0");
 				forecastDays.add("Today");			
 				Long temperature = (Long) currentForecast.get("temperature");
 				highTemps.add((int) (long) temperature);
 			} else if (i % 2 == 0) {
-				System.out.println("(even) i is: " + i);
+				//System.out.println("(even) i is: " + i);
 				forecastDays.add((String) currentForecast.get("name"));
 				Long temperature = (Long) currentForecast.get("temperature");
 				highTemps.add((int) (long) temperature);
 			} else {
-				System.out.println("(odd) i is " + i);
+				//System.out.println("(odd) i is " + i);
 				Long temperature = (Long) currentForecast.get("temperature");
 				lowTemps.add((int) (long) temperature);
 			}
 			
-			System.out.println("-------------------------------------");
+			//System.out.println("-------------------------------------");
 			
 		}
 		
-		System.out.println("IN API CALLS, FORECASTDAYS LENGTH: " + forecastDays.size());
+		//System.out.println("IN API CALLS, FORECASTDAYS LENGTH: " + forecastDays.size());
 		
 		dailyForecast.setForecastDay(forecastDays);
 		dailyForecast.setHighs(highTemps);
 		dailyForecast.setLow(lowTemps);
 		
 		return dailyForecast;
-		
-		
-		
-	/*
-		ObjectMapper objMapper = new ObjectMapper();
-		AlertFromAPI apiAlert = new AlertFromAPI();
-		try {
-			apiAlert = objMapper.readValue(response.toString(), AlertFromAPI.class);
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			System.out.println("You messed up - JsonMappingException");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("You messed up - IOException when trying");
-			e.printStackTrace();
-		}
-		
-		System.out.println("");
-		System.out.println("Type: " + apiAlert.getType());
-		System.out.println("Features: " + apiAlert.getFeatures());
-		System.out.println("Title: " + apiAlert.getTitle());
-		System.out.println("Updated: " + apiAlert.getUpdated());
-		*/
 		
 	}
 	

@@ -71,7 +71,7 @@ public class HomeController {
 		APICalls apiCalls = new APICalls();
 		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
 		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
-		barChartGenerator.generateForecastBarChart(barChartGenerator);
+		//barChartGenerator.generateForecastBarChart(barChartGenerator);
 		
 		//END DEMO PURPOSES-----------------------------------------------------
 		

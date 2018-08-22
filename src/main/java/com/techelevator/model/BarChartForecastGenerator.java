@@ -43,7 +43,7 @@ import javax.swing.JFrame;
 			chartPanel.setPreferredSize(new Dimension(900, 270));
 			setContentPane(chartPanel);
 			try {
-				OutputStream out = new FileOutputStream("/Users/timjohnston/workspace/PGH-COHORT0-CAPSTONE-TEAM0/etc/testChart2.png");
+				OutputStream out = new FileOutputStream("/Users/timjohnston/workspace/PGH-COHORT0-CAPSTONE-TEAM0/etc/testChart3.png");
 				ChartUtilities.writeChartAsPNG(out, chart, 800, 450);
 				System.out.println("tried to save chart");
 			} catch (IOException e) {
