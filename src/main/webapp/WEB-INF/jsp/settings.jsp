@@ -9,12 +9,12 @@
 			<div class = "row">
 			<div class="col-sm-3"></div>
 			<div class = "col-sm-6">
-			<h1>Your preferences: ${currentUser.userName}</h1>
+			<h1>Preferences</h1>
 			
 			<div class = "form-group custom-select">
 				<label for = "defaultViz">Select a  default visualization type:</label>
 				<select class="custom-select custom-select-lg mb-3">
-				  <option selected>Open this select menu</option>
+				 
 				  <option value="contourPlot" >Contour Plot</option>
 				  <option value="barChart">Bar Chart</option>
 				  
@@ -71,7 +71,7 @@
 			</div>
 			
 			<div>
-			<button type="submit" class="btn btn-default">Save Changes</button>
+			<button type="submit" class="btn btn-default"><i class="fas fa-save"></i> Save Changes</button>
 			</div>
 			</div>
 			<div class = "col-sm-3"></div>
