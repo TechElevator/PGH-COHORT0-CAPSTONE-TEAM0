@@ -1,9 +1,5 @@
-	
-
-
-
 	$(function () { 
-	    var myChart = Highcharts.chart('testChart', {
+	    var myChart = Highcharts.chart('forecastChart', {
 	        chart: {
 	            type: 'areaspline'
 	        },
