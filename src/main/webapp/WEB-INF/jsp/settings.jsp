@@ -24,7 +24,7 @@
 			
 			<div class="form-group">
 				<label for="homecity">Your home city </label>
-				<input type="text" id="homecity" name="homecity" placeHolder="Default Viz" class="form-control" />
+				<input type="text" id="homecity" name="homecity"class="form-control" />
 			</div>
 			<div class="form-group">
 				<label for="newPassword">To Change Password </label>
