@@ -59,6 +59,21 @@ public class JDBCUserDAO implements UserDAO {
 	public void updateUnits(String userName, String units) {
 		jdbcTemplate.update("UPDATE app_user SET default_units = ? WHERE user_name = ?", units, userName);
 	}
+	
+	@Override
+	public void updateDefaultVisualization(String userName, String defaultVisualization) {
+		jdbcTemplate.update("UPDATE app_user SET default_visualization = ? WHERE user_name = ?", defaultVisualization, userName);
+	}
+	
+	@Override
+	public void updateDefaultUnits(String userName, String defaultUnits) {
+		jdbcTemplate.update("UPDATE app_user SET default_visualization = ? WHERE user_name = ?", defaultUnits, userName);
+	}
+	
+	@Override
+	public void updateDefaultCity(String userName, long cityId) {
+		jdbcTemplate.update("UPDATE app_user SET default_city = ? WHERE user_name = ?", cityId, userName);
+	}
 
 	@Override
 	public Object getUserByUserName(String userName) {

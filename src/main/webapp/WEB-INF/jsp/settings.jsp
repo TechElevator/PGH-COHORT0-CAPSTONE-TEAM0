@@ -4,8 +4,8 @@
 
 
 
-
-			<form method = "POST" action = >
+<c:url var="formAction" value="/users/${sessionScope.currentUser.userName}/settings" />
+			<form method = "POST" action = "${formAction}">
 			<div class = "row">
 			<div class="col-sm-3"></div>
 			<div class = "col-sm-6">
@@ -13,10 +13,12 @@
 			
 			<div class = "form-group custom-select">
 				<label for = "defaultViz">Select a  default visualization type:</label>
-				<select class="custom-select custom-select-lg mb-3">
+				<select name = "defaultViz" class="custom-select custom-select-lg mb-3">
 				 
-				  <option value="contourPlot" >Contour Plot</option>
-				  <option value="barChart">Bar Chart</option>
+						<option value="spline">Line Chart</option>
+						<option value="areaspline">Area Line Chart</option>
+						<option value="column">Bar Chart</option>
+						<option value="meteogram">WeatherViz5000&#8482;</option>
 				  
 				</select>
 			</div>
@@ -37,8 +39,8 @@
 				
 			<div>
 			<label for = "defaultTempUnit"> Default Temperature Unit:</label>
-			<label class="checkbox-inline"><input type="radio" value="C" name = "defaultTempUnit">F &#176;</label>
-			<label class="checkbox-inline"><input type="radio" value="F" name = "defaultTempUnit">C &#176;</label>
+			<label class="checkbox-inline"><input type="radio" value="F" name = "defaultTempUnit">F &#176;</label>
+			<label class="checkbox-inline"><input type="radio" value="C" name = "defaultTempUnit">C &#176;</label>
 			</div>
 			
 			<div id ="textAlerts">

@@ -9,7 +9,13 @@ public interface UserDAO {
 	public void updatePassword(String userName, String password);
 	
 	public void updateUnits(String userName, String units);
+	
+	public void updateDefaultVisualization(String userName, String defaultVisualization);
 
 	public Object getUserByUserName(String userName);
+	
+	public void updateDefaultUnits(String userName, String defaultUnits);
+	
+	public void updateDefaultCity(String userName, long cityId);
 
 }
