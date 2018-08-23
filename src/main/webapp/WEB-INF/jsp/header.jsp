@@ -10,8 +10,8 @@
 	    <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.js "></script>
 	    <script src="https://cdn.jsdelivr.net/jquery.timeago/1.4.1/jquery.timeago.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	    <script src="https://code.highcharts.com/highcharts.js"></script>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/site.css"/>">
-		
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
