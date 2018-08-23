@@ -57,10 +57,13 @@ public class UserController {
 	}
 
 	@RequestMapping(path = "/users/{currentUser.name}/settings", method = RequestMethod.POST)
-	public String updateSettings(HttpSession session, @RequestParam String newPassword) {
+	public String updateSettings(HttpSession session, @RequestParam String newPassword, @RequestParam String defaultViz, @RequestParam String defaultTempUnit, @RequestParam long homeCity) {
 		
 		User currentUser = (User)session.getAttribute("currentUser");
 		userDAO.updatePassword(currentUser.getUserName(), newPassword);
+		userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
+		userDAO.updateUnits(currentUser.getUserName(), defaultTempUnit);
+		userDAO.updateDefaultCity(currentUser.getUserName(), homeCity);
 
 		return "redirect:/users/{userName}";
 

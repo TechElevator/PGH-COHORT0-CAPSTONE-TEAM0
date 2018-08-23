@@ -102,11 +102,9 @@
 			</div>
 			<div class="form-group">
 				<div>
-					<label for="defaultUnits"> Default Temperature Unit:</label> <label
-						class="checkbox-inline"><input type="radio" value="F"
-						name="defaultUnits">F &#176;</label> <label
-						class="checkbox-inline"><input type="radio" value="C"
-						name="defaultUnits">C &#176;</label>
+					<label for="defaultUnits"> Default Temperature Unit:</label>
+					<label class="checkbox-inline"><input type="radio" value="F" name="defaultUnits">F &#176;</label>
+					<label class="checkbox-inline"><input type="radio" value="C" name="defaultUnits">C &#176;</label>
 				</div>
 
 			</div>
