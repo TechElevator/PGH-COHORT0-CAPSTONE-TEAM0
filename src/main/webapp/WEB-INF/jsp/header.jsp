@@ -16,7 +16,7 @@
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$("time.timeago").timeago();
+				/* $("time.timeago").timeago(); */
 				
 				$("#logoutLink").click(function(event){
 					$("#logoutForm").submit();
