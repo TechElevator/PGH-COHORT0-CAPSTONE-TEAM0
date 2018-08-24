@@ -2,65 +2,47 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
-<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$.validator.addMethod('capitals', function(thing) {
-							return thing.match(/[A-Z]/);
-						});
-						$("form")
-								.validate(
-										{
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
+ <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
-											rules : {
-												userName : {
-													required : true
-												},
-												password : {
-													required : true,
-													minlength : 8,
-													capitals : true,
-												},
-												confirmPassword : {
-													required : true,
-													equalTo : "#password"
-												},
-												defaultCityId : {
-													required : true,
-												},
-												defaultVisualization : {
-													required : true,
-												},
-												defaultUnits : {
-													required : true,
-												}
-											},
-											messages : {
-												password : {
-													minlength : "Password too short, make it at least 15 characters",
-													capitals : "Field must contain a capital letter",
-												},
-												confirmPassword : {
-													equalTo : "Passwords do not match"
-												},
-												defaultCityId : {
-													required : "Please enter your home city."
-												},
-												defaultVisualization : {
-													required : "Please select a default weather viz"
-												},
-												defaultUnits : {
-													required : "Please select your preferred temperature units"
-												}
-											},
-											errorClass : "error"
-										});
-					});
-</script>
+
+
 
 <c:url var="formAction" value="/users" />
-<form method="POST" action="${formAction}">
+<form action="" method="POST" name="form_citydetails" id="form_citydetails" enctype="multipart/form-data" onsubmit="return false;">
+<script type="text/javascript">
+
+ 
+jQuery(function () 
+ {
+	 jQuery("#f_elem_city").autocomplete({
+		source: function (request, response) {
+		 jQuery.getJSON(
+			"http://gd.geobytes.com/AutoCompleteCity?callback=?&filter=US&q="+request.term,
+			function (data) {
+			 response(data);
+			}
+		 );
+		},
+		minLength: 3,
+		select: function (event, ui) {
+		 var selectedObj = ui.item;
+		 jQuery("#f_elem_city").val(selectedObj.value);
+		getcitydetails(selectedObj.value);
+		 return false;
+		},
+		open: function () {
+		 jQuery(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+		},
+		close: function () {
+		 jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+		}
+	 });
+	 jQuery("#f_elem_city").autocomplete("option", "delay", 100);
+	});
+</script>
+
 	<input type="hidden" name="CSRF_TOKEN" value="${CSRF_TOKEN}" />
 	<div class="row">
 		<div class="col-sm-4"></div>
@@ -76,14 +58,15 @@
 					class="form-control" />
 			</div>
 			<div class="form-group">
-				<label for="confirmPassword">Confirm Password: </label> <input
-					type="password" id="confirmPassword" name="confirmPassword"
+				<label for="confirmPassword">Confirm Password: </label> 
+				<input type="password" id="confirmPassword" name="confirmPassword"
 					placeHolder="Re-Type Password" class="form-control" />
 			</div>
 			<div class="form-group">
-				<label for="defaultCityId">Default City: </label> <input type="text"
-					id="defaultCityId" name="defaultCityId"
-					placeHolder="Pittsburgh, PA" class="form-control" />
+			<div>
+				<label for="defaultCityId">Default City: </label> 
+				</div>
+				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
 			</div>
 			<div class="form-group">
 				<label for="defaultVisualization">Select a default
@@ -112,6 +95,7 @@
 
 
 
+			<div>
 
 			<div>
 				<button type="submit" class="btn btn-default">Create User</button>
@@ -119,6 +103,63 @@
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
+	</div>
+
+<script type="text/javascript">
+function getcitydetails(fqcn) {
+
+	if (typeof fqcn == "undefined") fqcn = jQuery("#f_elem_city").val();
+
+	cityfqcn = fqcn;
+
+	if (cityfqcn) {
+
+	    jQuery.getJSON(
+	                "http://gd.geobytes.com/GetCityDetails?callback=?&fqcn="+cityfqcn,
+                     function (data) {
+	            jQuery("#geobytesinternet").val(data.geobytesinternet);
+	            jQuery("#geobytescountry").val(data.geobytescountry);
+	            jQuery("#geobytesregionlocationcode").val(data.geobytesregionlocationcode);
+	            jQuery("#geobytesregion").val(data.geobytesregion);
+	            jQuery("#geobyteslocationcode").val(data.geobyteslocationcode);
+	            jQuery("#geobytescity").val(data.geobytescity);
+	            jQuery("#geobytescityid").val(data.geobytescityid);
+	            jQuery("#geobytesfqcn").val(data.geobytesfqcn);
+	            jQuery("#geobyteslatitude").val(data.geobyteslatitude);
+	            jQuery("#geobyteslongitude").val(data.geobyteslongitude);
+	            jQuery("#geobytescapital").val(data.geobytescapital);
+	            jQuery("#geobytestimezone").val(data.geobytestimezone);
+	            jQuery("#geobytesnationalitysingular").val(data.geobytesnationalitysingular);
+	            jQuery("#geobytespopulation").val(data.geobytespopulation);
+	            jQuery("#geobytesnationalityplural").val(data.geobytesnationalityplural);
+	            jQuery("#geobytesmapreference").val(data.geobytesmapreference);
+	            jQuery("#geobytescurrency").val(data.geobytescurrency);
+	            jQuery("#geobytescurrencycode").val(data.geobytescurrencycode);
+	            }
+	    );
+	}
+}
+</script>
+<div>
+<input id="geobytescity" readonly="readonly" size="30" value="">
+</div>
+<div>
+<input id="geobytesregion" readonly="readonly" size="30" value="">
+</div>
+<div>
+<input id="geobyteslatitude" readonly="readonly" size="30" value="">
+</div>
+<div>
+<input id="geobyteslongitude" readonly="readonly" size="30" value="">
+</div>
+<div>
+<input id="geobytespopulation" readonly="readonly" size="30" value="">
+</div>
+<div>
+<input id="geobytestimezone" readonly="readonly" size="30" value="">
+</div>
 </form>
+
+
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />
