@@ -5,6 +5,97 @@
 <h1 class = "text-center">My Dashboard</h1>
 </div>
 
+<div id="currentConditionsContainer">
+	<span id="weatherIconContainer">
+		<img id="weatherIconImage" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
+	</span>
+	<span>
+		<ul class="list-unstyled">
+			<li id="temperature"></li>
+			<li id="precipChance"></li>
+			<li id="humidity"></li>
+			<li id="wind"></li>
+			<li id="windDirection"></li>
+			<li id="cloudCover"></li>
+		</ul>
+	</span>
+	
+
+
+
+</div>
+
+<div id="checkboxFormContainer">
+	<form>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "hiTemp" checked="checked">
+  			High Temperature
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "loTemp" checked="checked">
+  			Low Temperature
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "dewPoint" >
+  			Dew Point
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "precipChance">
+  			Precipitation Chance
+		</div>
+		<!--  
+		<div>
+  			<input class="checkbox" type="checkbox" id = "precipType">
+  			Precipitation Type
+		</div>
+		-->
+		<div>
+  			<input class="checkbox" type="checkbox" id = "humidity">
+  			Humidity
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "meanWind">
+  			Mean Wind Speed
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "windGust">
+  			Peak Wind Gust
+		</div>
+		<!--
+		<div>
+  			<input class="checkbox" type="checkbox" id = "windDirection">
+  			Wind Direction
+		</div>
+		-->
+		<div>
+  			<input class="checkbox" type="checkbox" id = "pressure">
+  			Pressure
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "cloudCover">
+  			Cloud Cover
+		</div>
+		<!-- 
+		<div>
+  			<input class="checkbox" type="checkbox" id = "visibility">
+  			Visibility
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "UV">
+  			UV Index
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "ozone">
+  			Ozone
+		</div>
+		<div>
+  			<input class="checkbox" type="checkbox" id = "moonPhase">
+  			Moon Phase
+		</div>
+		-->
+	</form>
+</div>
+
 <!-- The below div and script tag pulls in the forecast visualization -->
 <div>
 	<h2 class = "text-center">Forecast for Pittsburgh, PA</h2>
