@@ -102,6 +102,14 @@ public class JDBCUserDAO implements UserDAO {
 			thisUser = new User();
 			thisUser.setUserName(user.getString("user_name"));
 			thisUser.setPassword(user.getString("password"));
+			thisUser.setDefaultCity(user.getString("default_city"));
+			thisUser.setDefaultLatitude(user.getDouble("default_latitude"));
+			thisUser.setDefaultLongitude(user.getDouble("default_longitude"));
+			thisUser.setDefaultPopulation(user.getInt("default_population"));
+			thisUser.setDefaultRegion(user.getString("default_region"));
+			thisUser.setDefaultTimezone(user.getString("default_timezone"));
+			thisUser.setDefaultUnits(user.getString("default_units"));
+			thisUser.setDefaultVisualization(user.getString("default_visualization"));
 		}
 
 		return thisUser;
