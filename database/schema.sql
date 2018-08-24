@@ -35,8 +35,16 @@ CREATE TABLE app_user (
   role varchar(32),
   salt varchar(255) NOT NULL,
   default_city_id INTEGER NOT NULL,
+  default_city varchar(32) NOT NULL,
   default_visualization VARCHAR(16) DEFAULT 'bar',
   default_units CHAR DEFAULT 'F',
+  default_region varchar(32) NOT NULL,
+  default_latitude NUMERIC(9,4) NOT NULL,
+  default_longitude NUMERIC(9,4) NOT NULL,
+  default_population INTEGER,
+  default_timezone varchar(32) NOT NULL
+
+
   CONSTRAINT fk_default_city_id FOREIGN KEY (default_city_id) REFERENCES city (id)
 );
 

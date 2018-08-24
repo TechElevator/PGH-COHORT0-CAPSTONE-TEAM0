@@ -16,6 +16,12 @@ public class User {
 	private long defaultCityId;
 	private String defaultVisualization;
 	private String defaultUnits;
+	private String defaultCity;
+	private String defaultRegion;
+	private double defaultLatitude;
+	private double defaultLongitude;
+	private int defaultPopulation;
+	private String defaultTimezone;
 	
 	private String confirmPassword;
 	public String getUserName() {
@@ -66,5 +72,41 @@ public class User {
 	public void setDefaultUnits(String defaultUnits) {
 		this.defaultUnits = defaultUnits;
 	}
-	
+	public String getDefaultCity() {
+		return defaultCity;
+	}
+	public void setDefaultCity(String defaultCity) {
+		this.defaultCity = defaultCity;
+	}
+	public String getDefaultRegion() {
+		return defaultRegion;
+	}
+	public void setDefaultRegion(String defaultRegion) {
+		this.defaultRegion = defaultRegion;
+	}
+	public double getDefaultLatitude() {
+		return defaultLatitude;
+	}
+	public void setDefaultLatitude(double defaultLatitude) {
+		this.defaultLatitude = defaultLatitude;
+	}
+	public double getDefaultLongitude() {
+		return defaultLongitude;
+	}
+	public void setDefaultLongitude(double defaultLongitude) {
+		this.defaultLongitude = defaultLongitude;
+	}
+	public int getDefaultPopulation() {
+		return defaultPopulation;
+	}
+	public void setDefaultPopulation(int defaultPopulation) {
+		this.defaultPopulation = defaultPopulation;
+	}
+	public String getDefaultTimezone() {
+		return defaultTimezone;
+	}
+	public void setDefaultTimezone(String defaultTimezone) {
+		this.defaultTimezone = defaultTimezone;
+	}
+
 }
