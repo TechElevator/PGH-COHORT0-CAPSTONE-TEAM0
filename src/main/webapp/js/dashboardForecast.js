@@ -54,6 +54,25 @@ $( document ).ready(function() {
 	    		seriesData : [1015, 1014, 1004, 999, 1001, 1011, 1013],
 	    		type: "pressure"
 	    }
+	    
+	    var currentWeather = {
+	    		summary : "Partly Cloudy",
+	    		precipProbability : 24,
+	    		temperature : 74,
+	    		dewPoint : 50,
+	    		humidity : 47,
+	    		pressure : 1021,
+	    		windSpeed : 2.35,
+	    		windGust : 3.89,
+	    		windBearing : 344,
+	    		cloudCover : 0.37,
+	    		uvIndex : 7,
+	    		visibility : 10, 
+	    		ozone : 320
+	    }
+	    
+	    outputCurrentConditions(currentWeather);
+	    
 	    //END DUMMY DATA
     
     var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
@@ -301,6 +320,9 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
     var weatherParam2 = weatherInfo2.seriesData;
     var seriesName1 = weatherInfo1.seriesName;
     var seriesName2 = weatherInfo2.seriesName;
+    var yAxis1Type = "spline";
+    var yAxis2Type = "column";
+    
     
     console.log("in twovariabledualaxis=======");
     console.log("weatherparam1: ");
@@ -361,7 +383,7 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	    },
 	    series: [{
 	        name: seriesName2,
-	        type: yAxis2,
+	        type: yAxis2Type,
 	        yAxis: 1,
 	        data: weatherParam2,
 	        tooltip: {
@@ -370,7 +392,7 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	
 	    }, {
 	        name: seriesName1,
-	        type: yAxis1,
+	        type: yAxis1Type,
 	        data: weatherParam1,
 	        tooltip: {
 	            valueSuffix: ' °F'
@@ -387,6 +409,15 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
     var seriesName1 = weatherInfo1.seriesName;
     var seriesName2 = weatherInfo2.seriesName;
     var seriesName3 = weatherInfo3.seriesName;
+    
+    
+    
+    var yAxisTypes
+    
+    
+    
+    
+    
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
 	        zoomType: 'xy'
@@ -714,16 +745,16 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 				twoVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1]);
 				break;
 			case 3:
-				threeVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2]);
+				threeVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1], chartContent[2]);
 				break;
 			case 4:
-				fourVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3]);
+				fourVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3]);
 				break;
 			case 5:
-				fiveVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4]);
+				fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4]);
 				break;
 			case 6:
-				sixVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4], chartContent[5]);
+				sixVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4], chartContent[5]);
 				break;
 		}
 		
@@ -732,6 +763,16 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 	}	
 		
 		
+}
+
+//WRITE CURRENT FORECAST
+function outputCurrentConditions(currentWeather) {
+	$('#temperature').text("Temperature: " + currentWeather.temperature);
+	$('#precipChance').text("Precipitation: " + currentWeather.precipProbability + "% chance of precipitation");
+	$('#humidity').text("Humidity: " + currentWeather.humidity + "%");
+	$('#wind').text("Wind Speed: " + currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
+	$('#windDirection').text("Wind Direction: " + currentWeather.windBearing);
+	$('#cloudCover').text("Cloud Cover: " + currentWeather.cloudCover + " %");
 }
 
 

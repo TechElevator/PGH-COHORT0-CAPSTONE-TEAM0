@@ -5,6 +5,26 @@
 <h1 class = "text-center">My Dashboard</h1>
 </div>
 
+<div id="currentConditionsContainer">
+	<span id="weatherIconContainer">
+		<img id="weatherIconImage" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
+	</span>
+	<span>
+		<ul class="list-unstyled">
+			<li id="temperature"></li>
+			<li id="precipChance"></li>
+			<li id="humidity"></li>
+			<li id="wind"></li>
+			<li id="windDirection"></li>
+			<li id="cloudCover"></li>
+		</ul>
+	</span>
+	
+
+
+
+</div>
+
 <div id="checkboxFormContainer">
 	<form>
 		<div>
