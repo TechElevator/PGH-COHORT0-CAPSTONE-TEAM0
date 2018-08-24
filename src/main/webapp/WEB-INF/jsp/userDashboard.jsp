@@ -8,68 +8,68 @@
 <div id="checkboxFormContainer">
 	<form>
 		<div>
-  			<input type="checkbox" id = "hiTemp" checked="checked">
+  			<input class="checkbox" type="checkbox" id = "hiTemp" checked="checked">
   			High Temperature
 		</div>
 		<div>
-  			<input type="checkbox" id = "loTemp" >
+  			<input class="checkbox" type="checkbox" id = "loTemp" >
   			Low Temperature
 		</div>
 		<div>
-  			<input type="checkbox" id = "dewPoint" >
+  			<input class="checkbox" type="checkbox" id = "dewPoint" >
   			Dew Point
 		</div>
 		<div>
-  			<input type="checkbox" id = "precipChance" checked="checked">
+  			<input class="checkbox" type="checkbox" id = "precipChance" checked="checked">
   			Precipitation Chance
 		</div>
 		<!--  
 		<div>
-  			<input type="checkbox" id = "precipType">
+  			<input class="checkbox" type="checkbox" id = "precipType">
   			Precipitation Type
 		</div>
 		-->
 		<div>
-  			<input type="checkbox" id = "humidity" checked="checked">
+  			<input class="checkbox" type="checkbox" id = "humidity" checked="checked">
   			Humidity
 		</div>
 		<div>
-  			<input type="checkbox" id = "meanWind" checked="checked">
+  			<input class="checkbox" type="checkbox" id = "meanWind" checked="checked">
   			Mean Wind Speed
 		</div>
 		<div>
-  			<input type="checkbox" id = "windGust">
+  			<input class="checkbox" type="checkbox" id = "windGust">
   			Peak Wind Gust
 		</div>
 		<!--
 		<div>
-  			<input type="checkbox" id = "windDirection">
+  			<input class="checkbox" type="checkbox" id = "windDirection">
   			Wind Direction
 		</div>
 		-->
 		<div>
-  			<input type="checkbox" id = "pressure">
+  			<input class="checkbox" type="checkbox" id = "pressure">
   			Pressure
 		</div>
 		<div>
-  			<input type="checkbox" id = "cloudCover">
+  			<input class="checkbox" type="checkbox" id = "cloudCover">
   			Cloud Cover
 		</div>
 		<!-- 
 		<div>
-  			<input type="checkbox" id = "visibility">
+  			<input class="checkbox" type="checkbox" id = "visibility">
   			Visibility
 		</div>
 		<div>
-  			<input type="checkbox" id = "UV">
+  			<input class="checkbox" type="checkbox" id = "UV">
   			UV Index
 		</div>
 		<div>
-  			<input type="checkbox" id = "ozone">
+  			<input class="checkbox" type="checkbox" id = "ozone">
   			Ozone
 		</div>
 		<div>
-  			<input type="checkbox" id = "moonPhase">
+  			<input class="checkbox" type="checkbox" id = "moonPhase">
   			Moon Phase
 		</div>
 		-->

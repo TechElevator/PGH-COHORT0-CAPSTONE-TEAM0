@@ -39,7 +39,13 @@ $( document ).ready(function() {
     //var weatherSelections = [hiTempSelected, loTempSelected, dewPointSelected, precipChanceSelected, precipTypeSelected, humiditySelected, meanWindSelected, windGustSelected, windDirSelected, pressureSelected, ccSelected, visSelected, uvSelected, ozoneSelected, moonSelected];
     var weatherParameters = ["hiTemp", "loTemp", "dewPoint", "precipChance", "humidity", "cloudCoverage", "meanWind", "windGust", "pressure"]
     var weatherSelections = [hiTempSelected, loTempSelected, dewPointSelected, precipChanceSelected, humiditySelected, ccSelected, meanWindSelected, windGustSelected, pressureSelected];
-    determineViableCharts(weatherParameters, weatherSelections);
+    
+    $("input:checkbox").change(function(){
+        determineViableCharts(weatherParameters, weatherSelections);
+    });
+    
+    
+    
     
     //Make API Call to get daily forecast data. Save that data into arrays with scope of this .js file
     //(Or, return data as a javascript object
