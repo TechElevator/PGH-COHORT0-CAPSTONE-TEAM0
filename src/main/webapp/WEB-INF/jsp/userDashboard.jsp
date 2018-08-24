@@ -12,7 +12,7 @@
   			High Temperature
 		</div>
 		<div>
-  			<input class="checkbox" type="checkbox" id = "loTemp" >
+  			<input class="checkbox" type="checkbox" id = "loTemp" checked="checked">
   			Low Temperature
 		</div>
 		<div>
@@ -20,7 +20,7 @@
   			Dew Point
 		</div>
 		<div>
-  			<input class="checkbox" type="checkbox" id = "precipChance" checked="checked">
+  			<input class="checkbox" type="checkbox" id = "precipChance">
   			Precipitation Chance
 		</div>
 		<!--  
@@ -30,11 +30,11 @@
 		</div>
 		-->
 		<div>
-  			<input class="checkbox" type="checkbox" id = "humidity" checked="checked">
+  			<input class="checkbox" type="checkbox" id = "humidity">
   			Humidity
 		</div>
 		<div>
-  			<input class="checkbox" type="checkbox" id = "meanWind" checked="checked">
+  			<input class="checkbox" type="checkbox" id = "meanWind">
   			Mean Wind Speed
 		</div>
 		<div>

@@ -1,6 +1,65 @@
 $( document ).ready(function() {
     console.log( "ready!" );
     
+  //Make API Call to get daily forecast data. Save that data into arrays with scope of this .js file
+    //(Or, return data as a javascript object
+    //var forecast = retrieveForecastFromAPI();
+    //For now, we'll use dummy data
+    
+    //Parse forecast data into arrays
+    //*IMPLEMENT FUNCTION FOR THIS* - Note: Might not have to do this since data comes back in JSON
+	    //FOR DEMO PURPOSES: DUMMY DATA
+	    var hiTemp = {
+	    		seriesName : "High Temperature",
+	    		seriesData : [70, 69, 77, 85, 83, 87, 77],
+	    		type: "temperature"
+	    }
+	    var loTemp = {
+	    		seriesName : "Low Temperature",
+	    		seriesData : [51, 52, 60, 63, 63, 65, 58],
+	    		type: "temperature"
+	    }
+	    var dewPoint = {
+	    		seriesName : "Dew Point",
+	    		seriesData : [50, 50, 64, 82, 80, 74, 57],
+	    		type: "temperature"
+	    }
+	    var precipChance = {
+	    		seriesName : "Chance of Precipitation",
+	    		seriesData : [10, 12, 21, 74, 81, 32, 18],
+	    		type: "percentage"
+	    }
+	    var humidity = {
+	    		seriesName : "Humidity",
+	    		seriesData : [45, 45, 52, 74, 76, 72, 52],
+	    		type: "percentage"
+	    }
+	    var cloudCoverage = {
+	    		seriesName : "Cloud Coverage",
+	    		seriesData : [2, 2, 65, 72, 61, 40, 38],
+	    		type: "percentage"
+	    }
+	    var meanWind = {
+	    		seriesName : "Mean Wind",
+	    		seriesData : [1, 1, 3, 3, 3, 1, 2],
+	    		type: "velocity"
+	    }
+	    var windGust = {
+	    		seriesName : "Wind Gust",
+	    		seriesData : [3, 3, 6, 8, 4, 3, 3],
+	    		type: "velocity"
+	    }
+	    var pressure = {
+	    		seriesName : "Pressure",
+	    		seriesData : [1015, 1014, 1004, 999, 1001, 1011, 1013],
+	    		type: "pressure"
+	    }
+	    //END DUMMY DATA
+    
+    var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
+    //var testDataSeries = [weatherData[0]];
+    
+    
     var visType = "spline";
     var visType1 = "spline";
     var visType2 = "column";
@@ -21,39 +80,37 @@ $( document ).ready(function() {
     //var countPPB = 0;				//Ozone
     //var allCounts = [countTemperature, countPercentage, countVelocity, countIcon, countPressure, countDirection, countIndex, countDistance, countPPB];
     
-    var hiTempSelected = $("#hiTemp").is(':checked');
-    var loTempSelected = $("#loTemp").is(':checked');
-    var dewPointSelected = $("#dewPoint").is(':checked');
-    var precipChanceSelected = $("#precipChance").is(':checked');
-    //var precipTypeSelected = $("#precipType").is(':checked');
-    var humiditySelected = $("#humidity").is(':checked');
-    var meanWindSelected = $("#meanWind").is(':checked');
-    var windGustSelected = $("#windGust").is(':checked');
-    //var windDirSelected = $("#windDirection").is(':checked');
-    var pressureSelected = $("#pressure").is(':checked');
-    var ccSelected = $("#cloudCover").is(':checked');
-    //var visSelected = $("#visibility").is(':checked');
-    //var uvSelected = $("#UV").is(':checked');
-    //var ozoneSelected = $("#ozone").is(':checked');
-    //var moonSelected = $("#moonPhase").is(':checked');
-    //var weatherSelections = [hiTempSelected, loTempSelected, dewPointSelected, precipChanceSelected, precipTypeSelected, humiditySelected, meanWindSelected, windGustSelected, windDirSelected, pressureSelected, ccSelected, visSelected, uvSelected, ozoneSelected, moonSelected];
     var weatherParameters = ["hiTemp", "loTemp", "dewPoint", "precipChance", "humidity", "cloudCoverage", "meanWind", "windGust", "pressure"]
-    var weatherSelections = [hiTempSelected, loTempSelected, dewPointSelected, precipChanceSelected, humiditySelected, ccSelected, meanWindSelected, windGustSelected, pressureSelected];
+    
+    //Determine the category of chart (one variable, two var, etc - single yAxis, dual yAxis) and its content
+    //based on user's selected parameters
     
     $("input:checkbox").change(function(){
-        determineViableCharts(weatherParameters, weatherSelections);
+    		console.log("-------------------------------------")
+    		var chartCategory;
+    		var selectedContent;
+    		var chartData = [];
+    		var weatherSelections = determineSelected();
+    		var categoryAndContent = determineChartCategoryAndContent(weatherParameters, weatherSelections);
+    		chartCategory = categoryAndContent.shift();
+    		selectedContent = categoryAndContent;
+    		
+    		for (i = 0; i < selectedContent[0].length; i ++) {
+    			chartData[i] = weatherData[weatherParameters.indexOf(selectedContent[0][i])];
+    			console.log("i is; " + i);
+    		}
+    		
+    		console.log("selected content: ");
+    		console.log(selectedContent);
+    		console.log("chart content right after i click the checkbox: ");
+    	    console.log(selectedContent);
+    	    console.log("chart data right after i click the checkbox: ");
+    	    console.log(chartData);
+    	    
+    	    createChart(visType, forecastDays, chartCategory, chartData);
     });
     
     
-    
-    
-    //Make API Call to get daily forecast data. Save that data into arrays with scope of this .js file
-    //(Or, return data as a javascript object
-    //var forecast = retrieveForecastFromAPI();
-    //For now, we'll use dummy data
-    
-    //Parse forecast data into arrays
-    //*IMPLEMENT FUNCTION FOR THIS* - Note: Might not have to do this since data comes back in JSON
     
     //Retrieve user's preferred visualization type from the database
     //var preferredVis = retrivePreferredVis(userID);
@@ -62,22 +119,6 @@ $( document ).ready(function() {
     //twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2)
     
     /*
-    var weatherInfo1 = {
-    		seriesName : "High Temperature",
-    		seriesData : [70, 69, 77, 85, 83, 87, 77]
-    }
-    var weatherInfo2 = {
-    		seriesName : "Low Temperature",
-    		seriesData : [51, 52, 60, 63, 63, 65, 58]
-    }
-    var weatherInfo3 = {
-    		seriesName : "Dew Point",
-    		seriesData : [50, 50, 64, 82, 80, 74, 57]
-    }
-    var precipChance = {
-    		seriesName : "Chance of Precipitation",
-    		seriesData : [10, 12, 21, 74, 81, 32, 18]
-    }
     
     //singleVariableChart(visType, forecastDays, weatherInfo1);
     
@@ -117,7 +158,8 @@ function apiCallGetRequest(endpoint){
 
 //CHART: SINGLE-VARIABLE
 function singleVariableChart(visType, forecastDays, weatherInfo1) { 
-    var weatherParam1 = weatherInfo1.seriesData;
+    console.log(weatherInfo1);
+	var weatherParam1 = weatherInfo1.seriesData;
     var seriesName1 = weatherInfo1.seriesName;
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
@@ -259,6 +301,13 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
     var weatherParam2 = weatherInfo2.seriesData;
     var seriesName1 = weatherInfo1.seriesName;
     var seriesName2 = weatherInfo2.seriesName;
+    
+    console.log("in twovariabledualaxis=======");
+    console.log("weatherparam1: ");
+    console.log(weatherParam1);
+    console.log("weatherparam2: ");
+    console.log(weatherParam2);
+    
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
 	        zoomType: 'xy'
@@ -512,9 +561,31 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	});
 };
 
+function determineSelected() {
+	var hiTempSelected = $("#hiTemp").is(':checked');
+    var loTempSelected = $("#loTemp").is(':checked');
+    var dewPointSelected = $("#dewPoint").is(':checked');
+    var precipChanceSelected = $("#precipChance").is(':checked');
+    var humiditySelected = $("#humidity").is(':checked');
+    var meanWindSelected = $("#meanWind").is(':checked');
+    var windGustSelected = $("#windGust").is(':checked');
+    var pressureSelected = $("#pressure").is(':checked');
+    var ccSelected = $("#cloudCover").is(':checked');
+    //var visSelected = $("#visibility").is(':checked');
+    //var uvSelected = $("#UV").is(':checked');
+    //var ozoneSelected = $("#ozone").is(':checked');
+    //var moonSelected = $("#moonPhase").is(':checked');
+    //var weatherSelections = [hiTempSelected, loTempSelected, dewPointSelected, precipChanceSelected, precipTypeSelected, humiditySelected, meanWindSelected, windGustSelected, windDirSelected, pressureSelected, ccSelected, visSelected, uvSelected, ozoneSelected, moonSelected];
+    //var precipTypeSelected = $("#precipType").is(':checked');
+    //var windDirSelected = $("#windDirection").is(':checked');
+    
+    var weatherSelections = [hiTempSelected, loTempSelected, dewPointSelected, precipChanceSelected, humiditySelected, ccSelected, meanWindSelected, windGustSelected, pressureSelected];
+    
+    return weatherSelections;
+}
 
 //CHART SELECTION: Determine what type of plot to show based on checkboxes
-function determineViableCharts(weatherParameters, weatherSelections) {
+function determineChartCategoryAndContent(weatherParameters, weatherSelections) {
 	var countTemperature = 0;
 	var countPercentage = 0;
 	var countVelocity = 0;
@@ -528,17 +599,13 @@ function determineViableCharts(weatherParameters, weatherSelections) {
 		if (weatherSelections[i]) {
 			if (i < 3) {							//So, if a temperature checkbox is checked (hiTemp, loTemp, dew point)
 				countTemperature ++;
-				console.log("in temp");
 			} else if (i >= 3 && i < 6) {		//If a percentage checkbox is checked (precip chance, cloud cover, humidity)
 				countPercentage ++;
-				console.log("in percent");
 			} else if (i >= 6 && i < 8) {		//If a velocity checkbox is checked (mean wind, peak wind gust)
 				countVelocity ++;
-				console.log("in velocity");
 			} else {								//If the pressure checkbox is checked
 				countPressure ++;				
 			}
-			console.log("i is " + i);
 			paramsToPlot.push(weatherParameters[i]);		//Add the current weather parameter to the array of parameters to plot
 		}
 	}
@@ -550,9 +617,7 @@ function determineViableCharts(weatherParameters, weatherSelections) {
 		}
 	}
 	
-	console.log(typeCounts);
-	console.log(uniqueTypes);
-	console.log(paramsToPlot);
+	
 	
 	if (uniqueTypes == 1) {
 		if (paramsToPlot.length == 1) {
@@ -578,10 +643,95 @@ function determineViableCharts(weatherParameters, weatherSelections) {
 		chartCategory = "meteogram";
 	}
 	
+	console.log(paramsToPlot);
 	console.log(chartCategory);
 	
-	return [chartCategory, paramsToPlot];
+	return [chartCategory, paramsToPlot];	
+}
+
+function createChart(visType, forecastDays, chartCategory, chartContent) {
+	console.log("chart content: ");
+	console.log(chartContent);
+	console.log("first one in content: ");
+	console.log(chartContent[0]);
+	console.log("2nd one in content: ");
+	console.log(chartContent[1]);
 	
+	
+	//If chartCategory is a single-axis chart, we have it easy! Just determine the number of variables
+	//and pass it its contents
+	if (chartCategory == "singleVariable" || chartCategory == "twoVariable" || chartCategory == "threeVariable") {
+		switch (chartContent.length) {
+			case 1:
+				singleVariableChart(visType, forecastDays, chartContent[0]);
+				break;
+			case 2:
+				twoVariableChart(visType, forecastDays, chartContent[0], chartContent[1]);
+				break;
+			case 3:
+				threeVariableChart(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2]);
+				break;
+		}
+	}
+	
+	//If not a single-axis and not a meteogram, determine which value goes on which axis
+	//Then call appropriate chart function
+	if (chartCategory != "singleVariable" && chartCategory != "twoVariable" && chartCategory != "threeVariable" && chartCategory != "meteogram") {
+		
+		var yAxis1 = null;
+		var yAxis2 = null;
+		var types = [];
+		for (i = 0; i < chartContent; i ++) {
+			types.push(chartContent[i]);
+		}
+		
+		if (types.includes("temperature")) {
+			yAxis1 = "temperature";
+			if (types.includes("pressure")) {
+				yAxis2 = "pressure";
+			} else if (types.includes("velocity")) {
+				yAxis2 = "velocity";
+			} else {
+				yAxis2 = "percentage";
+			}
+		} else if (types.includes("pressure")) {
+			yAxis1 = "pressure";
+			if (types.includes("velocity")) {
+				yAxis2 = "velocity";
+			} else {
+				yAxis2 = "percentage";
+			}
+		} else {
+			yAxis1 = "velocity";
+			yAxis2 = "percentage";
+		}
+		
+		console.log("2nd one in content right before passing to function: ");
+		console.log(chartContent[1]);
+		
+		switch (chartContent.length) {
+			case 2:
+				twoVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1]);
+				break;
+			case 3:
+				threeVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2]);
+				break;
+			case 4:
+				fourVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3]);
+				break;
+			case 5:
+				fiveVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4]);
+				break;
+			case 6:
+				sixVariableDualAxis(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4], chartContent[5]);
+				break;
+		}
+		
+		
+		
+	}	
+		
+		
 }
 
 
