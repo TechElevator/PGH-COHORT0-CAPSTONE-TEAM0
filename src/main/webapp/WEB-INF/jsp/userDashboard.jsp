@@ -11,12 +11,12 @@
 	</span>
 	<span>
 		<ul class="list-unstyled">
-			<li id="temperature"></li>
-			<li id="precipChance"></li>
-			<li id="humidity"></li>
-			<li id="wind"></li>
-			<li id="windDirection"></li>
-			<li id="cloudCover"></li>
+			<li id="temperatureLI"></li>
+			<li id="precipChanceLI"></li>
+			<li id="humidityLI"></li>
+			<li id="windLI"></li>
+			<li id="windDirectionLI"></li>
+			<li id="cloudCoverLI"></li>
 		</ul>
 	</span>
 	
@@ -54,6 +54,10 @@
   			Humidity
 		</div>
 		<div>
+  			<input class="checkbox" type="checkbox" id = "cloudCover">
+  			Cloud Cover
+		</div>
+		<div>
   			<input class="checkbox" type="checkbox" id = "meanWind">
   			Mean Wind Speed
 		</div>
@@ -70,10 +74,6 @@
 		<div>
   			<input class="checkbox" type="checkbox" id = "pressure">
   			Pressure
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "cloudCover">
-  			Cloud Cover
 		</div>
 		<!-- 
 		<div>

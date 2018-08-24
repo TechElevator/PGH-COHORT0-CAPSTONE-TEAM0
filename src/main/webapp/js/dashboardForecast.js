@@ -119,9 +119,7 @@ $( document ).ready(function() {
     			console.log("i is; " + i);
     		}
     		
-    		console.log("selected content: ");
-    		console.log(selectedContent);
-    		console.log("chart content right after i click the checkbox: ");
+    		console.log("selected content right after i click the checkbox: ");
     	    console.log(selectedContent);
     	    console.log("chart data right after i click the checkbox: ");
     	    console.log(chartData);
@@ -324,11 +322,7 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
     var yAxis2Type = "column";
     
     
-    console.log("in twovariabledualaxis=======");
-    console.log("weatherparam1: ");
-    console.log(weatherParam1);
-    console.log("weatherparam2: ");
-    console.log(weatherParam2);
+    
     
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
@@ -409,14 +403,62 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
     var seriesName1 = weatherInfo1.seriesName;
     var seriesName2 = weatherInfo2.seriesName;
     var seriesName3 = weatherInfo3.seriesName;
+    //var yAxis1Type = "spline";
+    //var yAxis2Type = "column";
     
+    //Determine which values go on which axes (precedence should go temperature, pressure, velocity, percentage)
+    var types = [weatherInfo1.type, weatherInfo2.type, weatherInfo3.type];
+ 
+    //Determine axes
+    var allData = [weatherInfo1, weatherInfo2, weatherInfo3];
+    console.log(allData);
+    console.log(yAxis1);
+    console.log(yAxis2);
+    if (yAxis1 == "temperature") {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+    			console.log(allData[i].type);
+    			if (allData[i].type == yAxis1) {
+    				allData[i].chartType = "spline";
+    			} else {
+    				allData[i].chartType = "column";
+    			}
+    		}
+    		console.log("Ye olde data: ");
+    		console.log(allData[i]);
+    } else if (yAxis1 == "pressure") {
+    		
+    	for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    } else {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    	
+    }
     
+    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log(weatherInfo3);
     
-    var yAxisTypes
-    
-    
-    
-    
+    var chartType1 = weatherInfo1.chartType;
+    var chartType2 = weatherInfo2.chartType;
+    var chartType3 = weatherInfo3.chartType;
     
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
@@ -471,7 +513,7 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	    },
 	    series: [{
 	        name: seriesName3,
-	        type: yAxis2,
+	        type: chartType3,
 	        yAxis: 1,
 	        data: weatherParam3,
 	        tooltip: {
@@ -479,16 +521,16 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	        }
 	
 	    }, {
-	        name: seriesName1,
-	        type: yAxis1,
-	        data: weatherParam1,
+	        name: seriesName2,
+	        type: chartType2,
+	        data: weatherParam2,
 	        tooltip: {
 	            valueSuffix: ' °F'
 	        }
 	    }, {
-	        name: seriesName2,
-	        type: yAxis1,
-	        data: weatherParam2,
+	        name: seriesName1,
+	        type: chartType1,
+	        data: weatherParam1,
 	        tooltip: {
 	            valueSuffix: ' °F'
 	        }
@@ -507,6 +549,65 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
     var seriesName2 = weatherInfo2.seriesName;
     var seriesName3 = weatherInfo3.seriesName;
     var seriesName4 = weatherInfo4.seriesName;
+    
+    
+  //Determine which values go on which axes (precedence should go temperature, pressure, velocity, percentage)
+    var types = [weatherInfo1.type, weatherInfo2.type, weatherInfo3.type, weatherInfo4.type];
+ 
+    //Determine axes
+    var allData = [weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4];
+    console.log(allData);
+    console.log(yAxis1);
+    console.log(yAxis2);
+    if (yAxis1 == "temperature") {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+    			console.log(allData[i].type);
+    			if (allData[i].type == yAxis1) {
+    				allData[i].chartType = "spline";
+    			} else {
+    				allData[i].chartType = "column";
+    			}
+    		}
+    		console.log("Ye olde data: ");
+    		console.log(allData[i]);
+    } else if (yAxis1 == "pressure") {
+    		
+    	for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    } else {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    	
+    }
+    
+    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log(weatherInfo4);
+    
+    var chartType1 = weatherInfo1.chartType;
+    var chartType2 = weatherInfo2.chartType;
+    var chartType3 = weatherInfo3.chartType;
+    var chartType4 = weatherInfo4.chartType;
+    
+    
+    
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
 	        zoomType: 'xy'
@@ -598,10 +699,11 @@ function determineSelected() {
     var dewPointSelected = $("#dewPoint").is(':checked');
     var precipChanceSelected = $("#precipChance").is(':checked');
     var humiditySelected = $("#humidity").is(':checked');
+    var ccSelected = $("#cloudCover").is(':checked');
     var meanWindSelected = $("#meanWind").is(':checked');
     var windGustSelected = $("#windGust").is(':checked');
     var pressureSelected = $("#pressure").is(':checked');
-    var ccSelected = $("#cloudCover").is(':checked');
+    
     //var visSelected = $("#visibility").is(':checked');
     //var uvSelected = $("#UV").is(':checked');
     //var ozoneSelected = $("#ozone").is(':checked');
@@ -629,17 +731,26 @@ function determineChartCategoryAndContent(weatherParameters, weatherSelections) 
 	for (i = 0; i < weatherSelections.length; i ++) {
 		if (weatherSelections[i]) {
 			if (i < 3) {							//So, if a temperature checkbox is checked (hiTemp, loTemp, dew point)
+				console.log("i is: " + i);
 				countTemperature ++;
 			} else if (i >= 3 && i < 6) {		//If a percentage checkbox is checked (precip chance, cloud cover, humidity)
+				console.log("i is: " + i);
 				countPercentage ++;
 			} else if (i >= 6 && i < 8) {		//If a velocity checkbox is checked (mean wind, peak wind gust)
+				console.log("i is: " + i);
 				countVelocity ++;
 			} else {								//If the pressure checkbox is checked
+				console.log("i is: " + i);
 				countPressure ++;				
 			}
 			paramsToPlot.push(weatherParameters[i]);		//Add the current weather parameter to the array of parameters to plot
 		}
 	}
+	
+	console.log("COUNT TEMPERATURE IS: " + countTemperature);
+	console.log("COUNT PERCENTAGE IS: " + countPercentage);
+	console.log("COUNT VELOCITY IS: " + countVelocity);
+	console.log("COUNT PRESSURE IS: " + countPressure);
 	
 	var typeCounts = [countTemperature, countPercentage, countVelocity, countPressure];
 	for (i = 0; i < typeCounts.length; i ++) {
@@ -688,6 +799,9 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 	console.log("2nd one in content: ");
 	console.log(chartContent[1]);
 	
+	console.log("chart content is: ");
+	console.log(chartContent);
+	
 	
 	//If chartCategory is a single-axis chart, we have it easy! Just determine the number of variables
 	//and pass it its contents
@@ -712,9 +826,12 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 		var yAxis1 = null;
 		var yAxis2 = null;
 		var types = [];
-		for (i = 0; i < chartContent; i ++) {
-			types.push(chartContent[i]);
+		for (i = 0; i < chartContent.length; i ++) {
+			types.push(chartContent[i].type);
 		}
+		
+		console.log("TYPES: ");
+		console.log(types);
 		
 		if (types.includes("temperature")) {
 			yAxis1 = "temperature";
