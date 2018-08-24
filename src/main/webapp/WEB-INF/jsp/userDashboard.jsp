@@ -5,6 +5,77 @@
 <h1 class = "text-center">My Dashboard</h1>
 </div>
 
+<div id="checkboxFormContainer">
+	<form>
+		<div>
+  			<input type="checkbox" id = "hiTemp" checked="checked">
+  			High Temperature
+		</div>
+		<div>
+  			<input type="checkbox" id = "loTemp" >
+  			Low Temperature
+		</div>
+		<div>
+  			<input type="checkbox" id = "dewPoint" >
+  			Dew Point
+		</div>
+		<div>
+  			<input type="checkbox" id = "precipChance" checked="checked">
+  			Precipitation Chance
+		</div>
+		<!--  
+		<div>
+  			<input type="checkbox" id = "precipType">
+  			Precipitation Type
+		</div>
+		-->
+		<div>
+  			<input type="checkbox" id = "humidity" checked="checked">
+  			Humidity
+		</div>
+		<div>
+  			<input type="checkbox" id = "meanWind" checked="checked">
+  			Mean Wind Speed
+		</div>
+		<div>
+  			<input type="checkbox" id = "windGust">
+  			Peak Wind Gust
+		</div>
+		<!--
+		<div>
+  			<input type="checkbox" id = "windDirection">
+  			Wind Direction
+		</div>
+		-->
+		<div>
+  			<input type="checkbox" id = "pressure">
+  			Pressure
+		</div>
+		<div>
+  			<input type="checkbox" id = "cloudCover">
+  			Cloud Cover
+		</div>
+		<!-- 
+		<div>
+  			<input type="checkbox" id = "visibility">
+  			Visibility
+		</div>
+		<div>
+  			<input type="checkbox" id = "UV">
+  			UV Index
+		</div>
+		<div>
+  			<input type="checkbox" id = "ozone">
+  			Ozone
+		</div>
+		<div>
+  			<input type="checkbox" id = "moonPhase">
+  			Moon Phase
+		</div>
+		-->
+	</form>
+</div>
+
 <!-- The below div and script tag pulls in the forecast visualization -->
 <div>
 	<h2 class = "text-center">Forecast for Pittsburgh, PA</h2>
