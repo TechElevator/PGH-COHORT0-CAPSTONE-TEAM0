@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-    console.log( "ready!" );
     
   //Make API Call to get daily forecast data. Save that data into arrays with scope of this .js file
     //(Or, return data as a javascript object
@@ -101,30 +100,19 @@ $( document ).ready(function() {
     
     var weatherParameters = ["hiTemp", "loTemp", "dewPoint", "precipChance", "humidity", "cloudCoverage", "meanWind", "windGust", "pressure"]
     
-    //Determine the category of chart (one variable, two var, etc - single yAxis, dual yAxis) and its content
-    //based on user's selected parameters
+    //On first page load, chart will be created
+    //DEFINE VIS TYPE HERE BASED ON USER'S PREFERENCE, SAVED IN DATABASE
+    initiateChartCreation(visType, forecastDays, weatherParameters, weatherData);
     
+    //On every checkbox click, chart will be created
     $("input:checkbox").change(function(){
-    		console.log("-------------------------------------")
-    		var chartCategory;
-    		var selectedContent;
-    		var chartData = [];
-    		var weatherSelections = determineSelected();
-    		var categoryAndContent = determineChartCategoryAndContent(weatherParameters, weatherSelections);
-    		chartCategory = categoryAndContent.shift();
-    		selectedContent = categoryAndContent;
-    		
-    		for (i = 0; i < selectedContent[0].length; i ++) {
-    			chartData[i] = weatherData[weatherParameters.indexOf(selectedContent[0][i])];
-    			console.log("i is; " + i);
-    		}
-    		
-    		console.log("selected content right after i click the checkbox: ");
-    	    console.log(selectedContent);
-    	    console.log("chart data right after i click the checkbox: ");
-    	    console.log(chartData);
-    	    
-    	    createChart(visType, forecastDays, chartCategory, chartData);
+    		visType = $('#chartTypeSelection option:selected').val();
+    		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData);
+    });
+    //On every change of the desired chart type, chart will be created
+    $("#chartTypeSelection").change(function(){
+		visType = $('#chartTypeSelection option:selected').val();
+		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData);
     });
     
     
@@ -160,10 +148,40 @@ $( document ).ready(function() {
 //FUNCTIONS
 //================================================================================================
 
+//Chart creation
+function initiateChartCreation(visType, forecastDays, weatherParameters, weatherData) {
+	console.log("-------------------------------------")
+	var chartCategory;
+	var selectedContent;
+	var chartData = [];
+	var weatherSelections = determineSelected();
+	var categoryAndContent = determineChartCategoryAndContent(weatherParameters, weatherSelections);
+	chartCategory = categoryAndContent.shift();
+	selectedContent = categoryAndContent;
+	
+	for (i = 0; i < selectedContent[0].length; i ++) {
+		chartData[i] = weatherData[weatherParameters.indexOf(selectedContent[0][i])];
+		console.log("i is; " + i);
+	}
+	
+	console.log("selected content right after i click the checkbox: ");
+    console.log(selectedContent);
+    console.log("chart data right after i click the checkbox: ");
+    console.log(chartData);
+    
+    createChart(visType, forecastDays, chartCategory, chartData);
+}
+
 //API Call - Request daily forecast data from DarkSky API (forecast.io)
-function retriveForecastFromAPI(lat, lon, units) {
+function retrieveForecastFromAPI(lat, lon, units) {
 	var endpoint = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + lat + "," + lon;
 	var forecastJSON = JSON.parse(apiCallGetRequest(endpoint));
+	
+	//$("#userData").data("latitude"));
+	//$("#userData").data("longitude"));
+	//$("#userData").data("units"));
+	
+	
 }
 
 function apiCallGetRequest(endpoint){
@@ -175,7 +193,7 @@ function apiCallGetRequest(endpoint){
 
 //CHART: SINGLE-VARIABLE
 function singleVariableChart(visType, forecastDays, weatherInfo1) { 
-    console.log(weatherInfo1);
+    
 	var weatherParam1 = weatherInfo1.seriesData;
     var seriesName1 = weatherInfo1.seriesName;
 	var myChart = Highcharts.chart('forecastChart', {
@@ -411,9 +429,7 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
  
     //Determine axes
     var allData = [weatherInfo1, weatherInfo2, weatherInfo3];
-    console.log(allData);
-    console.log(yAxis1);
-    console.log(yAxis2);
+    
     if (yAxis1 == "temperature") {
     		
     		for (i = 0; i < allData.length; i ++) {
@@ -606,8 +622,6 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
     var chartType3 = weatherInfo3.chartType;
     var chartType4 = weatherInfo4.chartType;
     
-    
-    
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
 	        zoomType: 'xy'
@@ -661,7 +675,7 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	    },
 	    series: [{
 	        name: seriesName4,
-	        type: yAxis2,
+	        type: chartType4,
 	        yAxis: 1,
 	        data: weatherParam4,
 	        tooltip: {
@@ -669,23 +683,361 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        }
 	
 	    }, {
-	        name: seriesName1,
-	        type: yAxis1,
-	        data: weatherParam1,
+	        name: seriesName3,
+	        type: chartType3,
+	        data: weatherParam3,
 	        tooltip: {
 	            valueSuffix: ' °F'
 	        }
 	    }, {
 	        name: seriesName2,
-	        type: yAxis1,
+	        type: chartType2,
 	        data: weatherParam2,
 	        tooltip: {
 	            valueSuffix: ' °F'
 	        }
 	    }, {
+	        name: seriesName1,
+	        type: chartType1,
+	        data: weatherParam1,
+	        tooltip: {
+	            valueSuffix: ' °F'
+	        }
+	    }]
+	});
+};
+
+//CHART: FIVE VARIABLE, DUAL AXIS
+function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4, weatherInfo5) {
+	var weatherParam1 = weatherInfo1.seriesData;
+    var weatherParam2 = weatherInfo2.seriesData;
+    var weatherParam3 = weatherInfo3.seriesData;
+    var weatherParam4 = weatherInfo4.seriesData;
+    var weatherParam5 = weatherInfo5.seriesData;
+    var seriesName1 = weatherInfo1.seriesName;
+    var seriesName2 = weatherInfo2.seriesName;
+    var seriesName3 = weatherInfo3.seriesName;
+    var seriesName4 = weatherInfo4.seriesName;
+    var seriesName5 = weatherInfo5.seriesName;
+    
+    //Determine which values go on which axes (precedence should go temperature, pressure, velocity, percentage)
+    var types = [weatherInfo1.type, weatherInfo2.type, weatherInfo3.type, weatherInfo4.type, weatherInfo5.type];
+ 
+    //Determine axes
+    var allData = [weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4, weatherInfo5];
+    console.log(allData);
+    console.log(yAxis1);
+    console.log(yAxis2);
+    if (yAxis1 == "temperature") {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+    			console.log(allData[i].type);
+    			if (allData[i].type == yAxis1) {
+    				allData[i].chartType = "spline";
+    			} else {
+    				allData[i].chartType = "column";
+    			}
+    		}
+    		console.log("Ye olde data: ");
+    		console.log(allData[i]);
+    } else if (yAxis1 == "pressure") {
+    		
+    	for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    } else {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    	
+    }
+    
+    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log(weatherInfo4);
+    
+    var chartType1 = weatherInfo1.chartType;
+    var chartType2 = weatherInfo2.chartType;
+    var chartType3 = weatherInfo3.chartType;
+    var chartType4 = weatherInfo4.chartType;
+    var chartType5 = weatherInfo5.chartType;
+    
+	var myChart = Highcharts.chart('forecastChart', {
+		chart: {
+	        zoomType: 'xy'
+	    },
+	    title: {
+	        text: 'Average Monthly Temperature and Rainfall in Tokyo'
+	    },
+	    xAxis: [{
+	        categories: forecastDays,
+	        crosshair: true
+	    }],
+	    yAxis: [{ // Primary yAxis
+	        labels: {
+	            format: '{value}°F',
+	            style: {
+	                color: Highcharts.getOptions().colors[1]
+	            }
+	        },
+	        title: {
+	            text: 'Temperature',
+	            style: {
+	                color: Highcharts.getOptions().colors[1]
+	            }
+	        }
+	    }, { // Secondary yAxis
+	        title: {
+	            text: 'Rainfall',
+	            style: {
+	                color: Highcharts.getOptions().colors[0]
+	            }
+	        },
+	        labels: {
+	            format: '{value} mm',
+	            style: {
+	                color: Highcharts.getOptions().colors[0]
+	            }
+	        },
+	        opposite: true
+	    }],
+	    tooltip: {
+	        shared: true
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'left',
+	        x: 120,
+	        verticalAlign: 'top',
+	        y: 100,
+	        floating: true,
+	        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	    },
+	    series: [{
+	        name: seriesName5,
+	        type: chartType5,
+	        yAxis: 1,
+	        data: weatherParam5,
+	        tooltip: {
+	            valueSuffix: ' %'
+	        }
+	
+	    },{
+	        name: seriesName4,
+	        type: chartType4,
+	        yAxis: 1,
+	        data: weatherParam4,
+	        tooltip: {
+	            valueSuffix: ' %'
+	        }
+	
+	    }, {
 	        name: seriesName3,
-	        type: yAxis1,
+	        type: chartType3,
 	        data: weatherParam3,
+	        tooltip: {
+	            valueSuffix: ' °F'
+	        }
+	    }, {
+	        name: seriesName2,
+	        type: chartType2,
+	        data: weatherParam2,
+	        tooltip: {
+	            valueSuffix: ' °F'
+	        }
+	    }, {
+	        name: seriesName1,
+	        type: chartType1,
+	        data: weatherParam1,
+	        tooltip: {
+	            valueSuffix: ' °F'
+	        }
+	    }]
+	});
+};
+
+//CHART: SIX VARIABLE, DUAL AXIS
+function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4, weatherInfo5, weatherInfo6) {
+	var weatherParam1 = weatherInfo1.seriesData;
+    var weatherParam2 = weatherInfo2.seriesData;
+    var weatherParam3 = weatherInfo3.seriesData;
+    var weatherParam4 = weatherInfo4.seriesData;
+    var weatherParam5 = weatherInfo5.seriesData;
+    var weatherParam6 = weatherInfo6.seriesData;
+    var seriesName1 = weatherInfo1.seriesName;
+    var seriesName2 = weatherInfo2.seriesName;
+    var seriesName3 = weatherInfo3.seriesName;
+    var seriesName4 = weatherInfo4.seriesName;
+    var seriesName5 = weatherInfo5.seriesName;
+    var seriesName6 = weatherInfo6.seriesName;
+    
+    //Determine which values go on which axes (precedence should go temperature, pressure, velocity, percentage)
+    var types = [weatherInfo1.type, weatherInfo2.type, weatherInfo3.type, weatherInfo4.type, weatherInfo5.type, weatherInfo6.type];
+ 
+    //Determine axes
+    var allData = [weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4, weatherInfo5, weatherInfo6];
+    console.log(allData);
+    console.log(yAxis1);
+    console.log(yAxis2);
+    if (yAxis1 == "temperature") {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+    			console.log(allData[i].type);
+    			if (allData[i].type == yAxis1) {
+    				allData[i].chartType = "spline";
+    			} else {
+    				allData[i].chartType = "column";
+    			}
+    		}
+    		console.log("Ye olde data: ");
+    		console.log(allData[i]);
+    } else if (yAxis1 == "pressure") {
+    		
+    	for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    } else {
+    		
+    		for (i = 0; i < allData.length; i ++) {
+			console.log(allData[i].type);
+			if (allData[i].type == yAxis1) {
+				allData[i].chartType = "spline";
+			} else {
+				allData[i].chartType = "column";
+			}
+		}
+		console.log("Ye olde data: ");
+		console.log(allData[i]);
+    	
+    }
+    
+    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log(weatherInfo4);
+    
+    var chartType1 = weatherInfo1.chartType;
+    var chartType2 = weatherInfo2.chartType;
+    var chartType3 = weatherInfo3.chartType;
+    var chartType4 = weatherInfo4.chartType;
+    var chartType5 = weatherInfo5.chartType;
+    var chartType6 = weatherInfo6.chartType;
+    
+	var myChart = Highcharts.chart('forecastChart', {
+		chart: {
+	        zoomType: 'xy'
+	    },
+	    title: {
+	        text: 'Average Monthly Temperature and Rainfall in Tokyo'
+	    },
+	    xAxis: [{
+	        categories: forecastDays,
+	        crosshair: true
+	    }],
+	    yAxis: [{ // Primary yAxis
+	        labels: {
+	            format: '{value}°F',
+	            style: {
+	                color: Highcharts.getOptions().colors[1]
+	            }
+	        },
+	        title: {
+	            text: 'Temperature',
+	            style: {
+	                color: Highcharts.getOptions().colors[1]
+	            }
+	        }
+	    }, { // Secondary yAxis
+	        title: {
+	            text: 'Rainfall',
+	            style: {
+	                color: Highcharts.getOptions().colors[0]
+	            }
+	        },
+	        labels: {
+	            format: '{value} mm',
+	            style: {
+	                color: Highcharts.getOptions().colors[0]
+	            }
+	        },
+	        opposite: true
+	    }],
+	    tooltip: {
+	        shared: true
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'left',
+	        x: 120,
+	        verticalAlign: 'top',
+	        y: 100,
+	        floating: true,
+	        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	    },
+	    series: [{
+	        name: seriesName6,
+	        type: chartType6,
+	        yAxis: 1,
+	        data: weatherParam6,
+	        tooltip: {
+	            valueSuffix: ' %'
+	        }
+	
+	    },{
+	        name: seriesName5,
+	        type: chartType5,
+	        yAxis: 1,
+	        data: weatherParam5,
+	        tooltip: {
+	            valueSuffix: ' %'
+	        }
+	
+	    },{
+	        name: seriesName4,
+	        type: chartType4,
+	        yAxis: 1,
+	        data: weatherParam4,
+	        tooltip: {
+	            valueSuffix: ' %'
+	        }
+	
+	    }, {
+	        name: seriesName3,
+	        type: chartType3,
+	        data: weatherParam3,
+	        tooltip: {
+	            valueSuffix: ' °F'
+	        }
+	    }, {
+	        name: seriesName2,
+	        type: chartType2,
+	        data: weatherParam2,
+	        tooltip: {
+	            valueSuffix: ' °F'
+	        }
+	    }, {
+	        name: seriesName1,
+	        type: chartType1,
+	        data: weatherParam1,
 	        tooltip: {
 	            valueSuffix: ' °F'
 	        }
@@ -806,6 +1158,10 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 	//If chartCategory is a single-axis chart, we have it easy! Just determine the number of variables
 	//and pass it its contents
 	if (chartCategory == "singleVariable" || chartCategory == "twoVariable" || chartCategory == "threeVariable") {
+		
+		$("#chartTypeSelection").show();
+		$("#dropdownLabel").show();
+		
 		switch (chartContent.length) {
 			case 1:
 				singleVariableChart(visType, forecastDays, chartContent[0]);
@@ -817,11 +1173,14 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 				threeVariableChart(visType, forecastDays, chartContent[0], chartContent[1], chartContent[2]);
 				break;
 		}
-	}
+	
 	
 	//If not a single-axis and not a meteogram, determine which value goes on which axis
 	//Then call appropriate chart function
-	if (chartCategory != "singleVariable" && chartCategory != "twoVariable" && chartCategory != "threeVariable" && chartCategory != "meteogram") {
+	} else if (chartCategory != "singleVariable" && chartCategory != "twoVariable" && chartCategory != "threeVariable" && chartCategory != "meteogram") {
+		
+		$("#chartTypeSelection").hide();
+		$("#dropdownLabel").hide();
 		
 		var yAxis1 = null;
 		var yAxis2 = null;
@@ -877,6 +1236,10 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 		
 		
 		
+	} else {
+		$("#chartTypeSelection").hide();
+		$("#dropdownLabel").hide();
+		initiateMeteogram();
 	}	
 		
 		
@@ -884,12 +1247,12 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 
 //WRITE CURRENT FORECAST
 function outputCurrentConditions(currentWeather) {
-	$('#temperature').text("Temperature: " + currentWeather.temperature);
-	$('#precipChance').text("Precipitation: " + currentWeather.precipProbability + "% chance of precipitation");
-	$('#humidity').text("Humidity: " + currentWeather.humidity + "%");
-	$('#wind').text("Wind Speed: " + currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
-	$('#windDirection').text("Wind Direction: " + currentWeather.windBearing);
-	$('#cloudCover').text("Cloud Cover: " + currentWeather.cloudCover + " %");
+	$('#temperatureLI').text("Temperature: " + currentWeather.temperature);
+	$('#precipChanceLI').text("Precipitation: " + currentWeather.precipProbability + "% chance of precipitation");
+	$('#humidityLI').text("Humidity: " + currentWeather.humidity + "%");
+	$('#windLI').text("Wind Speed: " + currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
+	$('#windDirectionLI').text("Wind Direction: " + currentWeather.windBearing);
+	$('#cloudCoverLI').text("Cloud Cover: " + currentWeather.cloudCover + " %");
 }
 
 
