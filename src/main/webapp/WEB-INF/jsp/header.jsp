@@ -13,7 +13,10 @@
 	    <script src="https://code.highcharts.com/highcharts.js"></script>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/site.css"/>">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-		
+	<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
+		<!--  The above link is for the auto complete search bar -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<!--The above script is for the auto complete search bar  -->
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
