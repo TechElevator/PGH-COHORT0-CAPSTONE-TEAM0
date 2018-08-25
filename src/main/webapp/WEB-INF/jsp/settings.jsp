@@ -25,12 +25,8 @@
 			
 			
 			<div class="form-group">
-				<label for="homecity">Your home city </label>
-				<input type="text" id="homecity" name="homecity"class="form-control" />
-			</div>
-				<div class="form-group">
 			<div>
-				<label for="defaultCityId">Default City: </label> 
+				<label for="defaultCity">Default City: </label> 
 				</div>
 				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
 			</div>

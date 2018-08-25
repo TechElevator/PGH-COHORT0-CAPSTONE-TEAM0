@@ -109,7 +109,7 @@ public class JDBCUserDAO implements UserDAO {
 	
 	@Override
 	public void updateDefaultPopulation(String userName, long defaultPopulation) {
-		jdbcTemplate.update("UPDATE app_user SET default_city = ? WHERE user_name = ?", defaultPopulation, userName);
+		jdbcTemplate.update("UPDATE app_user SET default_population = ? WHERE user_name = ?", defaultPopulation, userName);
 	}
 	
 	@Override

@@ -44,13 +44,13 @@ public class UserController {
 			flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "user", result);
 			return "redirect:/users/new";
 		}
-		
+
 		System.out.println("about to userDAO stuff");
-		System.out.println(" " + user.getUserName() +" " + user.getPassword() +" " + user.getDefaultCity() +" " + user.getDefaultUnits() +" " + 
-				user.getDefaultVisualization() +" " + user.getDefaultRegion() +" " +  user.getDefaultLatitude() +" " + 
-				user.getDefaultLongitude() +" " +  user.getDefaultPopulation() +" " +  user.getDefaultTimezone());
-		
-		
+		System.out.println(" " + user.getUserName() + " " + user.getPassword() + " " + user.getDefaultCity() + " "
+				+ user.getDefaultUnits() + " " + user.getDefaultVisualization() + " " + user.getDefaultRegion() + " "
+				+ user.getDefaultLatitude() + " " + user.getDefaultLongitude() + " " + user.getDefaultPopulation() + " "
+				+ user.getDefaultTimezone());
+
 		userDAO.saveUser2(user.getUserName(), user.getPassword(), user.getDefaultCity(), user.getDefaultUnits(),
 				user.getDefaultVisualization(), user.getDefaultRegion(), user.getDefaultLatitude(),
 				user.getDefaultLongitude(), user.getDefaultPopulation(), user.getDefaultTimezone());
@@ -68,30 +68,47 @@ public class UserController {
 
 	@RequestMapping(path = "/users/{currentUser.name}/settings", method = RequestMethod.POST)
 	public String updateSettings(HttpSession session, @RequestParam String newPassword, @RequestParam String defaultViz,
-			@RequestParam String defaultTempUnit, @RequestParam String homeCity, @RequestParam double latitude, @RequestParam double longitude, @RequestParam long population, @RequestParam String region, @RequestParam String timezone) {
+			@RequestParam String defaultTempUnit, @RequestParam String defaultCity,
+			@RequestParam double defaultLatitude, @RequestParam double defaultLongitude,
+			/*@RequestParam long defaultPopulation,*/ @RequestParam String defaultRegion,
+			@RequestParam String defaultTimezone) {
+
+		System.out.println(defaultCity);
 
 		User currentUser = (User) session.getAttribute("currentUser");
-		
-		userDAO.updatePassword(currentUser.getUserName(), newPassword);
-		
-		if (homeCity != null && !homeCity.equals("")) {
-			userDAO.updateDefaultCity(currentUser.getUserName(), homeCity);
-			userDAO.updateDefaultLatitude(currentUser.getUserName(), latitude);
-			userDAO.updateDefaultLongitude(currentUser.getUserName(), longitude);
-			userDAO.updateDefaultPopulation(currentUser.getUserName(), population);
-			userDAO.updateDefaultRegion(currentUser.getUserName(), region);
-			userDAO.updateDefaultTimezone(currentUser.getUserName(), timezone);
+
+		System.out.println("got user from session");
+		System.out.println(currentUser.getUserName());
+
+		// userDAO.updatePassword(currentUser.getUserName(), newPassword);
+
+		if (defaultCity != null && !defaultCity.equals("")) {
+			System.out.println("got into city change");
+			System.out.println(defaultCity);
+			userDAO.updateDefaultCity(currentUser.getUserName(), defaultCity);
+			userDAO.updateDefaultLatitude(currentUser.getUserName(), defaultLatitude);
+			userDAO.updateDefaultLongitude(currentUser.getUserName(), defaultLongitude);
+//			userDAO.updateDefaultPopulation(currentUser.getUserName(), defaultPopulation);
+			userDAO.updateDefaultRegion(currentUser.getUserName(), defaultRegion);
+			userDAO.updateDefaultTimezone(currentUser.getUserName(), defaultTimezone);
 		}
 
-		if (defaultTempUnit != null && !defaultTempUnit.equals("")) {
+		if (defaultViz != null && !defaultViz.equals("")) {
+			System.out.println("got into viz change");
+			System.out.println(defaultCity);
 			userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
-		}		
-
-		if (defaultTempUnit != null && !defaultTempUnit.equals("")) {
-			userDAO.updateUnits(currentUser.getUserName(), defaultTempUnit);			
 		}
 
-		return "redirect:/users/{userName}";
+		if (defaultTempUnit != null && !defaultTempUnit.equals("")) {
+			System.out.println("got into temp change");
+			System.out.println(defaultCity);
+			userDAO.updateUnits(currentUser.getUserName(), defaultTempUnit);
+		}
+		
+		session.setAttribute("currentUser", userDAO.getUserByUserName(currentUser.getUserName()));
+		session.setAttribute("currentUserName", currentUser.getUserName());
+
+		return "redirect:/users/{currentUser.name}";
 
 	}
 }
