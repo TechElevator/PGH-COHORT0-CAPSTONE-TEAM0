@@ -88,8 +88,33 @@ public class JDBCUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void updateDefaultCity(String userName, long cityId) {
-		jdbcTemplate.update("UPDATE app_user SET default_city = ? WHERE user_name = ?", cityId, userName);
+	public void updateDefaultCity(String userName, String defaultCity) {
+		jdbcTemplate.update("UPDATE app_user SET default_city = ? WHERE user_name = ?", defaultCity, userName);
+	}
+	
+	@Override
+	public void updateDefaultRegion(String userName, String defaultRegion) {
+		jdbcTemplate.update("UPDATE app_user SET default_region = ? WHERE user_name = ?", defaultRegion, userName);
+	}
+	
+	@Override
+	public void updateDefaultLatitude(String userName, double defaultLatitude) {
+		jdbcTemplate.update("UPDATE app_user SET default_latitude = ? WHERE user_name = ?", defaultLatitude, userName);
+	}
+	
+	@Override
+	public void updateDefaultLongitude(String userName, double defaultLongitude) {
+		jdbcTemplate.update("UPDATE app_user SET default_longitude = ? WHERE user_name = ?", defaultLongitude, userName);
+	}
+	
+	@Override
+	public void updateDefaultPopulation(String userName, long defaultPopulation) {
+		jdbcTemplate.update("UPDATE app_user SET default_city = ? WHERE user_name = ?", defaultPopulation, userName);
+	}
+	
+	@Override
+	public void updateDefaultTimezone(String userName, String defaultTimezone) {
+		jdbcTemplate.update("UPDATE app_user SET default_timezone = ? WHERE user_name = ?", defaultTimezone, userName);
 	}
 
 	@Override

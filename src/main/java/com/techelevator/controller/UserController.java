@@ -68,13 +68,28 @@ public class UserController {
 
 	@RequestMapping(path = "/users/{currentUser.name}/settings", method = RequestMethod.POST)
 	public String updateSettings(HttpSession session, @RequestParam String newPassword, @RequestParam String defaultViz,
-			@RequestParam String defaultTempUnit, @RequestParam long homeCity) {
+			@RequestParam String defaultTempUnit, @RequestParam String homeCity, @RequestParam double latitude, @RequestParam double longitude, @RequestParam long population, @RequestParam String region, @RequestParam String timezone) {
 
 		User currentUser = (User) session.getAttribute("currentUser");
+		
 		userDAO.updatePassword(currentUser.getUserName(), newPassword);
-		userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
-		userDAO.updateUnits(currentUser.getUserName(), defaultTempUnit);
-		userDAO.updateDefaultCity(currentUser.getUserName(), homeCity);
+		
+		if (homeCity != null && !homeCity.equals("")) {
+			userDAO.updateDefaultCity(currentUser.getUserName(), homeCity);
+			userDAO.updateDefaultLatitude(currentUser.getUserName(), latitude);
+			userDAO.updateDefaultLongitude(currentUser.getUserName(), longitude);
+			userDAO.updateDefaultPopulation(currentUser.getUserName(), population);
+			userDAO.updateDefaultRegion(currentUser.getUserName(), region);
+			userDAO.updateDefaultTimezone(currentUser.getUserName(), timezone);
+		}
+
+		if (defaultTempUnit != null && !defaultTempUnit.equals("")) {
+			userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
+		}		
+
+		if (defaultTempUnit != null && !defaultTempUnit.equals("")) {
+			userDAO.updateUnits(currentUser.getUserName(), defaultTempUnit);			
+		}
 
 		return "redirect:/users/{userName}";
 
