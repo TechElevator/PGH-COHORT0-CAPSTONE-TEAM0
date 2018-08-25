@@ -11,47 +11,74 @@ $( document ).ready(function() {
 	    var hiTemp = {
 	    		seriesName : "High Temperature",
 	    		seriesData : [70, 69, 77, 85, 83, 87, 77],
-	    		type: "temperature"
+	    		type : "temperature",
+	    		axisLabel : "Temperature",
+	    		unitsImperial : "F",
+	    		unitsSI : "C"
 	    }
 	    var loTemp = {
 	    		seriesName : "Low Temperature",
 	    		seriesData : [51, 52, 60, 63, 63, 65, 58],
-	    		type: "temperature"
+	    		type : "temperature",
+	    		axisLabel : "Temperature",
+	    		unitsImperial : "F",
+	    		unitsSI : "C"
 	    }
 	    var dewPoint = {
 	    		seriesName : "Dew Point",
 	    		seriesData : [50, 50, 64, 82, 80, 74, 57],
-	    		type: "temperature"
+	    		type : "temperature",
+	    		axisLabel : "Temperature",
+	    		unitsImperial : "F",
+	    		unitsSI : "C"
 	    }
 	    var precipChance = {
 	    		seriesName : "Chance of Precipitation",
 	    		seriesData : [10, 12, 21, 74, 81, 32, 18],
-	    		type: "percentage"
+	    		type : "percentage",
+	    		axisLabel : "Percentage",
+	    		unitsImperial : "%",
+	    		unitsSI : "%"
 	    }
 	    var humidity = {
 	    		seriesName : "Humidity",
 	    		seriesData : [45, 45, 52, 74, 76, 72, 52],
-	    		type: "percentage"
+	    		type : "percentage",
+	    		axisLabel : "Percentage",
+	    		unitsImperial : "%",
+	    		unitsSI : "%"
 	    }
 	    var cloudCoverage = {
 	    		seriesName : "Cloud Coverage",
 	    		seriesData : [2, 2, 65, 72, 61, 40, 38],
-	    		type: "percentage"
+	    		type : "percentage",
+	    		axisLabel : "Percentage",
+	    		unitsImperial : "%",
+	    		unitsSI : "%"
 	    }
 	    var meanWind = {
 	    		seriesName : "Mean Wind",
 	    		seriesData : [1, 1, 3, 3, 3, 1, 2],
-	    		type: "velocity"
+	    		type : "velocity",
+	    		axisLabel : "Velocity",
+	    		unitsImperial : "mph",
+	    		unitsSI : "m/s"
 	    }
 	    var windGust = {
 	    		seriesName : "Wind Gust",
 	    		seriesData : [3, 3, 6, 8, 4, 3, 3],
-	    		type: "velocity"
+	    		type : "velocity",
+	    		axisLabel : "Velocity",
+	    		unitsImperial : "mph",
+	    		unitsSI : "m/s"
 	    }
 	    var pressure = {
 	    		seriesName : "Pressure",
 	    		seriesData : [1015, 1014, 1004, 999, 1001, 1011, 1013],
-	    		type: "pressure"
+	    		type : "pressure",
+	    		axisLabel : "Pressure",
+	    		unitsImperial : "mb",			//Pressure will always be reported in millibars, mb
+	    		unitsSI : "mb"
 	    }
 	    
 	    var currentWeather = {
@@ -78,7 +105,7 @@ $( document ).ready(function() {
     //var testDataSeries = [weatherData[0]];
     
     
-    var visType = "spline";
+    var visType = $("#userData").data("defaultviz");
     var visType1 = "spline";
     var visType2 = "column";
     var forecastDays = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'];
@@ -196,20 +223,23 @@ function singleVariableChart(visType, forecastDays, weatherInfo1) {
     
 	var weatherParam1 = weatherInfo1.seriesData;
     var seriesName1 = weatherInfo1.seriesName;
+    var yAxis = weatherInfo1.axisLabel + " (" + weatherInfo1.unitsImperial + ")";
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
             type: visType,
-            zoomType: 'xy'
+            zoomType: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
         },
         title: {
-            text: 'Seven Day Forecast: Temperature'
+            text: ''
         },
         xAxis: {
             categories: forecastDays
         },
         yAxis: {
             title: {
-                text: 'Temperature (Fahrenheit)'
+                text: yAxis
             }
         },
         series: [{
@@ -225,20 +255,23 @@ function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) {
     var weatherParam2 = weatherInfo2.seriesData;
     var seriesName1 = weatherInfo1.seriesName;
     var seriesName2 = weatherInfo2.seriesName;
+    var yAxis = weatherInfo1.axisLabel + " (" + weatherInfo1.unitsImperial + ")";
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
             type: visType,
-            zoomtype: 'xy'
+            zoomtype: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
         },
         title: {
-            text: 'Seven Day Forecast: Temperature'
+            text: ''
         },
         xAxis: {
             categories: forecastDays
         },
         yAxis: {
             title: {
-                text: 'Temperature (Fahrenheit)'
+                text: yAxis
             }
         },
         series: [{
@@ -259,20 +292,23 @@ function threeVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, w
     var seriesName1 = weatherInfo1.seriesName;
     var seriesName2 = weatherInfo2.seriesName;
     var seriesName3 = weatherInfo3.seriesName;
+    var yAxis = weatherInfo1.axisLabel + " (" + weatherInfo1.unitsImperial + ")";
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
             type: visType,
-            zoomtype: 'xy'
+            zoomtype: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
         },
         title: {
-            text: 'Seven Day Forecast: Temperature'
+            text: ''
         },
         xAxis: {
             categories: forecastDays
         },
         yAxis: {
             title: {
-                text: 'Temperature (Fahrenheit)'
+                text: yAxis
             }
         },
         series: [{
@@ -284,48 +320,6 @@ function threeVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, w
         }, {
             name: seriesName3,
             data: weatherParam3
-        }]
-    });
-};
-
-//CHART: FOUR-VARIABLE,  SAME Y AXIS 
-function fourVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4) { 
-    var weatherParam1 = weatherInfo1.seriesData;
-    var weatherParam2 = weatherInfo2.seriesData;
-    var weatherParam3 = weatherInfo3.seriesData;
-    var weatherParam4 = weatherInfo4.seriesData;
-    var seriesName1 = weatherInfo1.seriesName;
-    var seriesName2 = weatherInfo2.seriesName;
-    var seriesName3 = weatherInfo3.seriesName;
-    var seriesName4 = weatherInfo4.seriesName;
-	var myChart = Highcharts.chart('forecastChart', {
-        chart: {
-            type: visType,
-            zoomtype: 'xy'
-        },
-        title: {
-            text: 'Seven Day Forecast: Temperature'
-        },
-        xAxis: {
-            categories: forecastDays
-        },
-        yAxis: {
-            title: {
-                text: 'Temperature (Fahrenheit)'
-            }
-        },
-        series: [{
-            name: seriesName1,
-            data: weatherParam1
-        }, {
-            name: seriesName2,
-            data: weatherParam2
-        }, {
-            name: seriesName3,
-            data: weatherParam3
-        }, {
-            name: seriesName4,
-            data: weatherParam4
         }]
     });
 };
@@ -340,14 +334,14 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
     var yAxis2Type = "column";
     
     
-    
-    
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
-	        zoomType: 'xy'
+	        zoomType: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
 	    },
 	    title: {
-	        text: 'Average Monthly Temperature and Rainfall in Tokyo'
+	        text: ''
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
@@ -355,26 +349,26 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
-	            format: '{value}°F',
+	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        },
 	        title: {
-	            text: 'Temperature',
+	            text: weatherInfo1.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: 'Rainfall',
+	            text: weatherInfo2.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
 	        },
 	        labels: {
-	            format: '{value} mm',
+	            format: '{value} ' + weatherInfo2.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
@@ -391,7 +385,8 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        verticalAlign: 'top',
 	        y: 100,
 	        floating: true,
-	        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+	        borderColor: 'rgba(255, 255, 255, 0.7)'
 	    },
 	    series: [{
 	        name: seriesName2,
@@ -469,19 +464,18 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
     	
     }
     
-    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    console.log(weatherInfo3);
-    
     var chartType1 = weatherInfo1.chartType;
     var chartType2 = weatherInfo2.chartType;
     var chartType3 = weatherInfo3.chartType;
     
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
-	        zoomType: 'xy'
+	        zoomType: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
 	    },
 	    title: {
-	        text: 'Average Monthly Temperature and Rainfall in Tokyo'
+	        text: ''
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
@@ -489,26 +483,26 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
-	            format: '{value}°F',
+	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        },
 	        title: {
-	            text: 'Temperature',
+	            text: weatherInfo1.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: 'Rainfall',
+	            text: weatherInfo3.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
 	        },
 	        labels: {
-	            format: '{value} mm',
+	            format: '{value} ' + weatherInfo3.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
@@ -525,7 +519,8 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	        verticalAlign: 'top',
 	        y: 100,
 	        floating: true,
-	        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+	        borderColor: 'rgba(255, 255, 255, 0.7)'
 	    },
 	    series: [{
 	        name: seriesName3,
@@ -614,9 +609,6 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
     	
     }
     
-    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    console.log(weatherInfo4);
-    
     var chartType1 = weatherInfo1.chartType;
     var chartType2 = weatherInfo2.chartType;
     var chartType3 = weatherInfo3.chartType;
@@ -624,10 +616,12 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
     
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
-	        zoomType: 'xy'
+	        zoomType: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
 	    },
 	    title: {
-	        text: 'Average Monthly Temperature and Rainfall in Tokyo'
+	        text: ''
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
@@ -635,26 +629,26 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
-	            format: '{value}°F',
+	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        },
 	        title: {
-	            text: 'Temperature',
+	            text: weatherInfo1.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: 'Rainfall',
+	            text: weatherInfo3.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
 	        },
 	        labels: {
-	            format: '{value} mm',
+	            format: '{value} ' + weatherInfo3.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
@@ -671,7 +665,8 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        verticalAlign: 'top',
 	        y: 100,
 	        floating: true,
-	        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+	        borderColor: 'rgba(255, 255, 255, 0.7)'
 	    },
 	    series: [{
 	        name: seriesName4,
@@ -767,9 +762,6 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
     	
     }
     
-    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    console.log(weatherInfo4);
-    
     var chartType1 = weatherInfo1.chartType;
     var chartType2 = weatherInfo2.chartType;
     var chartType3 = weatherInfo3.chartType;
@@ -778,10 +770,12 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
     
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
-	        zoomType: 'xy'
+	        zoomType: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
 	    },
 	    title: {
-	        text: 'Average Monthly Temperature and Rainfall in Tokyo'
+	        text: ''
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
@@ -789,26 +783,26 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
-	            format: '{value}°F',
+	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        },
 	        title: {
-	            text: 'Temperature',
+	            text: weatherInfo1.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: 'Rainfall',
+	            text: weatherInfo3.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
 	        },
 	        labels: {
-	            format: '{value} mm',
+	            format: '{value} ' + weatherInfo3.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
@@ -825,7 +819,8 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        verticalAlign: 'top',
 	        y: 100,
 	        floating: true,
-	        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+	        borderColor: 'rgba(255, 255, 255, 0.7)'
 	    },
 	    series: [{
 	        name: seriesName5,
@@ -932,8 +927,6 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
     	
     }
     
-    console.log("weather1 chart type!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    console.log(weatherInfo4);
     
     var chartType1 = weatherInfo1.chartType;
     var chartType2 = weatherInfo2.chartType;
@@ -944,10 +937,12 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
     
 	var myChart = Highcharts.chart('forecastChart', {
 		chart: {
-	        zoomType: 'xy'
+	        zoomType: 'xy',
+            marginTop: 40 ,
+            backgroundColor:'rgba(255, 255, 255, 0.0)'
 	    },
 	    title: {
-	        text: 'Average Monthly Temperature and Rainfall in Tokyo'
+	        text: ''
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
@@ -955,26 +950,26 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
-	            format: '{value}°F',
+	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        },
 	        title: {
-	            text: 'Temperature',
+	            text: weatherInfo1.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[1]
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: 'Rainfall',
+	            text: weatherInfo3.axisLabel,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
 	        },
 	        labels: {
-	            format: '{value} mm',
+	            format: '{value} ' + weatherInfo3.unitsImperial,
 	            style: {
 	                color: Highcharts.getOptions().colors[0]
 	            }
@@ -991,7 +986,8 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        verticalAlign: 'top',
 	        y: 100,
 	        floating: true,
-	        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+	        borderColor: 'rgba(255, 255, 255, 0.7)'
 	    },
 	    series: [{
 	        name: seriesName6,
@@ -1227,7 +1223,7 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 				fourVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3]);
 				break;
 			case 5:
-				fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4]);
+				fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4]);
 				break;
 			case 6:
 				sixVariableDualAxis(yAxis1, yAxis2, forecastDays, chartContent[0], chartContent[1], chartContent[2], chartContent[3], chartContent[4], chartContent[5]);

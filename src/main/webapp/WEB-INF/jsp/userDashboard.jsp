@@ -3,20 +3,7 @@
 
 
 
-<div id="userData" data-latitude="${currentUser.defaultLatitude }" data-longitude="${currentUser.defaultLongitude}" data-units="${currentUser.defaultUnits}"></div>
-
-
-<div>
-<p>${currentUser.userName }</p>
-<p>${currentUser.defaultLatitude }</p>
-<p>${currentUser.defaultLongitude }</p>
-<p>${currentUser.defaultVisualization }</p>
-<p>${currentUser.defaultRegion }</p>
-<p>${currentUser.defaultCity }</p>
-<p>${currentUser.defaultTimezone }</p>
-<p>${currentUser.defaultPopulation }</p>
-<p>${currentUser.defaultUnits }</p>
-</div>
+<div id="userData" data-latitude="${currentUser.defaultLatitude }" data-longitude="${currentUser.defaultLongitude}" data-units="${currentUser.defaultUnits}" data-defaultviz="${currentUser.defaultVisualization}"></div>
 
 <div>
 <h1 class = "text-center">My Dashboard</h1>
