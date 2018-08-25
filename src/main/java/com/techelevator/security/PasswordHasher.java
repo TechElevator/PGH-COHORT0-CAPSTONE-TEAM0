@@ -36,7 +36,9 @@ public class PasswordHasher {
 
 	private Key createKey(String password, byte[] salt) {
 		SecretKeyFactory factory = getSecretKeyFactory();
+		
 		KeySpec keyspec = new PBEKeySpec(password.toCharArray(), salt , WORK_FACTOR, KEY_LENGTH);
+		System.out.println(password);
 	    Key key;
 		try {
 			key = factory.generateSecret(keyspec);

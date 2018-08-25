@@ -37,13 +37,23 @@ public class UserController {
 
 	@RequestMapping(path = "/users", method = RequestMethod.POST)
 	public String createUser(@Valid @ModelAttribute User user, BindingResult result, RedirectAttributes flash) {
+		System.out.println("posting to /users");
 		if (result.hasErrors()) {
+			System.out.println("has errors");
 			flash.addFlashAttribute("user", user);
 			flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "user", result);
 			return "redirect:/users/new";
 		}
-
-		userDAO.saveUser(user.getUserName(), user.getPassword(), user.getDefaultCityId(), user.getDefaultUnits(), user.getDefaultVisualization());
+		
+		System.out.println("about to userDAO stuff");
+		System.out.println(" " + user.getUserName() +" " + user.getPassword() +" " + user.getDefaultCity() +" " + user.getDefaultUnits() +" " + 
+				user.getDefaultVisualization() +" " + user.getDefaultRegion() +" " +  user.getDefaultLatitude() +" " + 
+				user.getDefaultLongitude() +" " +  user.getDefaultPopulation() +" " +  user.getDefaultTimezone());
+		
+		
+		userDAO.saveUser2(user.getUserName(), user.getPassword(), user.getDefaultCity(), user.getDefaultUnits(),
+				user.getDefaultVisualization(), user.getDefaultRegion(), user.getDefaultLatitude(),
+				user.getDefaultLongitude(), user.getDefaultPopulation(), user.getDefaultTimezone());
 		return "redirect:/login";
 	}
 
@@ -57,9 +67,10 @@ public class UserController {
 	}
 
 	@RequestMapping(path = "/users/{currentUser.name}/settings", method = RequestMethod.POST)
-	public String updateSettings(HttpSession session, @RequestParam String newPassword, @RequestParam String defaultViz, @RequestParam String defaultTempUnit, @RequestParam long homeCity) {
-		
-		User currentUser = (User)session.getAttribute("currentUser");
+	public String updateSettings(HttpSession session, @RequestParam String newPassword, @RequestParam String defaultViz,
+			@RequestParam String defaultTempUnit, @RequestParam long homeCity) {
+
+		User currentUser = (User) session.getAttribute("currentUser");
 		userDAO.updatePassword(currentUser.getUserName(), newPassword);
 		userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
 		userDAO.updateUnits(currentUser.getUserName(), defaultTempUnit);

@@ -39,13 +39,15 @@ public class JDBCUserDAO implements UserDAO {
 	public void saveUser2(String userName, String password, String defaultCity, String defaultUnits,
 			String defaultVisualization, String defaultRegion, double defaultLatitude, double defaultLongitude,
 			int defaultPopulation, String defaultTimezone) {
+		
 		byte[] salt = hashMaster.generateRandomSalt();
 		String hashedPassword = hashMaster.computeHash(password, salt);
 		String saltString = new String(Base64.encode(salt));
-
+		System.out.println("you are here line 46");
 		jdbcTemplate.update(
-				"INSERT INTO app_user(user_name, password, salt, default_city, default_units, default_visualization,default_region, default_latitude, default_longitude, default_population, default_timezone ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-				userName, hashedPassword, saltString, defaultCity, defaultUnits, defaultVisualization, defaultRegion, defaultLatitude, defaultLongitude, defaultPopulation, defaultTimezone);
+				"INSERT INTO app_user(user_name, password, salt, default_city, default_units, default_visualization, default_region, default_latitude, default_longitude, default_population, default_timezone ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				userName, hashedPassword, saltString, defaultCity, defaultUnits, defaultVisualization, defaultRegion,
+				defaultLatitude, defaultLongitude, defaultPopulation, defaultTimezone);
 	}
 
 	@Override
@@ -100,6 +102,14 @@ public class JDBCUserDAO implements UserDAO {
 			thisUser = new User();
 			thisUser.setUserName(user.getString("user_name"));
 			thisUser.setPassword(user.getString("password"));
+			thisUser.setDefaultCity(user.getString("default_city"));
+			thisUser.setDefaultLatitude(user.getDouble("default_latitude"));
+			thisUser.setDefaultLongitude(user.getDouble("default_longitude"));
+			thisUser.setDefaultPopulation(user.getInt("default_population"));
+			thisUser.setDefaultRegion(user.getString("default_region"));
+			thisUser.setDefaultTimezone(user.getString("default_timezone"));
+			thisUser.setDefaultUnits(user.getString("default_units"));
+			thisUser.setDefaultVisualization(user.getString("default_visualization"));
 		}
 
 		return thisUser;

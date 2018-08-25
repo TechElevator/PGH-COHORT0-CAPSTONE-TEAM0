@@ -2,7 +2,66 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document)
+    			.ready(
+                    function() {
+                        $.validator.addMethod('capitals', function(thing) {
+                            return thing.match(/[A-Z]/);
+                        });
+                        $("form")
+                                .validate(
+                                        {
+
+                                            rules : {
+                                                userName : {
+                                                    required : true,
+                                                },
+                                                password : {
+                                                    required : true,
+                                                    minlength : 8,
+                                                    capitals : true,
+                                                },
+                                                confirmPassword : {
+                                                    required : true,
+                                                    equalTo : "#password",
+                                                },
+                                                defaultCityId : {
+                                                    required : true,
+                                                },
+                                                defaultVisualization : {
+                                                    required : true,
+                                                },
+                                                defaultUnits : {
+                                                    required : true,
+                                                }
+                                            },
+                                            messages : {
+                                                password : {
+                                                    minlength : "Password too short, make it at least 15 characters",
+                                                    capitals : "Field must contain a capital letter",
+                                                },
+                                                confirmPassword : {
+                                                    equalTo : "Passwords do not match",
+                                                },
+                                                defaultCityId : {
+                                                    required : "Please enter your home city.",
+                                                },
+                                                defaultVisualization : {
+                                                    required : "Please select a default weather viz",
+                                                },
+                                                defaultUnits : {
+                                                    required : "Please select your preferred temperature units",
+                                                },
+                                            },
+                                            errorClass : "error"
+                                        });
+                    });
+</script>
+
+
+
+
 <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
@@ -10,7 +69,10 @@
 
 
 <c:url var="formAction" value="/users" />
-<form action="" method="POST" name="form_citydetails" id="form_citydetails" enctype="multipart/form-data" onsubmit="return false;">
+<form action="${formAction}" method="POST"> <!-- name="form_citydetails" id="form_citydetails" enctype="multipart/form-data" -->
+
+
+
 <script type="text/javascript">
 
  
@@ -39,7 +101,7 @@ jQuery(function ()
 		 jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
 		}
 	 });
-	 jQuery("#f_elem_city").autocomplete("option", "delay", 100);
+	 jQuery("#f_elem_city").autocomplete("option", "delay", 50);
 	});
 </script>
 
@@ -141,22 +203,22 @@ function getcitydetails(fqcn) {
 }
 </script>
 <div>
-<input id="geobytescity" readonly="readonly" size="30" value="">
+<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
 </div>
 <div>
-<input id="geobytesregion" readonly="readonly" size="30" value="">
+<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion">
 </div>
 <div>
-<input id="geobyteslatitude" readonly="readonly" size="30" value="">
+<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude">
 </div>
 <div>
-<input id="geobyteslongitude" readonly="readonly" size="30" value="">
+<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude">
 </div>
 <div>
-<input id="geobytespopulation" readonly="readonly" size="30" value="">
+<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation">
 </div>
 <div>
-<input id="geobytestimezone" readonly="readonly" size="30" value="">
+<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone">
 </div>
 </form>
 
