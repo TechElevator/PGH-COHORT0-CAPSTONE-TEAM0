@@ -28,6 +28,13 @@
 				<label for="homecity">Your home city </label>
 				<input type="text" id="homecity" name="homecity"class="form-control" />
 			</div>
+				<div class="form-group">
+			<div>
+				<label for="defaultCityId">Default City: </label> 
+				</div>
+				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
+			</div>
+			
 			<div class="form-group">
 				<label for="newPassword">To Change Password </label>
 				<input type="text" id="newPassword" name="newPassword" class="form-control" />
@@ -81,9 +88,94 @@
 			
 			
 			</div>
+<script type="text/javascript">			
+			jQuery(function () 
+ {
+	 jQuery("#f_elem_city").autocomplete({
+		source: function (request, response) {
+		 jQuery.getJSON(
+			"http://gd.geobytes.com/AutoCompleteCity?callback=?&filter=US&q="+request.term,
+			function (data) {
+			 response(data);
+			}
+		 );
+		},
+		minLength: 3,
+		select: function (event, ui) {
+		 var selectedObj = ui.item;
+		 jQuery("#f_elem_city").val(selectedObj.value);
+		getcitydetails(selectedObj.value);
+		 return false;
+		},
+		open: function () {
+		 jQuery(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+		},
+		close: function () {
+		 jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+		}
+	 });
+	 jQuery("#f_elem_city").autocomplete("option", "delay", 50);
+	});
+</script>
+<script type="text/javascript">
+function getcitydetails(fqcn) {
+
+	if (typeof fqcn == "undefined") fqcn = jQuery("#f_elem_city").val();
+
+	cityfqcn = fqcn;
+
+	if (cityfqcn) {
+
+	    jQuery.getJSON(
+	                "http://gd.geobytes.com/GetCityDetails?callback=?&fqcn="+cityfqcn,
+                     function (data) {
+	            jQuery("#geobytesinternet").val(data.geobytesinternet);
+	            jQuery("#geobytescountry").val(data.geobytescountry);
+	           
+	            jQuery("#geobytesregion").val(data.geobytesregion);
+	            jQuery("#geobyteslocationcode").val(data.geobyteslocationcode);
+	            jQuery("#geobytescity").val(data.geobytescity);
+	            jQuery("#geobytescityid").val(data.geobytescityid);
+	            jQuery("#geobytesfqcn").val(data.geobytesfqcn);
+	            jQuery("#geobyteslatitude").val(data.geobyteslatitude);
+	            jQuery("#geobyteslongitude").val(data.geobyteslongitude);
+	            
+	            jQuery("#geobytestimezone").val(data.geobytestimezone);
+	           ;
+	            jQuery("#geobytespopulation").val(data.geobytespopulation);
+	           
+	            jQuery("#geobytesmapreference").val(data.geobytesmapreference);
+	          
+	            }
+	    );
+	}
+}
+</script>	
+<div>
+<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
+</div>
+<div>
+<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion">
+</div>
+<div>
+<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude">
+</div>
+<div>
+<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude">
+</div>
+<div>
+<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation">
+</div>
+<div>
+<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone">
+</div>		
+</form>
 			
 			
-			</form>
+
+ 
+
+			
 	
 <script src = "<c:url value = "/js/settings.js"/>"></script>
 
