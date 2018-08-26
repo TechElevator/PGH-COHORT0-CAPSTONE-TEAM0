@@ -1,0 +1,33 @@
+
+
+#dailyWeatherIcon{
+	width: 250px;
+	height: 250px;
+}
+
+#currentUser{
+	float:right;
+	padding-right:15px;
+	font-weight:400;
+	color:white;
+	letter-spacing:1px;
+}
+
+#currentConditionsContainer{
+	display:flex;
+	flex-direction:row;
+	font-size: 2rem;
+	justify-content:space-evenly;
+}
+
+#dailyWeatherIcon{
+	margin:25px;
+	margin-right:50px;
+}
+
+#dailyWeatherInfo{
+	margin:25px;
+	padding-top:25px;
+	vertical-align:middle;
+}
+

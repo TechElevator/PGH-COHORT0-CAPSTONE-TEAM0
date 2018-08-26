@@ -1,13 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="/WEB-INF/jsp/header.jsp" />
-
-
+<link rel="stylesheet" type="text/css" href="<c:url value="/css/dashboard.css"/>">
 
 <div id="userData" data-latitude="${currentUser.defaultLatitude }" data-longitude="${currentUser.defaultLongitude}" data-units="${currentUser.defaultUnits}"></div>
 
 
-<div>
-<p>${currentUser.userName }</p>
+<%-- <div>
+<p >${currentUser.userName }</p>
 <p>${currentUser.defaultLatitude }</p>
 <p>${currentUser.defaultLongitude }</p>
 <p>${currentUser.defaultVisualization }</p>
@@ -17,16 +16,16 @@
 <p>${currentUser.defaultPopulation }</p>
 <p>${currentUser.defaultUnits }</p>
 </div>
-
+ --%>
 <div>
-<h1 class = "text-center">My Dashboard</h1>
+<h1 class = "text-center" id = "mydashboard">My Dashboard</h1>
 </div>
 
 <div id="currentConditionsContainer">
-	<span id="weatherIconContainer">
-		<img id="weatherIconImage" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
-	</span>
-	<span>
+
+		<img id="dailyWeatherIcon" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
+
+	<div id = "dailyWeatherInfo">
 		<ul class="list-unstyled">
 			<li id="temperatureLI"></li>
 			<li id="precipChanceLI"></li>
@@ -35,7 +34,7 @@
 			<li id="windDirectionLI"></li>
 			<li id="cloudCoverLI"></li>
 		</ul>
-	</span>
+	</div>
 	
 
 
@@ -139,6 +138,7 @@
 <script src = "<c:url value = "/js/createMeteogram.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardRadar.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardForecast.js"/>"></script>	
+
 <c:import url="/WEB-INF/jsp/footer.jsp" />   
         
     

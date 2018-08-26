@@ -10,13 +10,17 @@
 	    <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.js "></script>
 	    <script src="https://cdn.jsdelivr.net/jquery.timeago/1.4.1/jquery.timeago.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	    
+	    
+	    
 	    <script src="https://code.highcharts.com/highcharts.js"></script>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/site.css"/>">
+		
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-	<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
+		<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
 		<!--  The above link is for the auto complete search bar -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<!--The above script is for the auto complete search bar  -->
+		<link rel="stylesheet" type="text/css" href="<c:url value="/css/site.css"/>">
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -74,6 +78,6 @@
 			</div>
 		</nav>
 		<c:if test="${not empty currentUser}">
-			<p id="currentUser text-center">Current User: ${currentUser.userName}</p>
+			<div id="currentUser" class = "justify-content-end">Current User: ${currentUser.userName}</div>
 		</c:if>		
 		<div class="container">
