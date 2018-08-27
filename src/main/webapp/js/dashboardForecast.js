@@ -2,7 +2,7 @@ $( document ).ready(function() {
     
   //Make API Call to get daily forecast data. Save that data into arrays with scope of this .js file
     //(Or, return data as a javascript object
-    //var forecast = retrieveForecastFromAPI();
+    var forecast = retrieveForecastFromAPI(39.00,-79.99,'si');
     //For now, we'll use dummy data
     
     //Parse forecast data into arrays
@@ -193,31 +193,65 @@ function initiateChartCreation(visType, forecastDays, weatherParameters, weather
 		console.log("i is; " + i);
 	}
 	
-	console.log("selected content right after i click the checkbox: ");
-    console.log(selectedContent);
-    console.log("chart data right after i click the checkbox: ");
-    console.log(chartData);
-    
     createChart(visType, forecastDays, chartCategory, chartData, weatherData, weatherSelections);
 }
 
 //API Call - Request daily forecast data from DarkSky API (forecast.io)
 function retrieveForecastFromAPI(lat, lon, units) {
-	var endpoint = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + lat + "," + lon;
-	var forecastJSON = JSON.parse(apiCallGetRequest(endpoint));
-	
-	//$("#userData").data("latitude"));
-	//$("#userData").data("longitude"));
-	//$("#userData").data("units"));
-	
+	var endpoint = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/39.00,-79.99";
+	var forecastJSON = apiCallWithXMLHttpRequest(endpoint);
+	//var forecastJSON = apiCallWithAJAX(endpoint);
+	//var forecastJSON = apiCallWithjQueryGET(endpoint);
+
+	parsedData = parseDataFromAPI(forecastJSON);
 	
 }
 
-function apiCallGetRequest(endpoint){
+function apiCallWithjQueryGET(endpoint) {
+	$.get(endpoint, function(data, status) {
+		console.log("got to here at least");
+		console.log(`{data}`);
+	});
+}
+
+function apiCallWithAJAX(endpoint) {
+	$.ajax({
+		url: endpoint,
+		type:"GET",
+		success: function(result) {
+			console.log(result)
+		},
+		error: function(error){
+			console.log('Error ${error}')
+		}
+	})
+}
+
+function apiCallWithXMLHttpRequest(endpoint){
     var request = new XMLHttpRequest();
-    request.open("GET", endpoint ,false);
-    request.send(null);							//Can remove this? see https://stackoverflow.com/questions/2499567/how-to-make-a-json-call-to-a-url
+    request.open("GET", endpoint);
+    
+    request.setRequestHeader('Access-Control-Allow-Headers', '*');
+    request.send();							
+    
+    request.onreadystatechange=(e)=>{
+    		console.log(request.responseText)
+    	}
     return request.responseText;          
+}
+
+//PARSE FORECAST DATA FROM JSON
+function parseDataFromAPI(dataFromAPI) {
+	
+	currentConditions = dataFromAPI.currently;
+	
+	console.log("Data retrieved from API: ");
+	console.log(dataFromAPI);
+	console.log("current conditions: ");
+	console.log(currentConditions);
+	
+	return currentConditions;
+	
 }
 
 //CHART: SINGLE-VARIABLE
@@ -1296,6 +1330,8 @@ function outputCurrentConditions(currentWeather) {
 	$('#windDirectionLI').text(currentWeather.windBearing);
 	$('#cloudCoverLI').text(currentWeather.cloudCover + " %");
 }
+
+
 
 
 

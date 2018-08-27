@@ -201,22 +201,22 @@ function getcitydetails(fqcn) {
 
 
 <div>
-<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity" >
+<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity" style = "display:none" >
 </div>
 <div>
-<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" >
+<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" style = "display:none">
 </div>
 <div>
-<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude">
+<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude" style = "display:none">
 </div>
 <div>
-<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude">
+<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude" style = "display:none">
 </div>
 <div>
-<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation">
+<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation" style = "display:none">
 </div>
 <div>
-<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone">
+<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone" style = "display:none">
 </div>
 </form>
 

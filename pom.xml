@@ -91,11 +91,6 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
-	  	<dependency>
-	     	<groupId>org.jfree</groupId>
-	     	<artifactId>jfreechart</artifactId>     
-	    		<version>1.0.19</version>
-	  	</dependency>
 	  	<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
    			<groupId>com.googlecode.json-simple</groupId>

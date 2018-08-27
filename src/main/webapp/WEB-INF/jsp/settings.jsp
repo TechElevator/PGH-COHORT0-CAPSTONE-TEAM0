@@ -201,22 +201,22 @@ function getcitydetails(fqcn) {
 }
 </script>	
 <div>
-<input  id="geobytescity" readonly="readonly" size="30" name = "defaultCity" value ="">
+<input  id="geobytescity" readonly="readonly" size="30" name = "defaultCity" value ="" style = "display:none">
 </div>
 <div>
-<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" value ="">
+<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" value ="" style = "display:none">
 </div>
 <div>
-<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude" value ="0">
+<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude" value ="0" style = "display:none">
 </div>
 <div>
-<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude" value ="0">
+<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude" value ="0" style = "display:none">
 </div>
 <div>
-<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation" value = "0">
+<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation" value = "0" style = "display:none">
 </div>
 <div>
-<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone" value = "">
+<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone" value = "" style = "display:none">
 </div>
 </form>
 			
