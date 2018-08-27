@@ -17,81 +17,93 @@
 <p>${currentUser.defaultUnits }</p>
 </div>
  --%>
+ 
+ 
+
+
+
+ 
+ 
 <div>
 <h1 class = "text-center" id = "mydashboard">My Dashboard</h1>
 </div>
 
-<div id="currentConditionsContainer">
+ <div class="container py-3" id="currentConditionsContainer">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-6">
+            <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
+          </div>
+          <div class="col-md-6 px-3" >	
+             <ul class="list-unstyled align-middle" id = "weatherDetails">
+			<li ><span>Temperature: </span><span id="temperatureLI"></span><span>&#176;</span></li>
+			<li><span>Precipitation: </span><span id="precipChanceLI"></span></li>
+			<li><span>Humidity: </span><span id="humidityLI"></span></li>
+			<li><span>Wind Speed: </span><span id="windLI"></span></li>
+			<li><span>Wind Direction: </span><span id="windDirectionLI"></span></li>
+			<li><span>Cloud Cover: </span><span id="cloudCoverLI"></span></li>
+			</ul>
+            </div>
+          </div>
 
-		<img id="dailyWeatherIcon" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
-
-	<div id = "dailyWeatherInfo">
-		<ul class="list-unstyled">
-			<li id="temperatureLI"></li>
-			<li id="precipChanceLI"></li>
-			<li id="humidityLI"></li>
-			<li id="windLI"></li>
-			<li id="windDirectionLI"></li>
-			<li id="cloudCoverLI"></li>
-		</ul>
-	</div>
-	
-
-
-
-</div>
+        </div>
+      </div>
+    
 
 <div id="checkboxFormContainer">
 	<h2>Select weather properties: </h2>
-	<form>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "hiTemp" checked="checked">
-  			High Temperature
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "loTemp" checked="checked">
-  			Low Temperature
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "dewPoint" >
-  			Dew Point
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "precipChance">
-  			Precipitation Chance
-		</div>
+	<form class = "d-flex justify-content-center" id = "weatherPropertiesForm">
+	<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="hiTemp" value="option1" checked>
+  <label class="form-check-label" for="hiTemp">High Temperature</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="loTemp" value="option2">
+  <label class="form-check-label" for="loTemp">Low Temperature</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="dewPoint" value="option3" >
+  <label class="form-check-label" for="dewPoint">Dew Point</label>
+</div>
+
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="precipChance" value="option3" >
+  <label class="form-check-label" for="precipChance">Precipitation Chance</label>
+</div>	
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="humidity" value="option3" >
+  <label class="form-check-label" for="humidity">Humidity</label>
+</div>	
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="cloudCover" value="option3" >
+  <label class="form-check-label" for="cloudCover">Cloud Cover</label>
+</div>	
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="meanWind" value="option3" >
+  <label class="form-check-label" for="meanWind">Mean Wind Speed</label>
+</div>	
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="windGust" value="option3" >
+  <label class="form-check-label" for="windGust">Peak Wind Gust</label>
+</div>	
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="pressure" value="option3" >
+  <label class="form-check-label" for="pressure">Pressure</label>
+</div>
+
 		<!--  
 		<div>
   			<input class="checkbox" type="checkbox" id = "precipType">
   			Precipitation Type
 		</div>
 		-->
-		<div>
-  			<input class="checkbox" type="checkbox" id = "humidity">
-  			Humidity
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "cloudCover">
-  			Cloud Cover
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "meanWind">
-  			Mean Wind Speed
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "windGust">
-  			Peak Wind Gust
-		</div>
 		<!--
 		<div>
   			<input class="checkbox" type="checkbox" id = "windDirection">
   			Wind Direction
 		</div>
 		-->
-		<div>
-  			<input class="checkbox" type="checkbox" id = "pressure">
-  			Pressure
-		</div>
+	
 		<!-- 
 		<div>
   			<input class="checkbox" type="checkbox" id = "visibility">
@@ -112,10 +124,10 @@
 		-->
 	</form>
 	
-	<div id="chartTypeSelectionContainter">
-		<label id="dropdownLabel" for="chartTypeSelection">Select a chart style: </label>
-		<select id="chartTypeSelection" name="chartTypeSelection">
-	  		<option disabled selected value> -- select a chart type -- </option>
+	<div id="chartTypeSelectionContainer" class="d-flex justify-content-center">
+		
+		<select class = "custom-select" id="chartTypeSelection" name="chartTypeSelection">
+	  		<option selected disabled>Select A Chart Type</option>
 	  		<option value="column">Bar Chart</option>
 	  		<option value="spline">Line Plot</option>
 	  		<option value="areaspline">Filled Line Plot</option>
@@ -127,12 +139,12 @@
 <!-- The below pulls in the forecast visualization -->
 <div>
 	<h2 class = "text-center">Forecast for Pittsburgh, PA</h2>
-	<div class = "weatherviz img-fluid center-block" id="forecastChart" style="width:100%; height:500px;"></div>
+	<div class = "weatherviz img-fluid center-block" id="forecastChart"></div>
 </div>
 
 
 <!-- The below pulls in the live weather radar -->
-<div class = "weatherviz img-fluid center-block" id='liveRadar' style='width: 40vw; height: 50vh;'></div>	
+<div class = "weatherviz img-fluid" id='liveRadar'></div>	
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Auegz3e_DDJPknjYh5x9_mwrHLh28eGQT7eeR4SCm6cg5vllB7rqLaFGGp3Fznk_&callback=loadMapScenario' async defer></script>
 
 <script src = "<c:url value = "/js/createMeteogram.js"/>"></script>
