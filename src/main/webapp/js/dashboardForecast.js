@@ -136,7 +136,6 @@ $( document ).ready(function() {
     
     //On every checkbox click, chart will be created
     $("input:checkbox").change(function(){
-    		visType = $('#chartTypeSelection option:selected').val();
     		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     //On every change of the desired chart type, chart will be created
