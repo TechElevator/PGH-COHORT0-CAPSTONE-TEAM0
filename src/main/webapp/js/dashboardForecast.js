@@ -107,6 +107,8 @@ $( document ).ready(function() {
     
     
     var visType = $("#userData").data("defaultviz");
+    var defaultVisType = visType;
+    var visTypeWasChanged = false;
     var visType1 = "spline";
     var visType2 = "column";
     var forecastDays = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'];
@@ -139,7 +141,7 @@ $( document ).ready(function() {
     });
     //On every change of the desired chart type, chart will be created
     $("#chartTypeSelection").change(function(){
-		visType = $('#chartTypeSelection option:selected').val();
+    		visType = $('#chartTypeSelection option:selected').val();
 		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     
@@ -245,7 +247,11 @@ function singleVariableChart(visType, forecastDays, weatherInfo1) {
         },
         series: [{
             name: seriesName1,
-            data: weatherParam1
+            data: weatherParam1,
+            color: '#025ef2',
+	        tooltip: {
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	        }
         }]
     });
 };
@@ -262,7 +268,7 @@ function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) {
             type: visType,
             zoomtype: 'xy',
             marginTop: 40 ,
-            backgroundColor:'rgba(255, 255, 255, 0.0)'
+            backgroundColor:'rgba(255, 255, 255, .0)'
         },
         title: {
             text: ''
@@ -277,10 +283,18 @@ function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) {
         },
         series: [{
             name: seriesName1,
-            data: weatherParam1
+            data: weatherParam1,
+            color: '#025ef2',
+	        tooltip: {
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	        }
         }, {
             name: seriesName2,
-            data: weatherParam2
+            data: weatherParam2,
+            color: '#000105',
+	        tooltip: {
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	        }
         }]
     });
 };
@@ -314,13 +328,25 @@ function threeVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, w
         },
         series: [{
             name: seriesName1,
-            data: weatherParam1
+            data: weatherParam1,
+            color: '#025ef2',
+	        tooltip: {
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	        }
         }, {
             name: seriesName2,
-            data: weatherParam2
+            data: weatherParam2,
+            color: 'red',
+	        tooltip: {
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	        }
         }, {
             name: seriesName3,
-            data: weatherParam3
+            data: weatherParam3,
+            color: 'black',
+	        tooltip: {
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
+	        }
         }]
     });
 };
@@ -394,16 +420,18 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        type: yAxis2Type,
 	        yAxis: 1,
 	        data: weatherParam2,
+	        color: 'black',
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
 	        }
 	
 	    }, {
 	        name: seriesName1,
 	        type: yAxis1Type,
 	        data: weatherParam1,
+            color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
 	        }
 	    }]
 	});
@@ -528,23 +556,26 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	        type: chartType3,
 	        yAxis: 1,
 	        data: weatherParam3,
+	        color: 'black',
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
 	        }
 	
 	    }, {
 	        name: seriesName2,
 	        type: chartType2,
 	        data: weatherParam2,
+	        color: 'red',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
 	        }
 	    }, {
 	        name: seriesName1,
 	        type: chartType1,
 	        data: weatherParam1,
+            color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
 	        }
 	    }]
 	});
@@ -674,30 +705,34 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        type: chartType4,
 	        yAxis: 1,
 	        data: weatherParam4,
+	        color: 'purple',
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial
 	        }
 	
 	    }, {
 	        name: seriesName3,
 	        type: chartType3,
 	        data: weatherParam3,
+	        color: 'red',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
 	        }
 	    }, {
 	        name: seriesName2,
 	        type: chartType2,
 	        data: weatherParam2,
+	        color: 'black',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
 	        }
 	    }, {
 	        name: seriesName1,
 	        type: chartType1,
 	        data: weatherParam1,
+	        color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
 	        }
 	    }]
 	});
@@ -828,8 +863,9 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        type: chartType5,
 	        yAxis: 1,
 	        data: weatherParam5,
+	        color: '#e282ed',
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo5.unitsImperial
 	        }
 	
 	    },{
@@ -837,30 +873,34 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        type: chartType4,
 	        yAxis: 1,
 	        data: weatherParam4,
+	        color: '#94f7c5',
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial
 	        }
 	
 	    }, {
 	        name: seriesName3,
 	        type: chartType3,
 	        data: weatherParam3,
+	        color: 'red',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
 	        }
 	    }, {
 	        name: seriesName2,
 	        type: chartType2,
 	        data: weatherParam2,
+	        color: 'black',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
 	        }
 	    }, {
 	        name: seriesName1,
 	        type: chartType1,
 	        data: weatherParam1,
+	        color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
 	        }
 	    }]
 	});
@@ -995,8 +1035,9 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        type: chartType6,
 	        yAxis: 1,
 	        data: weatherParam6,
+	        color: '#db9943',
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo6.unitsImperial
 	        }
 	
 	    },{
@@ -1004,39 +1045,44 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        type: chartType5,
 	        yAxis: 1,
 	        data: weatherParam5,
+	        color: '#e282ed',
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo5.unitsImperial
 	        }
 	
 	    },{
 	        name: seriesName4,
 	        type: chartType4,
+	        color: '#94f7c5',
 	        yAxis: 1,
 	        data: weatherParam4,
 	        tooltip: {
-	            valueSuffix: ' %'
+	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial
 	        }
 	
 	    }, {
 	        name: seriesName3,
 	        type: chartType3,
 	        data: weatherParam3,
+	        color: 'red',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
 	        }
 	    }, {
 	        name: seriesName2,
 	        type: chartType2,
 	        data: weatherParam2,
+	        color: 'black',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
 	        }
 	    }, {
 	        name: seriesName1,
 	        type: chartType1,
 	        data: weatherParam1,
+	        color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: ' °F'
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
 	        }
 	    }]
 	});

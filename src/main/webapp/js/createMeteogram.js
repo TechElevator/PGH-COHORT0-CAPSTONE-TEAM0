@@ -230,7 +230,7 @@
 	            shared: true,
 	            useHTML: true,
 	            headerFormat:
-	                '<small>{point.x:%A, %b %e, %H:%M} - {point.point.to:%H:%M}</small><br>' +
+	                
 	                '<b>{point.point.symbolName}</b><br>'
 	
 	        },

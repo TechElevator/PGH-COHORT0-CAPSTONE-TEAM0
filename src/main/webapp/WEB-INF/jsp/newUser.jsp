@@ -198,6 +198,8 @@ function getcitydetails(fqcn) {
 	}
 }
 </script>
+
+
 <div>
 <input id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
 </div>

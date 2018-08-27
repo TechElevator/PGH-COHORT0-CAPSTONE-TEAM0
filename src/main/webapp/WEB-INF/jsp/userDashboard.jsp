@@ -32,7 +32,7 @@
 
  <div class="container py-3" id="currentConditionsContainer">
     <div class="card">
-      <div class="row">
+      <div class="row currentConditionsRow">
         <div class="col-md-6">
             <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
           </div>
@@ -60,7 +60,7 @@
   <label class="form-check-label" for="hiTemp">High Temperature</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="loTemp" value="option2">
+  <input class="form-check-input" type="checkbox" id="loTemp" value="option2" checked>
   <label class="form-check-label" for="loTemp">Low Temperature</label>
 </div>
 <div class="form-check form-check-inline">
