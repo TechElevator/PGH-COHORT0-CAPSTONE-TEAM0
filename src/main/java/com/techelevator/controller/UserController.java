@@ -67,10 +67,11 @@ public class UserController {
 	}
 
 	@RequestMapping(path = "/users/{currentUser.name}/settings", method = RequestMethod.POST)
-	public String updateSettings(HttpSession session, @RequestParam String newPassword, @RequestParam String defaultViz,
-			@RequestParam String defaultTempUnit, @RequestParam String defaultCity,
-			@RequestParam double defaultLatitude, @RequestParam double defaultLongitude,
-			/*@RequestParam long defaultPopulation,*/ @RequestParam String defaultRegion,
+	public String updateSettings(HttpSession session, @RequestParam String newPassword,
+			@RequestParam String confirmPassword, @RequestParam String defaultViz, @RequestParam String defaultTempUnit,
+			@RequestParam String defaultCity, @RequestParam double defaultLatitude,
+			@RequestParam double defaultLongitude,
+			/* @RequestParam long defaultPopulation, */ @RequestParam String defaultRegion,
 			@RequestParam String defaultTimezone) {
 
 		System.out.println(defaultCity);
@@ -80,7 +81,13 @@ public class UserController {
 		System.out.println("got user from session");
 		System.out.println(currentUser.getUserName());
 
-		// userDAO.updatePassword(currentUser.getUserName(), newPassword);
+		if (newPassword != null && newPassword.length() >= 8 && newPassword.equals(confirmPassword)
+				&& confirmPassword != null && confirmPassword.length() >= 8) {
+			System.out.println("Updating password now.");
+			userDAO.updatePassword(currentUser.getUserName(), newPassword);
+		} else {
+			System.out.println("Did not update password.");
+		}
 
 		if (defaultCity != null && !defaultCity.equals("")) {
 			System.out.println("got into city change");
@@ -88,23 +95,22 @@ public class UserController {
 			userDAO.updateDefaultCity(currentUser.getUserName(), defaultCity);
 			userDAO.updateDefaultLatitude(currentUser.getUserName(), defaultLatitude);
 			userDAO.updateDefaultLongitude(currentUser.getUserName(), defaultLongitude);
-//			userDAO.updateDefaultPopulation(currentUser.getUserName(), defaultPopulation);
+			// userDAO.updateDefaultPopulation(currentUser.getUserName(),
+			// defaultPopulation);
 			userDAO.updateDefaultRegion(currentUser.getUserName(), defaultRegion);
 			userDAO.updateDefaultTimezone(currentUser.getUserName(), defaultTimezone);
 		}
 
 		if (defaultViz != null && !defaultViz.equals("")) {
 			System.out.println("got into viz change");
-			System.out.println(defaultCity);
 			userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
 		}
 
 		if (defaultTempUnit != null && !defaultTempUnit.equals("")) {
 			System.out.println("got into temp change");
-			System.out.println(defaultCity);
 			userDAO.updateUnits(currentUser.getUserName(), defaultTempUnit);
 		}
-		
+
 		session.setAttribute("currentUser", userDAO.getUserByUserName(currentUser.getUserName()));
 		session.setAttribute("currentUserName", currentUser.getUserName());
 
