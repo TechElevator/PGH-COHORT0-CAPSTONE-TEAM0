@@ -1244,12 +1244,12 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 
 //WRITE CURRENT FORECAST
 function outputCurrentConditions(currentWeather) {
-	$('#temperatureLI').text("Temperature: " + currentWeather.temperature);
-	$('#precipChanceLI').text("Precipitation: " + currentWeather.precipProbability + "% chance of precipitation");
-	$('#humidityLI').text("Humidity: " + currentWeather.humidity + "%");
-	$('#windLI').text("Wind Speed: " + currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
-	$('#windDirectionLI').text("Wind Direction: " + currentWeather.windBearing);
-	$('#cloudCoverLI').text("Cloud Cover: " + currentWeather.cloudCover + " %");
+	$('#temperatureLI').text(currentWeather.temperature); 
+	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
+	$('#humidityLI').text(currentWeather.humidity + "%");
+	$('#windLI').text(currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
+	$('#windDirectionLI').text(currentWeather.windBearing);
+	$('#cloudCoverLI').text(currentWeather.cloudCover + " %");
 }
 
 

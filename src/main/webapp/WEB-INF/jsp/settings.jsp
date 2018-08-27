@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
-
+<link rel="stylesheet" type="text/css" href="<c:url value="/css/settings.css"/>">
 
 
 <c:url var="formAction" value="/users/${sessionScope.currentUser.userName}/settings" />
@@ -11,7 +11,7 @@
 			<div class = "col-sm-6">
 			<h1>Preferences</h1>
 			
-			<div class = "form-group custom-select">
+			<div class = "form-group">
 				<label for = "defaultViz">Select a  default visualization type:</label>
 				<select name = "defaultViz" class="custom-select custom-select-lg mb-3">
 				 
@@ -25,12 +25,8 @@
 			
 			
 			<div class="form-group">
-				<label for="homecity">Your home city </label>
-				<input type="text" id="homecity" name="homecity"class="form-control" />
-			</div>
-				<div class="form-group">
 			<div>
-				<label for="defaultCityId">Default City: </label> 
+				<label for="defaultCity">Default City: </label> 
 				</div>
 				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
 			</div>
@@ -57,24 +53,25 @@
 					<div id = "possibleAlerts">
 					
 					<p>Please select the text alerts you'd like to receive:</p>
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="" id="tornadoes" name = "tornadoes">
+					
+					<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="" id="tornadoes" name = "tornadoes">
 					  <label class="form-check-label" for="tornadoes">
 					    Tornadoes
 					  </label>
-					</div>
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="" id="earthquakes" name = "earthquakes">
+						</div>
+						<div class="form-check form-check-inline">
+						   <input class="form-check-input" type="checkbox" value="" id="earthquakes" name = "earthquakes">
 					  <label class="form-check-label" for="earthquakes">
 					    EarthQuakes
 					  </label>
-					</div>
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="" id="forestFires" name = "forestFires">
+						</div>
+						<div class="form-check form-check-inline">
+						   <input class="form-check-input" type="checkbox" value="" id="forestFires" name = "forestFires">
 					  <label class="form-check-label" for="forestFires">
 					    Forest Fires
 					  </label>
-					</div>
+						</div>
 					
 					</div>
 			</div>
@@ -151,8 +148,8 @@ function getcitydetails(fqcn) {
 	}
 }
 </script>	
-<div>
-<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
+<!-- <div>
+<input  id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
 </div>
 <div>
 <input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion">
@@ -168,7 +165,7 @@ function getcitydetails(fqcn) {
 </div>
 <div>
 <input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone">
-</div>		
+</div>	 -->	
 </form>
 			
 			
