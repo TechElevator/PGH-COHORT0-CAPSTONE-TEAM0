@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/*
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -23,7 +24,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
-
+*/
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -32,7 +33,7 @@ import javax.swing.JFrame;
 	public class BarChartForecastGenerator extends JFrame {
 
 		//private DailyForecast dailyForecast;
-		
+		/*
 		
 		public BarChartForecastGenerator(final String title, DailyForecast dailyForecast) {
 
@@ -137,7 +138,7 @@ import javax.swing.JFrame;
 			RefineryUtilities.centerFrameOnScreen(barChartGenerator);
 			barChartGenerator.setVisible(true);
 		}
-		
+	*/	
 	}
 
 
