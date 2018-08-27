@@ -110,7 +110,7 @@
 	/**
 	 * Draw blocks around wind arrows, below the plot area
 	 */
-	Meteogram.prototype.drawBlocksForWindArrows = function (chart) {
+	function drawBlocksForWindArrows(chart) {
 	    var xAxis = chart.xAxis[0],
 	        x,
 	        pos,
@@ -247,7 +247,7 @@
 	            labels: {
 	            		format: 'Day {value}',
 		            align: 'left',
-		            x: 3,
+		            x: 0,
 		            y: -5,
 		            style: {
 		            		fontSize: "14px"
@@ -267,7 +267,7 @@
 	            //},
 	            //opposite: true,
 	            //tickLength: 20,
-	            gridLineWidth: 1
+	            //gridLineWidth: 1
 	        }], 
 	
 	        yAxis: [{ // temperature axis
@@ -313,7 +313,7 @@
 	                rotation: 0,
 	                style: {
 	                    fontSize: '10px',
-	                    color: '#c112ed',
+	                    color: 'green',
 	                },
 	                textAlign: 'left',
 	                x: 3
@@ -322,7 +322,7 @@
 	            	format: '{value} mb',    
 	            	style: {
 	                    fontSize: '8px',
-	                    color: '#c112ed'
+	                    color: 'green'
 	                },
 	                y: 2,
 	                x: 3
@@ -509,7 +509,7 @@
 	            }
 	        }, {
 	            name: 'Pressure',
-	            color: '#c112ed',
+	            color: 'green',
 	            type: "spline",
 	            data: this.pressures,
 	            visible: pressureVisibility,
@@ -530,8 +530,8 @@
 	            lineWidth: 1.5,
 	            data: this.meanWinds,
 	            visible: meanWindVisibility,
-	            vectorLength: 18,
-	            yOffset: -15,
+	            vectorLength: 25,
+	            yOffset: -435,
 	            tooltip: {
 	                valueSuffix: ' m/s'
 	            }
@@ -543,8 +543,8 @@
 	            data: this.windGusts,
 	            lineWidth: 1.5,
 	            visible: windGustVisibility,
-	            vectorLength: 18,
-	            yOffset: -25,
+	            vectorLength: 25,
+	            yOffset: -405,
 	            tooltip: {
 	                valueSuffix: ' m/s'
 	            }
@@ -555,10 +555,11 @@
 	/**
 	 * Post-process the chart from the callback function, the second argument to Highcharts.Chart.
 	 */
-	Meteogram.prototype.onChartLoad = function (chart) {
+	//Meteogram.prototype.onChartLoad = function (chart) {
+	function onChartLoad(chart) {
 	
-	    this.drawWeatherSymbols(chart);
-	    this.drawBlocksForWindArrows(chart);
+	    //this.drawWeatherSymbols(chart);
+	    //this.drawBlocksForWindArrows(this.chart);
 	
 	};
 	
@@ -569,7 +570,7 @@
 	    console.log("in createMGram")
 		var meteogram = this;
 	    this.chart = new Highcharts.Chart(this.getChartOptions(), function (chart) {
-	        meteogram.onChartLoad(chart);
+	        meteogram.onChartLoad(this.chart);
 	    });
 	};
 	

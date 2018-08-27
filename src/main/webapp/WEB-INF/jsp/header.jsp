@@ -12,7 +12,7 @@
 	   <!--  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
 	  
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	    
+	    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	    
 	    <script src="https://code.highcharts.com/highcharts.js"></script>
 	    <script src="https://code.highcharts.com/modules/windbarb.js"></script>

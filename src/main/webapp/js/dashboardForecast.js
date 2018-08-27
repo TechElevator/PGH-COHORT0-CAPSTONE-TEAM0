@@ -89,9 +89,9 @@ $( document ).ready(function() {
 	    		humidity : 47,
 	    		pressure : 1021,
 	    		windSpeed : 2.35,
-	    		windGust : 3.89,
+	    		windGust : 4.89,
 	    		windBearing : 344,
-	    		cloudCover : 0.37,
+	    		cloudCover : 56,
 	    		uvIndex : 7,
 	    		visibility : 10, 
 	    		ozone : 320
@@ -265,7 +265,7 @@ function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) {
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
             type: visType,
-            zoomtype: 'xy',
+            zoomType: 'xy',
             marginTop: 40 ,
             backgroundColor:'rgba(255, 255, 255, .0)'
         },
@@ -310,7 +310,7 @@ function threeVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, w
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
             type: visType,
-            zoomtype: 'xy',
+            zoomType: 'xy',
             marginTop: 40 ,
             backgroundColor:'rgba(255, 255, 255, 0.0)'
         },
@@ -1289,7 +1289,7 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 
 //WRITE CURRENT FORECAST
 function outputCurrentConditions(currentWeather) {
-	$('#temperatureLI').text(currentWeather.temperature); 
+	$('#temperatureLI').text(currentWeather.temperature + " F"); 
 	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
 	$('#humidityLI').text(currentWeather.humidity + "%");
 	$('#windLI').text(currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
