@@ -71,7 +71,7 @@
 			<div>
 				<label for="defaultCity">Default City: </label> 
 				</div>
-				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
+				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control"   />
 			</div>
 			
 			<div class="form-group">
@@ -124,7 +124,6 @@
 			</div>
 			</div>
 			<div class = "col-sm-3"></div>
-			
 			
 			
 			</div>
@@ -192,22 +191,22 @@ function getcitydetails(fqcn) {
 }
 </script>	
 <div>
-<input  id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
+<input  id="geobytescity" readonly="readonly" size="30" name = "defaultCity" value ="">
 </div>
 <div>
-<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion">
+<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" value ="">
 </div>
 <div>
-<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude">
+<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude" value ="0">
 </div>
 <div>
-<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude">
+<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude" value ="0">
 </div>
 <div>
-<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation">
+<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation" value = "0">
 </div>
 <div>
-<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone">
+<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone" value = "">
 </div>
 </form>
 			
