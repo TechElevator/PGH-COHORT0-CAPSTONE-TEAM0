@@ -4,32 +4,34 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/settings.css"/>">
 <!--  <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
  --><script type="text/javascript">
-    $(document)
+
+	 
+	 
+ $(document)
     			.ready(
                     function() {
-                    		console.log("ready to validate")
+                    		
                         $.validator.addMethod('capitals', function(thing) {
                             return thing.match(/[A-Z]/);
-                        });
+						});
+                       
                         $("#changePreferences")
                                 .validate(
                                         {
-
                                             rules : {
+                                        
                                                 newPassword : {
-                                                    minlength : 8,
-                                                    capitals : true,
+                                                    isPassword: true
                                                 },
                                                 confirmPassword : {
-                                                    required : true,
                                                     equalTo : "#newPassword",
                                                 },
                                               
+                                          
                                             },
                                             messages : {
                                                 newPassword : {
-                                                    minlength : "Password too short, make it at least 8 characters",
-                                                    capitals : "Field must contain a capital letter",
+                                                   isPassword: "Password must be 8 characters + 1 capital to change or leave blank to keep password unchanged"
                                                 },
                                                 confirmPassword : {
                                                     equalTo : "Passwords do not match",
@@ -37,8 +39,15 @@
                                                
                                             },
                                             errorClass : "error"
-                                        });
-                    });
+										});
+							
+						});
+					
+ 	$.validator.addMethod('isPassword', function(value,index){
+ 		return value.length === 0 ||  (value.match(/[A-Z]/) && value.length > 8);
+ 	}, "Password must be greater than 8 characters and include a capital letter or be blank if you don't want to change your password");
+
+				 
 </script>
 
 
@@ -85,6 +94,7 @@
 				
 			<div>
 			<label for = "defaultTempUnit"> Default Temperature Unit:</label>
+			<label class="checkbox-inline"><input style="display:none" type="radio" value="" name = "defaultTempUnit" checked="checked"></label>
 			<label class="checkbox-inline"><input type="radio" value="F" name = "defaultTempUnit">F &#176;</label>
 			<label class="checkbox-inline"><input type="radio" value="C" name = "defaultTempUnit">C &#176;</label>
 			</div>
