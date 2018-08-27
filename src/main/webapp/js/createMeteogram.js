@@ -1,12 +1,47 @@
 
+	//Making these global instead of needing to pass 9+ arguments into functions. Better approach??
+	var hiTempVisibility;
+    var lowTempVisibility;
+    var dewPointVisibility;
+    var precipVisibility;
+    var humidityVisibility;
+    var cloudCoverVisibility;
+    var meanWindVisibility;
+    var windGustVisibility;
+    var pressureVisibility;
 
 
-	function initiateMeteogram() {
+	function initiateMeteogram(weatherData, weatherSelections) {
 	    console.log("-----In Meteogram creation-----");
-		
+		console.log(weatherSelections);
+	    
+	    hiTempVisibility = weatherSelections[0];
+	    lowTempVisibility = weatherSelections[1];
+	    dewPointVisibility = weatherSelections[2];
+	    precipVisibility = weatherSelections[3];
+	    humidityVisibility = weatherSelections[4];
+	    cloudCoverVisibility = weatherSelections[5];
+	    meanWindVisibility = weatherSelections[6];
+	    windGustVisibility = weatherSelections[7];
+	    pressureVisibility = weatherSelections[8];
+	    
+	    console.log(dewPointVisibility);
+	    
+	    /*
+	    this.hiTemperatures = weatherData[0];
+	    this.loTemperatures = weatherData[1];
+	    this.dewPoint = weatherData[2];
+	    this.precipitations = weatherData[3];
+	    this.humidity = weatherData[4];
+	    this.cloudCover = weatherData[5];
+	    this.meanWind = weatherData[6];
+	    this.windGusts = weatherData[7];
+	    this.pressures = weatherData[8];
+	    */
+	    
 		// Parallel arrays for the chart data
 	    //this.symbols = [];
-	    this.precipitations = [10, 11, 8, 9, 15, 14, 10];
+	    this.precipitations = [10, 11, 82, 64, 26, 14, 10];
 	    //this.precipitationsError = []; // Only for some data sets
 	    //this.winds = [];
 	    this.hiTemperatures = [32, 35, 38, 45, 41, 38, 34];
@@ -14,6 +49,7 @@
 	    this.dewPoint = [27, 28, 29, 30, 33, 25, 28];
 	    this.pressures = [1001, 1010, 1013, 1002, 1001, 1000, 998];
 	    this.cloudCover = [20, 25, 23, 47, 52, 13, 12];
+	    this.humidity = [47, 53, 73, 77, 39, 40, 42];
 	
 	    // Initialize
 	    //this.xml = xml;
@@ -120,7 +156,7 @@
 	 */
 	function getTitle() {
 	    console.log("in getTitle");
-		return 'Meteogram for Pittsburgh (Demo, fake data)' 
+		return '' 
 	};
 	
 	/**
@@ -136,13 +172,25 @@
 	            marginBottom: 70,
 	            marginRight: 40,
 	            marginTop: 50,
+	            backgroundColor:'rgba(255, 255, 255, 0.0)',
 	            plotBorderWidth: 1,
 	            //height: 310,
 	            alignTicks: false,
+	            zoomstype: 'xy',
 	            scrollablePlotArea: {
 	                minWidth: 720
 	            }
 	        },
+		    legend: {
+		        layout: 'vertical',
+		        align: 'left',
+		        x: 120,
+		        verticalAlign: 'top',
+		        y: 100,
+		        floating: true,
+		        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+		        borderColor: 'rgba(255, 255, 255, 0.7)'
+		    },
 	
 	        defs: {
 	            patterns: [{
@@ -188,9 +236,9 @@
 	        },
 	
 	        xAxis: [{ // Bottom X axis
-	            type: 'datetime',
-	            tickInterval: 2 * 36e5, // two hours
-	            minorTickInterval: 36e5, // one hour
+	            type: 'linear',
+	            //tickInterval: 2 * 36e5, // two hours
+	            //minorTickInterval: 36e5, // one hour
 	            tickLength: 0,
 	            gridLineWidth: 1,
 	            gridLineColor: (Highcharts.theme && Highcharts.theme.background2) || '#F0F0F0',
@@ -201,30 +249,37 @@
 	            offset: 30,
 	            showLastLabel: true,
 	            labels: {
-	                format: '{value:%H}'
-	            },
+	            		format: 'Day {value}',
+		            align: 'left',
+		            x: 3,
+		            y: -5,
+		            style: {
+		            		fontSize: "14px"
+		            }
+	            	},
 	            crosshair: true
 	        }, { // Top X axis
-	            linkedTo: 0,
-	            type: 'datetime',
-	            tickInterval: 24 * 3600 * 1000,
-	            labels: {
-	                format: '{value:<span style="font-size: 12px; font-weight: bold">%a</span> %b %e}',
-	                align: 'left',
-	                x: 3,
-	                y: -5
-	            },
-	            opposite: true,
-	            tickLength: 20,
+	            //linkedTo: 0,
+	            //type: 'datetime',
+	            //tickInterval: 1,
+	            //labels: {
+	                //format: '{value:<span style="font-size: 12px; font-weight: bold">%a</span> %b %e}',
+	            		//format: 'Day {value}',
+	                //align: 'left',
+	                //x: 3,
+	                //y: -5
+	            //},
+	            //opposite: true,
+	            //tickLength: 20,
 	            gridLineWidth: 1
-	        }],
+	        }], 
 	
 	        yAxis: [{ // temperature axis
 	            title: {
-	                text: null
+	                text: 'Temperature',
 	            },
 	            labels: {
-	                format: '{value}°',
+	                format: '{value} F',
 	                style: {
 	                    fontSize: '10px'
 	                },
@@ -256,21 +311,22 @@
 	        }, { // Air pressure
 	            allowDecimals: false,
 	            title: { // Title on top of axis
-	                text: 'hPa',
+	                text: 'mb',
 	                offset: 0,
 	                align: 'high',
 	                rotation: 0,
 	                style: {
 	                    fontSize: '10px',
-	                    color: Highcharts.getOptions().colors[2]
+	                    color: '#c112ed',
 	                },
 	                textAlign: 'left',
 	                x: 3
 	            },
 	            labels: {
-	                style: {
+	            	format: '{value} mb',    
+	            	style: {
 	                    fontSize: '8px',
-	                    color: Highcharts.getOptions().colors[2]
+	                    color: '#c112ed'
 	                },
 	                y: 2,
 	                x: 3
@@ -294,6 +350,7 @@
 	        series: [{
 	            name: 'High Temperature',
 	            data: this.hiTemperatures,
+	            visible: hiTempVisibility,
 	            type: 'spline',
 	            marker: {
 	                enabled: false,
@@ -304,8 +361,7 @@
 	                }
 	            },
 	            tooltip: {
-	                pointFormat: '<span style="color:{point.color}">\u25CF</span> ' +
-	                    '{series.name}: <b>{point.value}°C</b><br/>'
+	                valueSuffix: ' F'
 	            },
 	            zIndex: 1,
 	            color: '#FF3333',
@@ -314,6 +370,7 @@
 	        },{
 	            name: 'Low Temperature',
 	            data: this.loTemperatures,
+	            visible: lowTempVisibility,
 	            type: 'spline',
 	            marker: {
 	                enabled: false,
@@ -324,16 +381,16 @@
 	                }
 	            },
 	            tooltip: {
-	                pointFormat: '<span style="color:{point.color}">\u25CF</span> ' +
-	                    '{series.name}: <b>{point.value}°C</b><br/>'
+	                valueSuffix: ' F'
 	            },
 	            zIndex: 1,
-	            color: 'orange',
+	            color: 'black',
 	            negativeColor: '#48AFE8',
 	            visible: true
 	        }, {
 	            name: 'Dew Point',
 	            data: this.dewPoint,
+	            visible: dewPointVisibility,
 	            type: 'spline',
 	            marker: {
 	                enabled: false,
@@ -344,20 +401,19 @@
 	                }
 	            },
 	            tooltip: {
-	                pointFormat: '<span style="color:{point.color}">\u25CF</span> ' +
-	                    '{series.name}: <b>{point.value}°C</b><br/>'
+	                valueSuffix: ' F'
 	            },
+	        
 	            zIndex: 1,
-	            color: 'orange',
-	            negativeColor: '#48AFE8',
-	            visible: true
+	            color: '#66f756',
+	            negativeColor: '#48AFE8'
 	        }, {
 	            name: 'Precipitation',
 	            data: this.precipitationsError,
 	            type: 'column',
 	            color: 'url(#precipitation-error)',
 	            yAxis: 1,
-	            //groupPadding: 0,
+	            groupPadding: 0,
 	            //pointPadding: 0,
 	            tooltip: {
 	                valueSuffix: ' %',
@@ -380,11 +436,13 @@
 	        }, {
 	            name: 'Precipitation',
 	            data: this.precipitations,
+	            visible: precipVisibility,
 	            type: 'column',
-	            color: '#68CFE8',
+	            color: '#4256f4',
 	            yAxis: 1,
+	            //pointPlacement: .3,
 	            //groupPadding: 0,
-	            //pointPadding: 0,
+	            pointPadding: 0.0,
 	            grouping: false,
 	            dataLabels: {
 	                enabled: !meteogram.hasPrecipitationError,
@@ -399,33 +457,102 @@
 	                }
 	            },
 	            tooltip: {
-	                valueSuffix: ' mm'
+	                valueSuffix: ' %'
 	            }
 	        }, {
-	            name: 'Air pressure',
-	            color: Highcharts.getOptions().colors[2],
+	            name: 'Humidity',
+	            data: this.humidity,
+	            visible: humidityVisibility,
+	            type: 'column',
+	            color: '#18CFE8',
+	            yAxis: 1,
+	            //pointPlacement: 0.7,
+	            //groupPadding: 0,
+	            pointPadding: 0.2,
+	            grouping: false,
+	            dataLabels: {
+	                enabled: !meteogram.hasPrecipitationError,
+	                formatter: function () {
+	                    if (this.y > 0) {
+	                        return this.y;
+	                    }
+	                },
+	                style: {
+	                    fontSize: '8px',
+	                    color: 'gray'
+	                }
+	            },
+	            tooltip: {
+	                valueSuffix: ' %'
+	            }
+	        }, {
+	            name: 'Cloud Cover',
+	            data: this.cloudCover,
+	            type: 'column',
+	            color: 'white',
+	            visible: cloudCoverVisibility,
+	            yAxis: 1,
+	            //pointPlacement: 1,
+	            //groupPadding: 0,
+	            pointPadding: 0.4,
+	            grouping: false,
+	            dataLabels: {
+	                enabled: !meteogram.hasPrecipitationError,
+	                formatter: function () {
+	                    if (this.y > 0) {
+	                        return this.y;
+	                    }
+	                },
+	                style: {
+	                    fontSize: '8px',
+	                    color: 'gray'
+	                }
+	            },
+	            tooltip: {
+	                valueSuffix: ' %'
+	            }
+	        }, {
+	            name: 'Pressure',
+	            color: '#c112ed',
+	            type: "spline",
 	            data: this.pressures,
+	            visible: pressureVisibility,
 	            marker: {
 	                enabled: false
 	            },
 	            shadow: false,
 	            tooltip: {
-	                valueSuffix: ' hPa'
+	                valueSuffix: ' mb'
 	            },
 	            dashStyle: 'shortdot',
 	            yAxis: 2
 	        }, {
-	            name: 'Wind',
+	            name: 'Mean Wind',
 	            //type: 'windbarb',
 	            id: 'windbarbs',
 	            color: Highcharts.getOptions().colors[1],
 	            lineWidth: 1.5,
 	            data: this.winds,
+	            visible: meanWindVisibility,
 	            vectorLength: 18,
 	            yOffset: -15,
 	            tooltip: {
 	                valueSuffix: ' m/s'
 	            }
+	        }, {
+	            name: 'Wind Gusts',
+	            color: Highcharts.getOptions().colors[2],
+	            data: this.windGusts,
+	            visible: windGustVisibility,
+	            marker: {
+	                enabled: false
+	            },
+	            shadow: false,
+	            tooltip: {
+	                valueSuffix: ' mb'
+	            },
+	            dashStyle: 'shortdot',
+	            yAxis: 2
 	        }]
 	    };
 	};

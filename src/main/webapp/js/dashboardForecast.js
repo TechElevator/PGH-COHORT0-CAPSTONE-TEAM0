@@ -102,6 +102,7 @@ $( document ).ready(function() {
 	    //END DUMMY DATA
     
     var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
+    var weatherSelections = determineSelected();
     //var testDataSeries = [weatherData[0]];
     
     
@@ -129,17 +130,17 @@ $( document ).ready(function() {
     
     //On first page load, chart will be created
     //DEFINE VIS TYPE HERE BASED ON USER'S PREFERENCE, SAVED IN DATABASE
-    initiateChartCreation(visType, forecastDays, weatherParameters, weatherData);
+    initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     
     //On every checkbox click, chart will be created
     $("input:checkbox").change(function(){
     		visType = $('#chartTypeSelection option:selected').val();
-    		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData);
+    		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     //On every change of the desired chart type, chart will be created
     $("#chartTypeSelection").change(function(){
 		visType = $('#chartTypeSelection option:selected').val();
-		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData);
+		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     
     
@@ -176,7 +177,7 @@ $( document ).ready(function() {
 //================================================================================================
 
 //Chart creation
-function initiateChartCreation(visType, forecastDays, weatherParameters, weatherData) {
+function initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections) {
 	console.log("-------------------------------------")
 	var chartCategory;
 	var selectedContent;
@@ -196,7 +197,7 @@ function initiateChartCreation(visType, forecastDays, weatherParameters, weather
     console.log("chart data right after i click the checkbox: ");
     console.log(chartData);
     
-    createChart(visType, forecastDays, chartCategory, chartData);
+    createChart(visType, forecastDays, chartCategory, chartData, weatherData, weatherSelections);
 }
 
 //API Call - Request daily forecast data from DarkSky API (forecast.io)
@@ -1139,7 +1140,7 @@ function determineChartCategoryAndContent(weatherParameters, weatherSelections) 
 	return [chartCategory, paramsToPlot];	
 }
 
-function createChart(visType, forecastDays, chartCategory, chartContent) {
+function createChart(visType, forecastDays, chartCategory, chartContent, weatherData, weatherSelections) {
 	console.log("chart content: ");
 	console.log(chartContent);
 	console.log("first one in content: ");
@@ -1235,7 +1236,7 @@ function createChart(visType, forecastDays, chartCategory, chartContent) {
 	} else {
 		$("#chartTypeSelection").hide();
 		$("#dropdownLabel").hide();
-		initiateMeteogram();
+		initiateMeteogram(weatherData, weatherSelections);
 	}	
 		
 		
