@@ -2,10 +2,53 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/settings.css"/>">
+<!--  <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+ --><script type="text/javascript">
+    $(document)
+    			.ready(
+                    function() {
+                    		console.log("ready to validate")
+                        $.validator.addMethod('capitals', function(thing) {
+                            return thing.match(/[A-Z]/);
+                        });
+                        $("#changePreferences")
+                                .validate(
+                                        {
+
+                                            rules : {
+                                                newPassword : {
+                                                    minlength : 8,
+                                                    capitals : true,
+                                                },
+                                                confirmPassword : {
+                                                    required : true,
+                                                    equalTo : "#newPassword",
+                                                },
+                                              
+                                            },
+                                            messages : {
+                                                newPassword : {
+                                                    minlength : "Password too short, make it at least 8 characters",
+                                                    capitals : "Field must contain a capital letter",
+                                                },
+                                                confirmPassword : {
+                                                    equalTo : "Passwords do not match",
+                                                },
+                                               
+                                            },
+                                            errorClass : "error"
+                                        });
+                    });
+</script>
+
+
+
+
+
 
 
 <c:url var="formAction" value="/users/${sessionScope.currentUser.userName}/settings" />
-			<form method = "POST" action = "${formAction}">
+			<form method = "POST" action = "${formAction}" id ="changePreferences">
 			<div class = "row">
 			<div class="col-sm-3"></div>
 			<div class = "col-sm-6">
