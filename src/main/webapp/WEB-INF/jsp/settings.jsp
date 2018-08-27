@@ -148,7 +148,7 @@ function getcitydetails(fqcn) {
 	}
 }
 </script>	
-<!-- <div>
+<div>
 <input  id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
 </div>
 <div>
@@ -165,7 +165,7 @@ function getcitydetails(fqcn) {
 </div>
 <div>
 <input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone">
-</div>	 -->	
+</div>
 </form>
 			
 			

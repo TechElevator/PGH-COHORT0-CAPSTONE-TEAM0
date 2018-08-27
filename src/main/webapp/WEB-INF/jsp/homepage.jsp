@@ -12,7 +12,7 @@
  <h1>Search</h1>
  <div class="form-group">
 			<div>
-				<label for="defaultCity">Default City: </label> 
+				<label for="defaultCity">City: </label> 
 				</div>
 				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
 			</div>

@@ -201,10 +201,10 @@ function getcitydetails(fqcn) {
 
 
 <div>
-<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity">
+<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity" >
 </div>
 <div>
-<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion">
+<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" >
 </div>
 <div>
 <input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude">
