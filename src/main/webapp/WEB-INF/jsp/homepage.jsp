@@ -89,7 +89,6 @@ jQuery(function ()
 
  
 <script src = "<c:url value = "/js/homepage.js"/>"></script>
-<script src = "<c:url value = "/js/textautocomplete.js"/>"></script>
 
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />
