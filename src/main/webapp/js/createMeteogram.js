@@ -42,8 +42,8 @@
 		// Parallel arrays for the chart data
 	    //this.symbols = [];
 	    this.precipitations = [10, 11, 82, 64, 26, 14, 10];
-	    //this.precipitationsError = []; // Only for some data sets
-	    //this.winds = [];
+	    this.meanWinds = [[10,180],[11,167],[7,120],[5,133],[1,283],[5,259],[3,234]];
+	    this.windGusts = [[12,180],[13,167],[10,120],[10,133],[3,283],[7,259],[6,234]];
 	    this.hiTemperatures = [32, 35, 38, 45, 41, 38, 34];
 	    this.loTemperatures = [22, 23, 25, 28, 27, 24, 24];
 	    this.dewPoint = [27, 28, 29, 30, 33, 25, 28];
@@ -51,15 +51,11 @@
 	    this.cloudCover = [20, 25, 23, 47, 52, 13, 12];
 	    this.humidity = [47, 53, 73, 77, 39, 40, 42];
 	
-	    // Initialize
-	    //this.xml = xml;
-	    //this.container = container;
+	    
 	
 	    // Run
-	    //this.parseYrData();
-	    // Create the chart when the data is loaded
 	    createMGram()
-	    console.log("past create MGram")
+	    
 	}
 	
 	/**
@@ -114,7 +110,7 @@
 	/**
 	 * Draw blocks around wind arrows, below the plot area
 	 */
-	Meteogram.prototype.drawBlocksForWindArrows = function (chart) {
+	function drawBlocksForWindArrows(chart) {
 	    var xAxis = chart.xAxis[0],
 	        x,
 	        pos,
@@ -251,7 +247,7 @@
 	            labels: {
 	            		format: 'Day {value}',
 		            align: 'left',
-		            x: 3,
+		            x: 0,
 		            y: -5,
 		            style: {
 		            		fontSize: "14px"
@@ -271,7 +267,7 @@
 	            //},
 	            //opposite: true,
 	            //tickLength: 20,
-	            gridLineWidth: 1
+	            //gridLineWidth: 1
 	        }], 
 	
 	        yAxis: [{ // temperature axis
@@ -317,7 +313,7 @@
 	                rotation: 0,
 	                style: {
 	                    fontSize: '10px',
-	                    color: '#c112ed',
+	                    color: 'green',
 	                },
 	                textAlign: 'left',
 	                x: 3
@@ -326,7 +322,7 @@
 	            	format: '{value} mb',    
 	            	style: {
 	                    fontSize: '8px',
-	                    color: '#c112ed'
+	                    color: 'green'
 	                },
 	                y: 2,
 	                x: 3
@@ -513,7 +509,7 @@
 	            }
 	        }, {
 	            name: 'Pressure',
-	            color: '#c112ed',
+	            color: 'green',
 	            type: "spline",
 	            data: this.pressures,
 	            visible: pressureVisibility,
@@ -528,31 +524,30 @@
 	            yAxis: 2
 	        }, {
 	            name: 'Mean Wind',
-	            //type: 'windbarb',
+	            type: 'windbarb',
 	            id: 'windbarbs',
-	            color: Highcharts.getOptions().colors[1],
+	            color: 'black',
 	            lineWidth: 1.5,
-	            data: this.winds,
+	            data: this.meanWinds,
 	            visible: meanWindVisibility,
-	            vectorLength: 18,
-	            yOffset: -15,
+	            vectorLength: 25,
+	            yOffset: -435,
 	            tooltip: {
 	                valueSuffix: ' m/s'
 	            }
 	        }, {
 	            name: 'Wind Gusts',
-	            color: Highcharts.getOptions().colors[2],
+	            type: 'windbarb',
+	            id: 'windbarbsGust',
+	            color: 'red',
 	            data: this.windGusts,
+	            lineWidth: 1.5,
 	            visible: windGustVisibility,
-	            marker: {
-	                enabled: false
-	            },
-	            shadow: false,
+	            vectorLength: 25,
+	            yOffset: -405,
 	            tooltip: {
-	                valueSuffix: ' mb'
-	            },
-	            dashStyle: 'shortdot',
-	            yAxis: 2
+	                valueSuffix: ' m/s'
+	            }
 	        }]
 	    };
 	};
@@ -560,10 +555,11 @@
 	/**
 	 * Post-process the chart from the callback function, the second argument to Highcharts.Chart.
 	 */
-	Meteogram.prototype.onChartLoad = function (chart) {
+	//Meteogram.prototype.onChartLoad = function (chart) {
+	function onChartLoad(chart) {
 	
-	    this.drawWeatherSymbols(chart);
-	    this.drawBlocksForWindArrows(chart);
+	    //this.drawWeatherSymbols(chart);
+	    //this.drawBlocksForWindArrows(this.chart);
 	
 	};
 	
@@ -574,7 +570,7 @@
 	    console.log("in createMGram")
 		var meteogram = this;
 	    this.chart = new Highcharts.Chart(this.getChartOptions(), function (chart) {
-	        meteogram.onChartLoad(chart);
+	        meteogram.onChartLoad(this.chart);
 	    });
 	};
 	
@@ -582,115 +578,7 @@
 	    $('#loading').html('<i class="fa fa-frown-o"></i> Failed loading data, please try again later');
 	};
 	
-	/**
-	 * Handle the data. This part of the code is not Highcharts specific, but deals with yr.no's
-	 * specific data format
-	 */
-	/*
-	Meteogram.prototype.parseYrData = function () {
 	
-	    var meteogram = this,
-	        xml = this.xml,
-	        pointStart,
-	        forecast = xml && xml.querySelector('forecast');
-	
-	    if (!forecast) {
-	        return this.error();
-	    }
-	
-	    // The returned xml variable is a JavaScript representation of the provided
-	    // XML, generated on the server by running PHP simple_load_xml and
-	    // converting it to JavaScript by json_encode.
-	    Highcharts.each(
-	        forecast.querySelectorAll('tabular time'),
-	        function (time, i) {
-	            // Get the times - only Safari can't parse ISO8601 so we need to do
-	            // some replacements
-	            var from = time.getAttribute('from') + ' UTC',
-	                to = time.getAttribute('to') + ' UTC';
-	
-	            from = from.replace(/-/g, '/').replace('T', ' ');
-	            from = Date.parse(from);
-	            to = to.replace(/-/g, '/').replace('T', ' ');
-	            to = Date.parse(to);
-	
-	            if (to > pointStart + 4 * 24 * 36e5) {
-	                return;
-	            }
-	
-	            // If it is more than an hour between points, show all symbols
-	            if (i === 0) {
-	                meteogram.resolution = to - from;
-	            }
-	
-	            // Populate the parallel arrays
-	            meteogram.symbols.push(
-	                time.querySelector('symbol').getAttribute('var')
-	                    .match(/[0-9]{2}[dnm]?/)[0]
-	            );
-	
-	            meteogram.temperatures.push({
-	                x: from,
-	                y: parseInt(
-	                    time.querySelector('temperature').getAttribute('value'),
-	                    10
-	                ),
-	                // custom options used in the tooltip formatter
-	                to: to,
-	                symbolName: time.querySelector('symbol').getAttribute('name')
-	            });
-	
-	            var precipitation = time.querySelector('precipitation');
-	            meteogram.precipitations.push({
-	                x: from,
-	                y: parseFloat(
-	                    Highcharts.pick(
-	                        precipitation.getAttribute('minvalue'),
-	                        precipitation.getAttribute('value')
-	                    )
-	                )
-	            });
-	
-	            if (precipitation.getAttribute('maxvalue')) {
-	                meteogram.hasPrecipitationError = true;
-	                meteogram.precipitationsError.push({
-	                    x: from,
-	                    y: parseFloat(precipitation.getAttribute('maxvalue')),
-	                    minvalue: parseFloat(precipitation.getAttribute('minvalue')),
-	                    maxvalue: parseFloat(precipitation.getAttribute('maxvalue')),
-	                    value: parseFloat(precipitation.getAttribute('value'))
-	                });
-	            }
-	
-	            if (i % 2 === 0) {
-	                meteogram.winds.push({
-	                    x: from,
-	                    value: parseFloat(time.querySelector('windSpeed')
-	                        .getAttribute('mps')),
-	                    direction: parseFloat(time.querySelector('windDirection')
-	                        .getAttribute('deg'))
-	                });
-	            }
-	
-	            meteogram.pressures.push({
-	                x: from,
-	                y: parseFloat(time.querySelector('pressure').getAttribute('value'))
-	            });
-	
-	            if (i === 0) {
-	                pointStart = (from + to) / 2;
-	            }
-	        }
-	    );
-	
-	    // Smooth the line
-	    this.smoothLine(this.temperatures);
-	
-	    // Create the chart when the data is loaded
-	    this.createChart();
-	};
-	*/
-	// End of the Meteogram protype
 	
 	
 	

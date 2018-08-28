@@ -2,7 +2,7 @@ $( document ).ready(function() {
     
   //Make API Call to get daily forecast data. Save that data into arrays with scope of this .js file
     //(Or, return data as a javascript object
-    //var forecast = retrieveForecastFromAPI();
+    var forecast = retrieveForecastFromAPI(39.00,-79.99,'si');
     //For now, we'll use dummy data
     
     //Parse forecast data into arrays
@@ -89,9 +89,9 @@ $( document ).ready(function() {
 	    		humidity : 47,
 	    		pressure : 1021,
 	    		windSpeed : 2.35,
-	    		windGust : 3.89,
+	    		windGust : 4.89,
 	    		windBearing : 344,
-	    		cloudCover : 0.37,
+	    		cloudCover : 56,
 	    		uvIndex : 7,
 	    		visibility : 10, 
 	    		ozone : 320
@@ -136,7 +136,6 @@ $( document ).ready(function() {
     
     //On every checkbox click, chart will be created
     $("input:checkbox").change(function(){
-    		visType = $('#chartTypeSelection option:selected').val();
     		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     //On every change of the desired chart type, chart will be created
@@ -194,31 +193,65 @@ function initiateChartCreation(visType, forecastDays, weatherParameters, weather
 		console.log("i is; " + i);
 	}
 	
-	console.log("selected content right after i click the checkbox: ");
-    console.log(selectedContent);
-    console.log("chart data right after i click the checkbox: ");
-    console.log(chartData);
-    
     createChart(visType, forecastDays, chartCategory, chartData, weatherData, weatherSelections);
 }
 
 //API Call - Request daily forecast data from DarkSky API (forecast.io)
 function retrieveForecastFromAPI(lat, lon, units) {
-	var endpoint = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + lat + "," + lon;
-	var forecastJSON = JSON.parse(apiCallGetRequest(endpoint));
-	
-	//$("#userData").data("latitude"));
-	//$("#userData").data("longitude"));
-	//$("#userData").data("units"));
-	
+	var endpoint = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/39.00,-79.99";
+	var forecastJSON = apiCallWithXMLHttpRequest(endpoint);
+	//var forecastJSON = apiCallWithAJAX(endpoint);
+	//var forecastJSON = apiCallWithjQueryGET(endpoint);
+
+	parsedData = parseDataFromAPI(forecastJSON);
 	
 }
 
-function apiCallGetRequest(endpoint){
+function apiCallWithjQueryGET(endpoint) {
+	$.get(endpoint, function(data, status) {
+		console.log("got to here at least");
+		console.log(`{data}`);
+	});
+}
+
+function apiCallWithAJAX(endpoint) {
+	$.ajax({
+		url: endpoint,
+		type:"GET",
+		success: function(result) {
+			console.log(result)
+		},
+		error: function(error){
+			console.log('Error ${error}')
+		}
+	})
+}
+
+function apiCallWithXMLHttpRequest(endpoint){
     var request = new XMLHttpRequest();
-    request.open("GET", endpoint ,false);
-    request.send(null);							//Can remove this? see https://stackoverflow.com/questions/2499567/how-to-make-a-json-call-to-a-url
+    request.open("GET", endpoint);
+    
+    request.setRequestHeader('Access-Control-Allow-Headers', '*');
+    request.send();							
+    
+    request.onreadystatechange=(e)=>{
+    		console.log(request.responseText)
+    	}
     return request.responseText;          
+}
+
+//PARSE FORECAST DATA FROM JSON
+function parseDataFromAPI(dataFromAPI) {
+	
+	currentConditions = dataFromAPI.currently;
+	
+	console.log("Data retrieved from API: ");
+	console.log(dataFromAPI);
+	console.log("current conditions: ");
+	console.log(currentConditions);
+	
+	return currentConditions;
+	
 }
 
 //CHART: SINGLE-VARIABLE
@@ -266,7 +299,7 @@ function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) {
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
             type: visType,
-            zoomtype: 'xy',
+            zoomType: 'xy',
             marginTop: 40 ,
             backgroundColor:'rgba(255, 255, 255, .0)'
         },
@@ -311,7 +344,7 @@ function threeVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, w
 	var myChart = Highcharts.chart('forecastChart', {
         chart: {
             type: visType,
-            zoomtype: 'xy',
+            zoomType: 'xy',
             marginTop: 40 ,
             backgroundColor:'rgba(255, 255, 255, 0.0)'
         },
@@ -1290,13 +1323,15 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 
 //WRITE CURRENT FORECAST
 function outputCurrentConditions(currentWeather) {
-	$('#temperatureLI').text(currentWeather.temperature); 
+	$('#temperatureLI').text(currentWeather.temperature + " F"); 
 	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
 	$('#humidityLI').text(currentWeather.humidity + "%");
 	$('#windLI').text(currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
 	$('#windDirectionLI').text(currentWeather.windBearing);
 	$('#cloudCoverLI').text(currentWeather.cloudCover + " %");
 }
+
+
 
 
 

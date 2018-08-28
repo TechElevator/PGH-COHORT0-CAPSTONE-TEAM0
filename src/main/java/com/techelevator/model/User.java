@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 public class User {
 	private String userName;
 	
-	@Size(min=10, message="Password too short, must be at least 10")
+	@Size(min=8, message="Password too short, must be at least 8")
 	@Pattern.List({
 		@Pattern(regexp=".*[a-z].*", message="Must have a lower case"),
 		@Pattern(regexp=".*[A-Z].*", message="Must have a capital")

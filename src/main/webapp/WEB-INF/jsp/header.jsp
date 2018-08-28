@@ -2,6 +2,17 @@
 
 <!DOCTYPE html>
 <html>
+
+<style>
+	.weatherVizLogo{
+	font-size:1.5em;
+	}
+	
+	nav li{
+	margin-right:10px;
+	font-weight:600;
+}
+ </style>
 	<head>
 		<title>Weather Viz</title>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -12,9 +23,10 @@
 	   <!--  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
 	  
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	    
+	    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	    
 	    <script src="https://code.highcharts.com/highcharts.js"></script>
+	    <script src="https://code.highcharts.com/modules/windbarb.js"></script>
 		
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
@@ -46,11 +58,14 @@
 			<c:url var="imgSrc" value="/img/logo.png" />
 			<a href="${homePageHref}"><img src="${imgSrc}" class="img-responsive" /></a>
 		</header> --%>
+		
+		
+		
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="collapse navbar-collapse" id ="navbarNav">
 				<ul class="navbar-nav" >
 					<c:url var="homePageHref" value="/" />
-					<li class = "nav-item"><a class = "nav-link"  href="${homePageHref}"><i class="fas fa-home"></i> Home</a></li>
+					<li class = "nav-item"><a class = "nav-link weatherVizLogo"  href="${homePageHref}">WeatherViz</a></li>
 					
 					<c:if test="${not empty currentUser}">
 						<c:url var="dashboardHref" value="/users/${currentUser.userName}" />

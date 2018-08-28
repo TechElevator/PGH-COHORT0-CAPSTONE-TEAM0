@@ -31,14 +31,15 @@
 </div>
 
  <div class="container py-3" id="currentConditionsContainer">
-    <div class="card">
+    <div class="card currentConditionsCard">
+    		<h1 class = "text-center">Current Conditions in Pittsburgh, PA</h1>
       <div class="row currentConditionsRow">
         <div class="col-md-6">
             <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
           </div>
           <div class="col-md-6 px-3" >	
              <ul class="list-unstyled align-middle" id = "weatherDetails">
-			<li ><span>Temperature: </span><span id="temperatureLI"></span><span>&#176;</span></li>
+			<li ><span>Temperature: </span><span id="temperatureLI"></span></li>
 			<li><span>Precipitation: </span><span id="precipChanceLI"></span></li>
 			<li><span>Humidity: </span><span id="humidityLI"></span></li>
 			<li><span>Wind Speed: </span><span id="windLI"></span></li>
@@ -51,9 +52,8 @@
         </div>
       </div>
     
-
+<h1 class = "text-center">Forecast for Pittsburgh, PA</h1>
 <div id="checkboxFormContainer">
-	<h2>Select weather properties: </h2>
 	<form class = "d-flex justify-content-center" id = "weatherPropertiesForm">
 	<div class="form-check form-check-inline">
   <input class="form-check-input" type="checkbox" id="hiTemp" value="option1" checked>
@@ -140,7 +140,6 @@
 
 <!-- The below pulls in the forecast visualization -->
 <div>
-	<h2 class = "text-center">Forecast for Pittsburgh, PA</h2>
 	<div class = "weatherviz img-fluid center-block" id="forecastChart"></div>
 </div>
 
