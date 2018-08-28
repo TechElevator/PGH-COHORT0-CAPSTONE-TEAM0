@@ -63,10 +63,12 @@
 
 
 
+<c:if test="${isDuplicateUsername}">
+<p>ALERT: That username is already taken.</p>
+</c:if>
 
 
-
-<c:url var="formAction" value="/users" />
+<c:url var="formAction" value="/users/new" />
 <form action="${formAction}" method="POST"> <!-- name="form_citydetails" id="form_citydetails" enctype="multipart/form-data" -->
 
 
