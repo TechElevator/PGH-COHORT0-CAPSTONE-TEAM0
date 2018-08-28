@@ -22,6 +22,7 @@ public class User {
 	private double defaultLongitude;
 	private int defaultPopulation;
 	private String defaultTimezone;
+	private String phone;
 	
 //	private String confirmPassword;
 	public String getUserName() {
@@ -103,11 +104,20 @@ public class User {
 	public void setDefaultPopulation(int defaultPopulation) {
 		this.defaultPopulation = defaultPopulation;
 	}
+	
 	public String getDefaultTimezone() {
 		return this.defaultTimezone;
 	}
 	public void setDefaultTimezone(String defaultTimezone) {
 		this.defaultTimezone = defaultTimezone;
+	}
+	
+	public String getPhone() {
+		return this.phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

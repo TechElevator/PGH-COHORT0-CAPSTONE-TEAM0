@@ -11,7 +11,7 @@ import com.techelevator.model.JDBCCityDAO;
 
 public class JDBCCityDAOIntegrationTest extends DAOIntegrationTest {
 	
-	
+/*	
 	private DataSource dataSource = getDataSource();
 	private JDBCCityDAO cityDAO = new JDBCCityDAO(dataSource);
 	
@@ -45,4 +45,5 @@ public class JDBCCityDAOIntegrationTest extends DAOIntegrationTest {
 		Assert.assertEquals("47.6217,-122.3238", seattleTest.getLatLon());
 	}
 
+*/
 }

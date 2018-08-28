@@ -74,6 +74,7 @@ public class UserController {
 	    	System.out.println("some error happened on the way to the database");
 	        return "redirect:/users/new";
 	    }
+	    
 	    return "redirect:/login";
 	}
 

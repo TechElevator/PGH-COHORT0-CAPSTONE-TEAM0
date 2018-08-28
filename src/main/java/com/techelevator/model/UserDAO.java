@@ -2,8 +2,9 @@ package com.techelevator.model;
 
 public interface UserDAO {
 
-	public void saveUser(String userName, String password, long defaultCityId, String defaultUnits,
+/*	public void saveUser(String userName, String password, long defaultCityId, String defaultUnits,
 			String defaultVisualization);
+			*/
 
 	public boolean searchForUsernameAndPassword(String userName, String password);
 
@@ -24,6 +25,8 @@ public interface UserDAO {
 	public void updateDefaultLatitude(String userName, double defaultLatitude);
 	
 	public void updateDefaultLongitude(String userName, double defaultLongitude);
+	
+	public void updatePhone(String userName, String phone);
 	
 	public void updateDefaultPopulation(String userName, long defaultPopulation);
 	
