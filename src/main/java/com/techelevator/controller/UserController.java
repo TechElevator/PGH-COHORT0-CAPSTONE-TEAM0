@@ -1,10 +1,12 @@
 package com.techelevator.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.JOptionPane;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -45,15 +47,30 @@ public class UserController {
 			return "redirect:/users/new";
 		}
 
-		System.out.println("about to userDAO stuff");
-		System.out.println(" " + user.getUserName() + " " + user.getPassword() + " " + user.getDefaultCity() + " "
-				+ user.getDefaultUnits() + " " + user.getDefaultVisualization() + " " + user.getDefaultRegion() + " "
-				+ user.getDefaultLatitude() + " " + user.getDefaultLongitude() + " " + user.getDefaultPopulation() + " "
-				+ user.getDefaultTimezone());
-
+//		System.out.println(" " + user.getUserName() + " " + user.getPassword() + " " + user.getDefaultCity() + " "
+//				+ user.getDefaultUnits() + " " + user.getDefaultVisualization() + " " + user.getDefaultRegion() + " "
+//				+ user.getDefaultLatitude() + " " + user.getDefaultLongitude() + " " + user.getDefaultPopulation() + " "
+//				+ user.getDefaultTimezone());
+		
+		try {
 		userDAO.saveUser2(user.getUserName(), user.getPassword(), user.getDefaultCity(), user.getDefaultUnits(),
 				user.getDefaultVisualization(), user.getDefaultRegion(), user.getDefaultLatitude(),
 				user.getDefaultLongitude(), user.getDefaultPopulation(), user.getDefaultTimezone());
+	
+		
+		
+		}catch(DuplicateKeyException e ) {
+			
+			JOptionPane.showMessageDialog(null, "Username already exists");
+				  
+			return "redirect:/users/new";
+			
+		}
+		
+		catch (Exception e){
+			JOptionPane.showMessageDialog(null, "Something went wrong");
+			return "redirect:/users/new";
+		}
 		return "redirect:/login";
 	}
 

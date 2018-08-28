@@ -4,7 +4,6 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/homepage.css"/>">
 
 
-
  
  <form action="" method="post" name="form_citydetails" id="form_citydetails" >
  <div class="col-sm-3"></div>
@@ -27,11 +26,28 @@
 		  
 		</select>
 	</div>
+	
+		<div class="form-check">
+		<label class="form-check-label" for="defaultCheck1">Historical Weather Search:</label>
+		  <input class="form-check-input" type="checkbox" value="historical" id="historicalDateCheckbox">
+		  
+		</div>
+		
+		<div id = "historicalDateSearch">
+		<label class="form-check-label"  for = "startDate">Start Date:</label>
+		<input class="form-check-label"  type = "date" id = "startDate">
+		
+		
+		<label for = "endDate">End Date:</label>
+		<input class="form-check-label"  type = "date" id = "endDate">
+		
+		</div>
+		
  
- <div>
-	<button type="submit" class="btn btn-default"><i class="fas fa-save"></i> Save Changes</button>
-</div>
-</div>
+		 <div>
+			<button type="submit" class="btn btn-default"><i class="fas fa-save"></i> Save Changes</button>
+		</div>
+		</div>
  
  
  
@@ -85,10 +101,10 @@ jQuery(function ()
 
 
 
-
+<script src = "<c:url value = "/js/homepage.js"/>"></script>
 
  
-<script src = "<c:url value = "/js/homepage.js"/>"></script>
+<!-- <script src = "js/homepage.js"/></script> -->
 
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />
