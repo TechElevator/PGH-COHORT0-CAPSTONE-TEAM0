@@ -68,7 +68,7 @@
 			<div class = "form-group">
 				<label for = "defaultViz">Select a  default visualization type:</label>
 				<select name = "defaultViz" class="custom-select custom-select-lg mb-3">
-				 
+				 		<option value =""></option>
 						<option value="spline">Line Chart</option>
 						<option value="areaspline">Area Line Chart</option>
 						<option value="column">Bar Chart</option>
@@ -77,7 +77,7 @@
 				</select>
 			</div>
 			
-			
+				
 			<div class="form-group">
 			<div>
 				<label for="defaultCity">Default City: </label> 
