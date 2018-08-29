@@ -93,37 +93,6 @@
   <label class="form-check-label" for="pressure">Pressure</label>
 </div>
 
-		<!--  
-		<div>
-  			<input class="checkbox" type="checkbox" id = "precipType">
-  			Precipitation Type
-		</div>
-		-->
-		<!--
-		<div>
-  			<input class="checkbox" type="checkbox" id = "windDirection">
-  			Wind Direction
-		</div>
-		-->
-	
-		<!-- 
-		<div>
-  			<input class="checkbox" type="checkbox" id = "visibility">
-  			Visibility
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "UV">
-  			UV Index
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "ozone">
-  			Ozone
-		</div>
-		<div>
-  			<input class="checkbox" type="checkbox" id = "moonPhase">
-  			Moon Phase
-		</div>
-		-->
 	</form>
 	
 	<div id="chartTypeSelectionContainer" class="d-flex justify-content-center">

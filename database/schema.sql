@@ -7,7 +7,9 @@ BEGIN;
 -- CREATE statements go here
 DROP TABLE IF EXISTS app_user;
 DROP TABLE IF EXISTS city;
+DROP TABLE IF EXISTS user_alert;
 
+/*
 CREATE TABLE city(
    city              VARCHAR(46) NOT NULL
   ,city_ascii        VARCHAR(46) NOT NULL
@@ -26,15 +28,16 @@ CREATE TABLE city(
   ,zips              VARCHAR(1859)
   ,id                INTEGER  NOT NULL PRIMARY KEY 
 );
-
+*/
 
 CREATE TABLE app_user (
   id SERIAL PRIMARY KEY,
   user_name varchar(32) NOT NULL UNIQUE,
   password varchar(32) NOT NULL,
-  role varchar(32),
+  role varchar(32) DEFAULT 'user',
   salt varchar(255) NOT NULL,
-  default_city_id INTEGER,
+  phone VARCHAR(10),
+--  default_city_id INTEGER,
   default_city varchar(32) NOT NULL,
   default_visualization VARCHAR(16) DEFAULT 'bar',
   default_units CHAR DEFAULT 'F',
@@ -42,10 +45,20 @@ CREATE TABLE app_user (
   default_latitude NUMERIC(9,4) NOT NULL,
   default_longitude NUMERIC(9,4) NOT NULL,
   default_population INTEGER,
-  default_timezone varchar(32) NOT NULL,
+  default_timezone varchar(32) NOT NULL
 
 
-  CONSTRAINT fk_default_city_id FOREIGN KEY (default_city_id) REFERENCES city (id)
+--  ,CONSTRAINT fk_default_city_id FOREIGN KEY (default_city_id) REFERENCES city (id)
+);
+
+CREATE TABLE user_alert (
+  alert_id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  alert_type VARCHAR(32),
+  alerts_above INTEGER,
+  alerts_below INTEGER,
+
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES app_user (id)
 );
 
 COMMIT;

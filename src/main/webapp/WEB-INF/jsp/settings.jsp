@@ -2,6 +2,8 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/settings.css"/>">
+	<link rel = "stylesheet" type="text/css"  media="screen" href="/capstone/css/bootstrap-formhelpers.min.css">
+
 <!--  <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
  --><script type="text/javascript">
 
@@ -105,27 +107,34 @@
 			<label class="checkbox-inline"><input id = "noTextAlerts" type="radio" value="No" name = "textAlerts">No</label>
 					<div id = "possibleAlerts">
 					
-					<p>Please select the text alerts you'd like to receive:</p>
 					
-					<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="checkbox" value="" id="tornadoes" name = "tornadoes">
-					  <label class="form-check-label" for="tornadoes">
-					    Tornadoes
+					
+					
+					<div class="form-group">
+					<label for="phoneNumber">Phone Number: </label>
+					<input type="text" class="input-medium bfh-phone" data-country="US" id = "phoneNumber" name = "phoneNumber" class = "form-control">
+					</div>
+					
+					<div class = "weathertypes">
+					<div class="form-check form-check-inline ">
+						  <input class="form-check-input" type="checkbox" value="" id="thunderstorms" name = "thunderstorms">
+					  <label class="form-check-label" for="thunderstorms">
+					    Thunderstorms
 					  </label>
 						</div>
 						<div class="form-check form-check-inline">
-						   <input class="form-check-input" type="checkbox" value="" id="earthquakes" name = "earthquakes">
-					  <label class="form-check-label" for="earthquakes">
-					    EarthQuakes
+						   <input class="form-check-input" type="checkbox" value="" id="wind" name = "wind">
+					  <label class="form-check-label" for="wind">
+					    Wind
 					  </label>
 						</div>
 						<div class="form-check form-check-inline">
-						   <input class="form-check-input" type="checkbox" value="" id="forestFires" name = "forestFires">
-					  <label class="form-check-label" for="forestFires">
-					    Forest Fires
+						   <input class="form-check-input" type="checkbox" value="" id="heat" name = "heat">
+					  <label class="form-check-label" for="heat">
+					    Heat
 					  </label>
 						</div>
-					
+					</div>
 					</div>
 			</div>
 			
@@ -225,7 +234,7 @@ function getcitydetails(fqcn) {
  
 
 			
-	
+<script src= "<c:url value = "/js/bootstrap-formhelpers.min.js"/>"></script>	
 <script src = "<c:url value = "/js/settings.js"/>"></script>
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

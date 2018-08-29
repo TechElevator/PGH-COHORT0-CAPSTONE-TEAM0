@@ -1,10 +1,13 @@
 package com.techelevator.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.JOptionPane;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -35,26 +38,44 @@ public class UserController {
 		return "newUser";
 	}
 
-	@RequestMapping(path = "/users", method = RequestMethod.POST)
-	public String createUser(@Valid @ModelAttribute User user, BindingResult result, RedirectAttributes flash) {
-		System.out.println("posting to /users");
-		if (result.hasErrors()) {
-			System.out.println("has errors");
-			flash.addFlashAttribute("user", user);
-			flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "user", result);
-			return "redirect:/users/new";
-		}
+	@RequestMapping(path = "/users/new", method = RequestMethod.POST)
+	public String createUser(@Valid @ModelAttribute User user, BindingResult result, RedirectAttributes flash, HttpServletRequest request) {
+	System.out.println("posting to /users/new");
+	if (result.hasErrors()) {
+	System.out.println("has errors");
+	flash.addFlashAttribute("user", user);
+	flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "user", result);
+	return "redirect:/users/new";
+	}
 
-		System.out.println("about to userDAO stuff");
-		System.out.println(" " + user.getUserName() + " " + user.getPassword() + " " + user.getDefaultCity() + " "
-				+ user.getDefaultUnits() + " " + user.getDefaultVisualization() + " " + user.getDefaultRegion() + " "
-				+ user.getDefaultLatitude() + " " + user.getDefaultLongitude() + " " + user.getDefaultPopulation() + " "
-				+ user.getDefaultTimezone());
+	// System.out.println(" " + user.getUserName() + " " + user.getPassword() + " " + user.getDefaultCity() + " "
+	// + user.getDefaultUnits() + " " + user.getDefaultVisualization() + " " + user.getDefaultRegion() + " "
+	// + user.getDefaultLatitude() + " " + user.getDefaultLongitude() + " " + user.getDefaultPopulation() + " "
+	// + user.getDefaultTimezone());
 
-		userDAO.saveUser2(user.getUserName(), user.getPassword(), user.getDefaultCity(), user.getDefaultUnits(),
-				user.getDefaultVisualization(), user.getDefaultRegion(), user.getDefaultLatitude(),
-				user.getDefaultLongitude(), user.getDefaultPopulation(), user.getDefaultTimezone());
-		return "redirect:/login";
+	    try {
+	    userDAO.saveUser2(user.getUserName(), user.getPassword(), user.getDefaultCity(), user.getDefaultUnits(),
+	            user.getDefaultVisualization(), user.getDefaultRegion(), user.getDefaultLatitude(),
+	            user.getDefaultLongitude(), user.getDefaultPopulation(), user.getDefaultTimezone());
+
+	    
+	    
+	    }catch(DuplicateKeyException e ) {
+	    
+	    	request.setAttribute("isDuplicateUsername", true);
+	    System.out.println(request.getAttribute("isDuplicateUsername"));
+	    	System.out.println("duplicate username found in database");
+	              
+	        return "newUser";
+	        
+	    }
+	    
+	    catch (Exception e){
+	    	System.out.println("some error happened on the way to the database");
+	        return "redirect:/users/new";
+	    }
+	    
+	    return "redirect:/login";
 	}
 
 	@RequestMapping(path = "/users/{currentUser.name}/settings", method = RequestMethod.GET)

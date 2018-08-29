@@ -2,6 +2,17 @@
 
 <!DOCTYPE html>
 <html>
+
+<style>
+	.weatherVizLogo{
+	font-size:1.5em;
+	}
+	
+	nav li{
+	margin-right:10px;
+	font-weight:600;
+}
+ </style>
 	<head>
 		<title>Weather Viz</title>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -47,11 +58,14 @@
 			<c:url var="imgSrc" value="/img/logo.png" />
 			<a href="${homePageHref}"><img src="${imgSrc}" class="img-responsive" /></a>
 		</header> --%>
+		
+		
+		
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="collapse navbar-collapse" id ="navbarNav">
 				<ul class="navbar-nav" >
 					<c:url var="homePageHref" value="/" />
-					<li class = "nav-item"><a class = "nav-link"  href="${homePageHref}"><i class="fas fa-home"></i> Home</a></li>
+					<li class = "nav-item"><a class = "nav-link weatherVizLogo"  href="${homePageHref}">WeatherViz</a></li>
 					
 					<c:if test="${not empty currentUser}">
 						<c:url var="dashboardHref" value="/users/${currentUser.userName}" />

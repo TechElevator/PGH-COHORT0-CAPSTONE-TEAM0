@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.techelevator.model.User;
 import com.techelevator.security.PasswordHasher;
+//import com.twilio.Twilio;
+//import com.twilio.rest.api.v2010.account.Message;
+//import com.twilio.type.PhoneNumber;
 
 @Component
 public class JDBCUserDAO implements UserDAO {
@@ -23,6 +26,7 @@ public class JDBCUserDAO implements UserDAO {
 		this.hashMaster = hashMaster;
 	}
 
+/*
 	@Override
 	public void saveUser(String userName, String password, long defaultCityId, String defaultUnits,
 			String defaultVisualization) {
@@ -34,6 +38,7 @@ public class JDBCUserDAO implements UserDAO {
 				"INSERT INTO app_user(user_name, password, salt, default_city_id, default_units, default_visualization) VALUES (?, ?, ?, ?, ?, ?)",
 				userName, hashedPassword, saltString, defaultCityId, defaultUnits, defaultVisualization);
 	}
+	*/
 
 	@Override
 	public void saveUser2(String userName, String password, String defaultCity, String defaultUnits,
@@ -48,6 +53,28 @@ public class JDBCUserDAO implements UserDAO {
 				"INSERT INTO app_user(user_name, password, salt, default_city, default_units, default_visualization, default_region, default_latitude, default_longitude, default_population, default_timezone ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				userName, hashedPassword, saltString, defaultCity, defaultUnits, defaultVisualization, defaultRegion,
 				defaultLatitude, defaultLongitude, defaultPopulation, defaultTimezone);
+		
+		//BEGIN TWILIO TEST
+		
+//	    final String ACCOUNT_SID =
+//	            "ACc662cd062611460d4b264698fc7dec62";
+//	    final String AUTH_TOKEN =
+//	            "49dc4284ba5cfba87f9c1a2454d598d9";
+//	    
+//        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+//
+//        Message message = Message
+//                .creator(new PhoneNumber("+14126573458"), // to
+//                        new PhoneNumber("+18782187024"), // from
+//                        "Where's Wallace?")
+//                .create();
+//
+//        System.out.println(message.getSid());
+        
+        //END TWILIO TEST
+
+
+		
 	}
 
 	@Override
@@ -81,7 +108,7 @@ public class JDBCUserDAO implements UserDAO {
 	public void updateUnits(String userName, String units) {
 		jdbcTemplate.update("UPDATE app_user SET default_units = ? WHERE user_name = ?", units, userName);
 	}
-
+	
 	@Override
 	public void updateDefaultVisualization(String userName, String defaultVisualization) {
 		jdbcTemplate.update("UPDATE app_user SET default_visualization = ? WHERE user_name = ?", defaultVisualization,
@@ -114,15 +141,23 @@ public class JDBCUserDAO implements UserDAO {
 		jdbcTemplate.update("UPDATE app_user SET default_longitude = ? WHERE user_name = ?", defaultLongitude, userName);
 	}
 	
+
 	@Override
 	public void updateDefaultPopulation(String userName, long defaultPopulation) {
 		jdbcTemplate.update("UPDATE app_user SET default_population = ? WHERE user_name = ?", defaultPopulation, userName);
 	}
 	
+	
 	@Override
 	public void updateDefaultTimezone(String userName, String defaultTimezone) {
 		jdbcTemplate.update("UPDATE app_user SET default_timezone = ? WHERE user_name = ?", defaultTimezone, userName);
 	}
+	
+	@Override
+	public void updatePhone(String userName, String phone) {
+		jdbcTemplate.update("UPDATE app_user SET phone = ? WHERE user_name = ?", phone, userName);
+	}
+
 
 	@Override
 	public Object getUserByUserName(String userName) {
@@ -142,6 +177,7 @@ public class JDBCUserDAO implements UserDAO {
 			thisUser.setDefaultTimezone(user.getString("default_timezone"));
 			thisUser.setDefaultUnits(user.getString("default_units"));
 			thisUser.setDefaultVisualization(user.getString("default_visualization"));
+			thisUser.setPhone(user.getString("phone"));
 		}
 
 		return thisUser;

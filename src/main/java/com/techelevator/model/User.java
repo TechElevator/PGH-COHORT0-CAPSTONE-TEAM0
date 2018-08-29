@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 public class User {
 	private String userName;
 	
-	@Size(min=10, message="Password too short, must be at least 10")
+	@Size(min=8, message="Password too short, must be at least 8")
 	@Pattern.List({
 		@Pattern(regexp=".*[a-z].*", message="Must have a lower case"),
 		@Pattern(regexp=".*[A-Z].*", message="Must have a capital")
@@ -22,6 +22,7 @@ public class User {
 	private double defaultLongitude;
 	private int defaultPopulation;
 	private String defaultTimezone;
+	private String phone;
 	
 //	private String confirmPassword;
 	public String getUserName() {
@@ -103,11 +104,20 @@ public class User {
 	public void setDefaultPopulation(int defaultPopulation) {
 		this.defaultPopulation = defaultPopulation;
 	}
+	
 	public String getDefaultTimezone() {
 		return this.defaultTimezone;
 	}
 	public void setDefaultTimezone(String defaultTimezone) {
 		this.defaultTimezone = defaultTimezone;
+	}
+	
+	public String getPhone() {
+		return this.phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }
