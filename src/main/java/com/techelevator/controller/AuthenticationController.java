@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.techelevator.model.APICalls;
 import com.techelevator.model.BarChartForecastGenerator;
 import com.techelevator.model.DailyForecast;
+import com.techelevator.model.JDBCTwilioDbDAO;
 import com.techelevator.model.TwilioDb;
 import com.techelevator.model.TwilioDbDAO;
 import com.techelevator.model.User;
@@ -27,12 +28,7 @@ public class AuthenticationController {
 
 	private UserDAO userDAO;
 	private TwilioDbDAO twilioDbDAO;
-
-//	@Autowired
-//	public AuthenticationController(UserDAO userDAO) {
-//		this.userDAO = userDAO;
-//	}
-
+	
 
 	@Autowired
 	public AuthenticationController(UserDAO userDAO, TwilioDbDAO twilioDbDAO) {
@@ -83,8 +79,7 @@ public class AuthenticationController {
 		try {
 		String phoneNumber = currentUser.getPhone();
 		TwilioDb twilioDb = twilioDbDAO.getCredentials();
-		
-        Twilio.init(twilioDb.getAccountSid(), twilioDb.getAuthToken());
+		Twilio.init(twilioDb.getAccountSid(), twilioDb.getAuthToken());
 
         Message message = Message
                 .creator(new PhoneNumber("+1" + phoneNumber.replaceAll("[^\\d]", "")), // to
