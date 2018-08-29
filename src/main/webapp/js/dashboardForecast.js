@@ -394,6 +394,15 @@ function triggerCurrentConditions(dataFromAPI) {
 	
 }
 
+function textCurrentWeather(currentWeather){
+	
+	
+	
+	
+	
+	
+}
+
 
 /*
 //PARSE FORECAST DATA FROM JSON
