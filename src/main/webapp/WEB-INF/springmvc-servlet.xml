@@ -40,6 +40,7 @@
     <!-- Uncomment the following datasource definition and provide the correct database name, username, and password
     	 to connect to a database -->
 	
+
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql://localhost:5432/capstone" />
@@ -64,9 +65,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 			   http://www.springframework.org/schema/beans/spring-beans.xsd
 			   http://www.springframework.org/schema/cloud/aws/context
-			   http://www.springframework.org/schema/cloud/spring-cloud-aws-context.xsd
-			   http://www.springframework.org/schema/cloud/aws/jdbc
-			   http://www.springframework.org/schema/cloud/spring-cloud-aws-jdbc.xsd">
+ 			   http://www.springframework.org/schema/cloud/spring-cloud-aws-context.xsd
+ 			   http://www.springframework.org/schema/cloud/aws/jdbc
+ 			   http://www.springframework.org/schema/cloud/spring-cloud-aws-jdbc.xsd"> 
        <aws-context:context-region auto-detect="true" />
       	<aws-context:context-credentials>
  	  <aws-context:instance-profile-credentials/>
