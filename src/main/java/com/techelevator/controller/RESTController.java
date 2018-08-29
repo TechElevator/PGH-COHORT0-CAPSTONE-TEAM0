@@ -26,7 +26,7 @@ public class RESTController {
 	@RequestMapping(value = "API/dailyForecast/{latLon}", method = RequestMethod.GET, produces = "application/json")
 	public darkSkyForecast serveDailyForecastJSON(@PathVariable String latLon) {
 
-		latLon = "39.00,-79.9959";
+		//latLon = latLon;
 		APICalls apiCalls = new APICalls();
 		
 		System.out.println("Great job!");
@@ -38,7 +38,7 @@ public class RESTController {
 	@RequestMapping(value = "API/current/{latLon}", method = RequestMethod.GET, produces = "application/json")
 	public darkSkyForecast serveCurrentConditionsJSON(@PathVariable String latLon) {
 
-		latLon = "39.00,-79.9959";
+		//latLon = "39.00,-79.9959";
 		APICalls apiCalls = new APICalls();
 		
 		System.out.println("Great job!");

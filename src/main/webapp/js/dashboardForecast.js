@@ -90,33 +90,22 @@ $( document ).ready(function() {
     		ozone : 320
     }
     
-    outputCurrentConditions(currentWeather);
+    //outputCurrentConditions(currentWeather);
     //END DUMMY DATA================================================================================
 	
     
 	//Make API Call to get daily forecast data from our REST API
-    var dataFromAPI = retrieveForecastFromAPI(39.00,-79.99,'si');
+    retrieveForecastFromAPI(39.00,-79.99,'si');
+    retrieveCurrentConditionsFromAPI(39.00,-79.99,'si');
     
   //Make API Call to get daily forecast data from our REST API
-    var currentConditionsFromAPI = retrieveForecastFromAPI(39.00,-79.99,'si');
+  //var currentConditionsFromAPI = retrieveForecastFromAPI(39.00,-79.99,'si');
     
-    console.log('dataFromAPI is: ');
-    console.log(dataFromAPI);
     
-    var hiTemp = dataFromAPI.highs;
-    var loTemp = dataFromAPI.lows;
-    var dewPoint = dataFromAPI.dewPoint;
-    var cloudCoverage = dataFromAPI.cloudCover;
-    var pressure = dataFromAPI.pressure;
-    var windGust = dataFromAPI.gustWind;
-    var meanWind = dataFromAPI.meanWind;
-    var humidity = dataFromAPI.humidity;
-    var precipChance = dataFromAPI.precipChance;
-    var precipIntensity = dataFromAPI.precipIntensity;
-    var summary = dataFromAPI.summary;
-    var time = dataFromAPI.time;
-    var windDirection = dataFromAPI.windDirection;
+    
+    
 	
+    /*
     var currentWeather = {
     		summary : currentConditionsFromAPI.summary[0],
     		precipProbability : currentConditionsFromAPI.precipChance[0],
@@ -127,23 +116,7 @@ $( document ).ready(function() {
     		windBearing : currentConditionsFromAPI.windDirection[0],
     		cloudCover : currentConditionsFromAPI.cloudCover[0],
     }
-    
-    var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
-    var weatherSelections = determineSelected();
-    //var testDataSeries = [weatherData[0]];
-    
-    
-    var visType = $("#userData").data("defaultviz");
-    var defaultVisType = visType;
-    var visTypeWasChanged = false;
-    var visType1 = "spline";
-    var visType2 = "column";
-    var forecastDays = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'];
-    var weatherParameters = ["hiTemp", "loTemp", "dewPoint", "precipChance", "humidity", "cloudCoverage", "meanWind", "windGust", "pressure"];
-    
-    //On first page load, chart will be created
-    //DEFINE VIS TYPE HERE BASED ON USER'S PREFERENCE, SAVED IN DATABASE
-    initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
+    */
     
     //On every checkbox click, chart will be created
     $("input:checkbox").change(function(){
@@ -166,7 +139,13 @@ $( document ).ready(function() {
 
 //Chart creation
 function initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections) {
-	////console.log("-------------------------------------")
+	console.log("Right after initiateChartCreation: ");
+	console.log(weatherData);
+	console.log(weatherSelections);
+	console.log(weatherParameters);
+	console.log(forecastDays);
+	console.log(visType);
+	
 	var chartCategory;
 	var selectedContent;
 	var chartData = [];
@@ -180,14 +159,18 @@ function initiateChartCreation(visType, forecastDays, weatherParameters, weather
 		//console.log("i is; " + i);
 	}
 	
+	console.log("chartData being passed in to createChart:");
+	console.log(chartData);
+	console.log(chartCategory);
+	
     createChart(visType, forecastDays, chartCategory, chartData, weatherData, weatherSelections);
 }
 
 //API Call - Request daily forecast data from DarkSky API (forecast.io)
 function retrieveForecastFromAPI(lat, lon, units) {
-	var endpoint = "http://localhost:8080/capstone/API/dailyForecast/40.4406,-100.9959"
+	var endpoint = "http://localhost:8080/capstone/API/dailyForecast/40.455305,-80.019397";
 	
-	var dataJSON = apiCallWithAJAX(endpoint);
+	var dataJSON = apiCallForDailyForecastWithAJAX(endpoint);
 	console.log("dataJSON is: ");
 	console.log(dataJSON);
 	
@@ -197,9 +180,9 @@ function retrieveForecastFromAPI(lat, lon, units) {
 
 //API Call - Request current conditions from DarkSky API (forecast.io)
 function retrieveCurrentConditionsFromAPI(lat, lon, units) {
-	var endpoint = "http://localhost:8080/capstone/API/dailyForecast/40.4406,-100.9959"
+	var endpoint = "http://localhost:8080/capstone/API/current/40.455305,-80.019397";
 	
-	var dataJSON = apiCallWithAJAX(endpoint);
+	var dataJSON = apiCallForCurrentConditionsWithAJAX(endpoint);
 	console.log("dataJSON is: ");
 	console.log(dataJSON);
 	
@@ -207,36 +190,161 @@ function retrieveCurrentConditionsFromAPI(lat, lon, units) {
 	
 }
 
-//AJAX call to our REST service
-function apiCallWithAJAX(endpoint) {
-
-	$.ajax({
+//AJAX call to our REST service for daily forecast
+function apiCallForDailyForecastWithAJAX(endpoint) {
+	return $.ajax({
 		url: endpoint,
-		//async: false,
 		type:"GET",
 		success: function(result) {
-			console.log("Result is: ");
+			console.log("result is: ");
 			console.log(result);
-			return result;
-		},
-		error: function(error){
-			console.log('Error ${error}')
+			console.log("now calling function to continue the program");
+			
+			//Trigger the rest of the program to continue
+			triggerForecastChartCreation(result);
+			
 		}
-	})
-	
-	
-	/*
-	$.ajax({url: endpoint}).then(function(result) {
-		console.log("Result is: ");
-			console.log(result);
-			return result;
 	});
-	*/
+}
+
+//AJAX call to our REST service for current conditions
+function apiCallForCurrentConditionsWithAJAX(endpoint) {
+	return $.ajax({
+		url: endpoint,
+		type:"GET",
+		success: function(result) {
+			console.log("result is: ");
+			console.log(result);
+			console.log("now calling function to continue the program");
+			
+			//Trigger the creation of the forecast visualization
+			triggerCurrentConditions(result);
+			
+		}
+	});
+}
+
+function triggerForecastChartCreation(dataFromAPI) {
 	
+	var hiTemp = {
+    		seriesName : "High Temperature",
+    		seriesData : dataFromAPI.highs,
+    		type : "temperature",
+    		axisLabel : "Temperature",
+    		unitsImperial : "F",
+    		unitsSI : "C"
+    }
+    var loTemp = {
+    		seriesName : "Low Temperature",
+    		seriesData : dataFromAPI.lows,
+    		type : "temperature",
+    		axisLabel : "Temperature",
+    		unitsImperial : "F",
+    		unitsSI : "C"
+    }
+    var dewPoint = {
+    		seriesName : "Dew Point",
+    		seriesData : dataFromAPI.dewPoint,
+    		type : "temperature",
+    		axisLabel : "Temperature",
+    		unitsImperial : "F",
+    		unitsSI : "C"
+    }
+    var precipChance = {
+    		seriesName : "Chance of Precipitation",
+    		seriesData : dataFromAPI.precipChance,
+    		type : "percentage",
+    		axisLabel : "Percentage",
+    		unitsImperial : "%",
+    		unitsSI : "%"
+    }
+    var humidity = {
+    		seriesName : "Humidity",
+    		seriesData : dataFromAPI.humidity,
+    		type : "percentage",
+    		axisLabel : "Percentage",
+    		unitsImperial : "%",
+    		unitsSI : "%"
+    }
+    var cloudCoverage = {
+    		seriesName : "Cloud Coverage",
+    		seriesData : dataFromAPI.cloudCover,
+    		type : "percentage",
+    		axisLabel : "Percentage",
+    		unitsImperial : "%",
+    		unitsSI : "%"
+    }
+    var meanWind = {
+    		seriesName : "Mean Wind",
+    		seriesData : dataFromAPI.meanWind,
+    		type : "velocity",
+    		axisLabel : "Velocity",
+    		unitsImperial : "mph",
+    		unitsSI : "m/s"
+    }
+    var windGust = {
+    		seriesName : "Wind Gust",
+    		seriesData : dataFromAPI.gustWind,
+    		type : "velocity",
+    		axisLabel : "Velocity",
+    		unitsImperial : "mph",
+    		unitsSI : "m/s"
+    }
+    var pressure = {
+    		seriesName : "Pressure",
+    		seriesData : dataFromAPI.pressure,
+    		type : "pressure",
+    		axisLabel : "Pressure",
+    		unitsImperial : "mb",			//Pressure will always be reported in millibars, mb
+    		unitsSI : "mb"
+    }
+    
+    var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
+    var weatherSelections = determineSelected();
+    
+    console.log("In doThings, weatherData is: ");
+    console.log(weatherData);
+    
+    //var visType = $("#userData").data("defaultviz");
+    var visType = "column";
+    var defaultVisType = visType;
+    var visTypeWasChanged = false;
+    var visType1 = "spline";
+    var visType2 = "column";
+    var forecastDays = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'];
+    var weatherParameters = ["hiTemp", "loTemp", "dewPoint", "precipChance", "humidity", "cloudCoverage", "meanWind", "windGust", "pressure"];
+    
+    //On first page load, chart will be created
+    //DEFINE VIS TYPE HERE BASED ON USER'S PREFERENCE, SAVED IN DATABASE
+    initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
+    
+}
+
+function triggerCurrentConditions(dataFromAPI) {
 	
+	console.log("in triggerCurrentConditions");
+	console.log(dataFromAPI);
+	
+	var currentWeather = {
+    		summary : "Partly Cloudy",
+    		precipProbability : 24,
+    		temperature : 74,
+    		dewPoint : 50,
+    		humidity : 47,
+    		pressure : 1021,
+    		windSpeed : 2.35,
+    		windGust : 4.89,
+    		windBearing : 344,
+    		cloudCover : 56,
+    		uvIndex : 7,
+    		visibility : 10, 
+    		ozone : 320
+    }
 	
 }
 
+
+/*
 //PARSE FORECAST DATA FROM JSON
 function parseDailyForecastDataFromAPI(dataFromAPI) {
 	
@@ -246,6 +354,7 @@ function parseDailyForecastDataFromAPI(dataFromAPI) {
 	return [currentConditions, daily];
 	
 }
+*/
 
 //CHART: SINGLE-VARIABLE
 function singleVariableChart(visType, forecastDays, weatherInfo1) { 
@@ -284,7 +393,12 @@ function singleVariableChart(visType, forecastDays, weatherInfo1) {
 
 //CHART: TWO-VARIABLE, SAME Y AXIS 
 function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) { 
-    var weatherParam1 = weatherInfo1.seriesData;
+    
+	console.log("in plot function: ");
+	console.log(weatherInfo1);
+	console.log(weatherInfo2);
+	
+	var weatherParam1 = weatherInfo1.seriesData;
     var weatherParam2 = weatherInfo2.seriesData;
     var seriesName1 = weatherInfo1.seriesName;
     var seriesName2 = weatherInfo2.seriesName;
@@ -1217,16 +1331,12 @@ function determineChartCategoryAndContent(weatherParameters, weatherSelections) 
 }
 
 function createChart(visType, forecastDays, chartCategory, chartContent, weatherData, weatherSelections) {
-	//console.log("chart content: ");
-	//console.log(chartContent);
-	//console.log("first one in content: ");
-	//console.log(chartContent[0]);
-	//console.log("2nd one in content: ");
-	//console.log(chartContent[1]);
-	
-	//console.log("chart content is: ");
-	//console.log(chartContent);
-	
+	console.log("In createChart: chart content: ");
+	console.log(chartContent);
+	console.log("first one in content: ");
+	console.log(chartContent[0]);
+	console.log("2nd one in content: ");
+	console.log(chartContent[1]);
 	
 	//If chartCategory is a single-axis chart, we have it easy! Just determine the number of variables
 	//and pass it its contents

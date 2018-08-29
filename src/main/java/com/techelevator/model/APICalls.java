@@ -312,7 +312,7 @@ public class APICalls {
 			System.out.println("Now starting API call test for forecast!!: ");
 			
 			URL obj = null;
-			String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/39.00,-79.99";
+			String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + latLon;
 			try {
 				obj = new URL(url);
 			} catch (MalformedURLException e) {
@@ -511,6 +511,7 @@ public class APICalls {
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObj = null;
 			JSONArray jsonArr = null;
+			JSONObject jsonObjNested = null;
 			try {
 				jsonObj = (JSONObject) parser.parse(response.toString());
 				//System.out.println("SUCCESSFULLY GOT PAST JSON OBJ");
@@ -518,8 +519,11 @@ public class APICalls {
 				
 				System.out.println(jsonObj.toJSONString());
 				
-				JSONObject jsonObjNested = (JSONObject) jsonObj.get("daily");
-				jsonArr = (JSONArray) jsonObjNested.get("data");
+				jsonObjNested = (JSONObject) jsonObj.get("currently");
+				
+				System.out.println(jsonObjNested.toJSONString());
+				
+				
 				
 				
 				//System.out.println("SUCCESSFULLY GOT PAST JSON Arr");
@@ -528,7 +532,7 @@ public class APICalls {
 				} else {
 					//System.out.println("nested object IS NOT NULL!");
 				}
-				System.out.println(jsonArr.toJSONString());
+				//System.out.println(jsonArr.toJSONString());
 				
 			} catch (ParseException e) {
 				System.out.println("Parse exception");
@@ -553,12 +557,12 @@ public class APICalls {
 			
 			
 			//Iterate through forecast days
-			for (int i = 0; i < jsonArr.size(); i ++) {
+			for (int i = 0; i < jsonObjNested.size(); i ++) {
 				//System.out.println(i);
-				JSONObject currentForecast = (JSONObject) jsonArr.get(i);
+				JSONObject currentForecast = (JSONObject) jsonObjNested.get(i);
 				//System.out.println(currentForecast.toJSONString());
-				String test = (String) currentForecast.get("detailedForecast");
-				//System.out.println(test);
+				//String test = (String) currentForecast.get("detailedForecast");
+				System.out.println(currentForecast);
 				
 				//time.add((Integer) (int) (long) currentForecast.get("time"));
 				highTemp.add((Integer) (int) (double) currentForecast.get("temperature"));
