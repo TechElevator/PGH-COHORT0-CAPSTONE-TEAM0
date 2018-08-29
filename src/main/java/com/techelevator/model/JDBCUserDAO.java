@@ -1,5 +1,8 @@
 package com.techelevator.model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.sql.DataSource;
 
 import org.bouncycastle.util.encoders.Base64;
@@ -10,9 +13,9 @@ import org.springframework.stereotype.Component;
 
 import com.techelevator.model.User;
 import com.techelevator.security.PasswordHasher;
-//import com.twilio.Twilio;
-//import com.twilio.rest.api.v2010.account.Message;
-//import com.twilio.type.PhoneNumber;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 @Component
 public class JDBCUserDAO implements UserDAO {
@@ -56,20 +59,21 @@ public class JDBCUserDAO implements UserDAO {
 		
 		//BEGIN TWILIO TEST
 		
-//	    final String ACCOUNT_SID =
-//	            "ACc662cd062611460d4b264698fc7dec62";
-//	    final String AUTH_TOKEN =
-//	            "49dc4284ba5cfba87f9c1a2454d598d9";
-//	    
-//        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-//
-//        Message message = Message
-//                .creator(new PhoneNumber("+14126573458"), // to
-//                        new PhoneNumber("+18782187024"), // from
-//                        "Where's Wallace?")
-//                .create();
-//
-//        System.out.println(message.getSid());
+/*	    final String ACCOUNT_SID =
+	            "ACc662cd062611460d4b264698fc7dec62";
+	    final String AUTH_TOKEN =
+	            "49dc4284ba5cfba87f9c1a2454d598d9";
+	    
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message
+                .creator(new PhoneNumber("+14126573458"), // to
+                        new PhoneNumber("+18782187024"), // from
+                        "Where's Wallace?")
+                .create();
+
+        System.out.println(message.getSid());
+        */
         
         //END TWILIO TEST
 

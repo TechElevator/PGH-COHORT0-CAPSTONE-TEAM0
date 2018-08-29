@@ -12,8 +12,11 @@ import com.techelevator.model.JDBCCityDAO;
 public class JDBCCityDAOIntegrationTest extends DAOIntegrationTest {
 	
 
+
 /*	
 =======
+=======
+>>>>>>> b542813099d37f88f62b155bf6e2bbc795bef0f0
 	/*
 >>>>>>> d99850002b8c33be4b5c9b3b9cffc1655a42e33c
 	private DataSource dataSource = getDataSource();
@@ -48,9 +51,5 @@ public class JDBCCityDAOIntegrationTest extends DAOIntegrationTest {
 		Assert.assertEquals("America/Los_Angeles", seattleTest.getTimezone());
 		Assert.assertEquals("47.6217,-122.3238", seattleTest.getLatLon());
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> d99850002b8c33be4b5c9b3b9cffc1655a42e33c
 */
 }

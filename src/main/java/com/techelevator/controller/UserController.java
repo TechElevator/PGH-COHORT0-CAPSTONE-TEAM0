@@ -93,7 +93,7 @@ public class UserController {
 			@RequestParam String defaultCity, @RequestParam double defaultLatitude,
 			@RequestParam double defaultLongitude,
 			/* @RequestParam long defaultPopulation, */ @RequestParam String defaultRegion,
-			@RequestParam String defaultTimezone) {
+			@RequestParam String defaultTimezone, @RequestParam String phoneNumber) {
 
 		System.out.println(defaultCity);
 
@@ -126,6 +126,14 @@ public class UserController {
 			System.out.println("got into viz change");
 			userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
 		}
+		
+		if (phoneNumber != null && !phoneNumber.equals("")) {
+			System.out.println("got into phone number change");
+			System.out.println("Received phone value: " + phoneNumber);
+			
+			userDAO.updatePhone(currentUser.getUserName(), phoneNumber);
+		}
+
 
 		if (defaultTempUnit != null && !defaultTempUnit.equals("")) {
 			System.out.println("got into temp change");

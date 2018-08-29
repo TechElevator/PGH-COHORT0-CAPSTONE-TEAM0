@@ -5,9 +5,10 @@
 BEGIN;
 
 -- CREATE statements go here
+DROP TABLE IF EXISTS user_alert;
 DROP TABLE IF EXISTS app_user;
 DROP TABLE IF EXISTS city;
-DROP TABLE IF EXISTS user_alert;
+DROP TABLE IF EXISTS twilio_auth;
 
 /*
 CREATE TABLE city(
@@ -29,6 +30,7 @@ CREATE TABLE city(
   ,id                INTEGER  NOT NULL PRIMARY KEY 
 );
 */
+
 
 CREATE TABLE app_user (
   id SERIAL PRIMARY KEY,
@@ -60,5 +62,13 @@ CREATE TABLE user_alert (
 
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES app_user (id)
 );
+
+
+CREATE TABLE twilio_auth (
+  account_sid VARCHAR(64) PRIMARY KEY,
+  auth_token VARCHAR(64),
+  from_phone VARCHAR(16)
+);
+
 
 COMMIT;

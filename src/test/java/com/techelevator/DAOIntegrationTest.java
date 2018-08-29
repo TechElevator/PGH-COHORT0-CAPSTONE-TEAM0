@@ -12,9 +12,6 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 public abstract class DAOIntegrationTest {
 
 
-//	
-//	
-//	
 
 //	/* Using this particular implementation of DataSource so that
 //	 * every database interaction is part of the same database
@@ -52,9 +49,5 @@ public abstract class DAOIntegrationTest {
 //	protected DataSource getDataSource() {
 //		return dataSource;
 //	}
-
-//	
-	
-	
 
 }
