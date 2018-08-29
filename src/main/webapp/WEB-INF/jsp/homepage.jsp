@@ -17,7 +17,7 @@
 			</div>
  <div class = "form-group">
 		<label for = "defaultViz">Select a  default visualization type:</label>
-		<select name = "defaultViz" class="custom-select custom-select-lg mb-3">
+		<select id="chartTypeSelection" name = "defaultViz" class="custom-select custom-select-lg mb-3">
 		 
 				<option value="spline">Line Chart</option>
 				<option value="areaspline">Area Line Chart</option>
@@ -158,7 +158,8 @@ jQuery(function ()
 
 
 <script src = "<c:url value = "/js/homepage.js"/>"></script>
-
+<script src = "<c:url value = "/js/createMeteogram.js"/>"></script>
+<script src = "<c:url value = "/js/dashboardForecast.js"/>"></script>	
  
 <!-- <script src = "js/homepage.js"/></script> -->
 

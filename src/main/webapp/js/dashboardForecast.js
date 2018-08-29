@@ -121,16 +121,34 @@ $( document ).ready(function() {
     */
     
     //On every checkbox click, chart will be created
-    $("input:checkbox").change(function(){
-    		//visType = $('#chartTypeSelection option:selected').val();	
-    		retrieveForecastFromAPI(39.00,-79.99,'si');	
-    		//initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
+    $("input:checkbox").change(function() {
+    		
+    		if ($("#historicalDateCheckbox").is(':checked')) {
+    			
+    			var startDate = $('#startDate').val();
+    			//console.log('START DATE: ');
+    			//console.log(startDate);
+    			
+    			var formattedStartDate = startDate.replace(/-/g, '.');
+    			//console.log(formattedStartDate);
+    			var dateObj = new Date(formattedStartDate);
+    			console.log(dateObj.getTime() / 1000);
+    			var unixTime = dateObj.getTime() / 1000;
+    			
+    			retrieveHistoricalFromAPI(39.00,-79.99, unixTime, 'si');
+    			
+    		} else {
+    			retrieveForecastFromAPI(39.00,-79.99,'si');
+    		}
+    	
+    	
+    			  		
     });
+    
     //On every change of the desired chart type, chart will be created
     $("#chartTypeSelection").change(function(){
     		visType = $('#chartTypeSelection option:selected').val();
     		retrieveForecastFromAPI(39.00,-79.99,'si');
-		//initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     
     
@@ -144,12 +162,12 @@ $( document ).ready(function() {
 
 //Chart creation
 function initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections) {
-	console.log("Right after initiateChartCreation: ");
-	console.log(weatherData);
-	console.log(weatherSelections);
-	console.log(weatherParameters);
-	console.log(forecastDays);
-	console.log(visType);
+	//console.log("Right after initiateChartCreation: ");
+	//console.log(weatherData);
+	//console.log(weatherSelections);
+	//console.log(weatherParameters);
+	//console.log(forecastDays);
+	//console.log(visType);
 	
 	var chartCategory;
 	var selectedContent;
@@ -161,12 +179,12 @@ function initiateChartCreation(visType, forecastDays, weatherParameters, weather
 	
 	for (i = 0; i < selectedContent[0].length; i ++) {
 		chartData[i] = weatherData[weatherParameters.indexOf(selectedContent[0][i])];
-		//console.log("i is; " + i);
+		////console.log("i is; " + i);
 	}
 	
-	console.log("chartData being passed in to createChart:");
-	console.log(chartData);
-	console.log(chartCategory);
+	//console.log("chartData being passed in to createChart:");
+	//console.log(chartData);
+	//console.log(chartCategory);
 	
     createChart(visType, forecastDays, chartCategory, chartData, weatherData, weatherSelections);
 }
@@ -176,8 +194,8 @@ function retrieveForecastFromAPI(lat, lon, units) {
 	var endpoint = "http://localhost:8080/capstone/API/dailyForecast/40.455305,-80.019397";
 	
 	var dataJSON = apiCallForDailyForecastWithAJAX(endpoint);
-	console.log("dataJSON is: ");
-	console.log(dataJSON);
+	//console.log("dataJSON is: ");
+	//console.log(dataJSON);
 	
 	return dataJSON;
 	
@@ -188,8 +206,20 @@ function retrieveCurrentConditionsFromAPI(lat, lon, units) {
 	var endpoint = "http://localhost:8080/capstone/API/current/40.455305,-80.019397";
 	
 	var dataJSON = apiCallForCurrentConditionsWithAJAX(endpoint);
-	console.log("dataJSON is: ");
-	console.log(dataJSON);
+	//console.log("dataJSON is: ");
+	//console.log(dataJSON);
+	
+	return dataJSON;
+	
+}
+
+//API Call - Request historical conditions from DarkSky API (forecast.io)
+function retrieveHistoricalFromAPI(lat, lon, unixTime, units) {
+	var endpoint = "http://localhost:8080/capstone/API/historical/40.455305,-80.019397,978325200";
+	
+	var dataJSON = apiCallForCurrentConditionsWithAJAX(endpoint);
+	//console.log("dataJSON is: ");
+	//console.log(dataJSON);
 	
 	return dataJSON;
 	
@@ -201,9 +231,9 @@ function apiCallForDailyForecastWithAJAX(endpoint) {
 		url: endpoint,
 		type:"GET",
 		success: function(result) {
-			console.log("result is: ");
-			console.log(result);
-			console.log("now calling function to continue the program");
+			//console.log("result is: ");
+			//console.log(result);
+			//console.log("now calling function to continue the program");
 			
 			//Trigger the rest of the program to continue
 			triggerForecastChartCreation(result);
@@ -218,9 +248,9 @@ function apiCallForCurrentConditionsWithAJAX(endpoint) {
 		url: endpoint,
 		type:"GET",
 		success: function(result) {
-			console.log("result is: ");
-			console.log(result);
-			console.log("now calling function to continue the program");
+			//console.log("result is: ");
+			//console.log(result);
+			//console.log("now calling function to continue the program");
 			
 			//Trigger the creation of the forecast visualization
 			triggerCurrentConditions(result);
@@ -307,8 +337,8 @@ function triggerForecastChartCreation(dataFromAPI) {
     var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
     var weatherSelections = determineSelected();
     
-    console.log("In doThings, weatherData is: ");
-    console.log(weatherData);
+    ////console.log("In doThings, weatherData is: ");
+    ////console.log(weatherData);
     
     //var visType = $("#userData").data("defaultviz");
     //var visType = "column";
@@ -327,8 +357,8 @@ function triggerForecastChartCreation(dataFromAPI) {
 
 function triggerCurrentConditions(dataFromAPI) {
 	
-	console.log("in triggerCurrentConditions");
-	console.log(dataFromAPI);
+	//console.log("in triggerCurrentConditions");
+	//console.log(dataFromAPI);
 	
 	var currentWeather = {
     		summary : "Partly Cloudy",
@@ -357,8 +387,8 @@ function triggerCurrentConditions(dataFromAPI) {
     		cloudCover : dataFromAPI.cloudCover[0] * 100,
     }
 	
-	console.log("current weather: ");
-	console.log(currentWeather);
+	//console.log("current weather: ");
+	//console.log(currentWeather);
 	
 	outputCurrentConditions(currentWeather);
 	
@@ -415,9 +445,9 @@ function singleVariableChart(visType, forecastDays, weatherInfo1) {
 //CHART: TWO-VARIABLE, SAME Y AXIS 
 function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) { 
     
-	console.log("in plot function: ");
-	console.log(weatherInfo1);
-	console.log(weatherInfo2);
+	//console.log("in plot function: ");
+	//console.log(weatherInfo1);
+	//console.log(weatherInfo2);
 	
 	var weatherParam1 = weatherInfo1.seriesData;
     var weatherParam2 = weatherInfo2.seriesData;
@@ -618,39 +648,39 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
     if (yAxis1 == "temperature") {
     		
     		for (i = 0; i < allData.length; i ++) {
-    			//console.log(allData[i].type);
+    			////console.log(allData[i].type);
     			if (allData[i].type == yAxis1) {
     				allData[i].chartType = "spline";
     			} else {
     				allData[i].chartType = "column";
     			}
     		}
-    		//console.log("Ye olde data: ");
-    		//console.log(allData[i]);
+    		////console.log("Ye olde data: ");
+    		////console.log(allData[i]);
     } else if (yAxis1 == "pressure") {
     		
     	for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     } else {
     		
     		for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     	
     }
     
@@ -760,45 +790,45 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
  
     //Determine axes
     var allData = [weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4];
-    //console.log(allData);
-    //console.log(yAxis1);
-    //console.log(yAxis2);
+    ////console.log(allData);
+    ////console.log(yAxis1);
+    ////console.log(yAxis2);
     if (yAxis1 == "temperature") {
     		
     		for (i = 0; i < allData.length; i ++) {
-    			//console.log(allData[i].type);
+    			////console.log(allData[i].type);
     			if (allData[i].type == yAxis1) {
     				allData[i].chartType = "spline";
     			} else {
     				allData[i].chartType = "column";
     			}
     		}
-    		//console.log("Ye olde data: ");
-    		//console.log(allData[i]);
+    		////console.log("Ye olde data: ");
+    		////console.log(allData[i]);
     } else if (yAxis1 == "pressure") {
     		
     	for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     } else {
     		
     		for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     	
     }
     
@@ -917,45 +947,45 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
  
     //Determine axes
     var allData = [weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4, weatherInfo5];
-    //console.log(allData);
-    //console.log(yAxis1);
-    //console.log(yAxis2);
+    ////console.log(allData);
+    ////console.log(yAxis1);
+    ////console.log(yAxis2);
     if (yAxis1 == "temperature") {
     		
     		for (i = 0; i < allData.length; i ++) {
-    			//console.log(allData[i].type);
+    			////console.log(allData[i].type);
     			if (allData[i].type == yAxis1) {
     				allData[i].chartType = "spline";
     			} else {
     				allData[i].chartType = "column";
     			}
     		}
-    		//console.log("Ye olde data: ");
-    		//console.log(allData[i]);
+    		////console.log("Ye olde data: ");
+    		////console.log(allData[i]);
     } else if (yAxis1 == "pressure") {
     		
     	for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     } else {
     		
     		for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     	
     }
     
@@ -1087,45 +1117,45 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
  
     //Determine axes
     var allData = [weatherInfo1, weatherInfo2, weatherInfo3, weatherInfo4, weatherInfo5, weatherInfo6];
-    //console.log(allData);
-    //console.log(yAxis1);
-    //console.log(yAxis2);
+    ////console.log(allData);
+    ////console.log(yAxis1);
+    ////console.log(yAxis2);
     if (yAxis1 == "temperature") {
     		
     		for (i = 0; i < allData.length; i ++) {
-    			//console.log(allData[i].type);
+    			////console.log(allData[i].type);
     			if (allData[i].type == yAxis1) {
     				allData[i].chartType = "spline";
     			} else {
     				allData[i].chartType = "column";
     			}
     		}
-    		//console.log("Ye olde data: ");
-    		//console.log(allData[i]);
+    		////console.log("Ye olde data: ");
+    		////console.log(allData[i]);
     } else if (yAxis1 == "pressure") {
     		
     	for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     } else {
     		
     		for (i = 0; i < allData.length; i ++) {
-			//console.log(allData[i].type);
+			////console.log(allData[i].type);
 			if (allData[i].type == yAxis1) {
 				allData[i].chartType = "spline";
 			} else {
 				allData[i].chartType = "column";
 			}
 		}
-		//console.log("Ye olde data: ");
-		//console.log(allData[i]);
+		////console.log("Ye olde data: ");
+		////console.log(allData[i]);
     	
     }
     
@@ -1291,26 +1321,26 @@ function determineChartCategoryAndContent(weatherParameters, weatherSelections) 
 	for (i = 0; i < weatherSelections.length; i ++) {
 		if (weatherSelections[i]) {
 			if (i < 3) {							//So, if a temperature checkbox is checked (hiTemp, loTemp, dew point)
-				//console.log("i is: " + i);
+				////console.log("i is: " + i);
 				countTemperature ++;
 			} else if (i >= 3 && i < 6) {		//If a percentage checkbox is checked (precip chance, cloud cover, humidity)
-				//console.log("i is: " + i);
+				////console.log("i is: " + i);
 				countPercentage ++;
 			} else if (i >= 6 && i < 8) {		//If a velocity checkbox is checked (mean wind, peak wind gust)
-				//console.log("i is: " + i);
+				////console.log("i is: " + i);
 				countVelocity ++;
 			} else {								//If the pressure checkbox is checked
-				//console.log("i is: " + i);
+				////console.log("i is: " + i);
 				countPressure ++;				
 			}
 			paramsToPlot.push(weatherParameters[i]);		//Add the current weather parameter to the array of parameters to plot
 		}
 	}
 	
-	//console.log("COUNT TEMPERATURE IS: " + countTemperature);
-	//console.log("COUNT PERCENTAGE IS: " + countPercentage);
-	//console.log("COUNT VELOCITY IS: " + countVelocity);
-	//console.log("COUNT PRESSURE IS: " + countPressure);
+	////console.log("COUNT TEMPERATURE IS: " + countTemperature);
+	////console.log("COUNT PERCENTAGE IS: " + countPercentage);
+	////console.log("COUNT VELOCITY IS: " + countVelocity);
+	////console.log("COUNT PRESSURE IS: " + countPressure);
 	
 	var typeCounts = [countTemperature, countPercentage, countVelocity, countPressure];
 	for (i = 0; i < typeCounts.length; i ++) {
@@ -1345,19 +1375,19 @@ function determineChartCategoryAndContent(weatherParameters, weatherSelections) 
 		chartCategory = "meteogram";
 	}
 	
-	//console.log(paramsToPlot);
-	//console.log(chartCategory);
+	////console.log(paramsToPlot);
+	////console.log(chartCategory);
 	
 	return [chartCategory, paramsToPlot];	
 }
 
 function createChart(visType, forecastDays, chartCategory, chartContent, weatherData, weatherSelections) {
-	console.log("In createChart: chart content: ");
-	console.log(chartContent);
-	console.log("first one in content: ");
-	console.log(chartContent[0]);
-	console.log("2nd one in content: ");
-	console.log(chartContent[1]);
+	//console.log("In createChart: chart content: ");
+	//console.log(chartContent);
+	//console.log("first one in content: ");
+	//console.log(chartContent[0]);
+	//console.log("2nd one in content: ");
+	//console.log(chartContent[1]);
 	
 	//If chartCategory is a single-axis chart, we have it easy! Just determine the number of variables
 	//and pass it its contents
@@ -1393,8 +1423,8 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 			types.push(chartContent[i].type);
 		}
 		
-		//console.log("TYPES: ");
-		//console.log(types);
+		////console.log("TYPES: ");
+		////console.log(types);
 		
 		if (types.includes("temperature")) {
 			yAxis1 = "temperature";
@@ -1417,8 +1447,8 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 			yAxis2 = "percentage";
 		}
 		
-		//console.log("2nd one in content right before passing to function: ");
-		//console.log(chartContent[1]);
+		////console.log("2nd one in content right before passing to function: ");
+		////console.log(chartContent[1]);
 		
 		switch (chartContent.length) {
 			case 2:
