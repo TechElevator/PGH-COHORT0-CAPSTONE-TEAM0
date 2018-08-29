@@ -122,7 +122,7 @@ $( document ).ready(function() {
     
     //On every checkbox click, chart will be created
     $("input:checkbox").change(function(){
-    		visType = $('#chartTypeSelection option:selected').val();	
+    		//visType = $('#chartTypeSelection option:selected').val();	
     		retrieveForecastFromAPI(39.00,-79.99,'si');	
     		//initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
