@@ -127,7 +127,7 @@ public class UserController {
 			userDAO.updateDefaultVisualization(currentUser.getUserName(), defaultViz);
 		}
 		
-		if (phoneNumber != null && !phoneNumber.equals("")) {
+		if (phoneNumber != null && !phoneNumber.equals("+1 ")) {
 			System.out.println("got into phone number change");
 			System.out.println("Received phone value: " + phoneNumber);
 			
