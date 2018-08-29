@@ -159,7 +159,9 @@ public class JDBCUserDAO implements UserDAO {
 	
 	@Override
 	public void updatePhone(String userName, String phone) {
-		jdbcTemplate.update("UPDATE app_user SET phone = ? WHERE user_name = ?", phone, userName);
+		String cleanedPhone = phone.replaceAll("[^\\d]", "").substring(1);
+		System.out.println("Cleaned phone is " + cleanedPhone);
+		jdbcTemplate.update("UPDATE app_user SET phone = ? WHERE user_name = ?", cleanedPhone, userName);
 	}
 
 
