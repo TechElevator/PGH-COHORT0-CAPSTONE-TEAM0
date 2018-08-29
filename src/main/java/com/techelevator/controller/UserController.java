@@ -17,17 +17,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.techelevator.model.TwilioDb;
+import com.techelevator.model.TwilioDbDAO;
 import com.techelevator.model.User;
 import com.techelevator.model.UserDAO;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 @Controller
 public class UserController {
 
 	private UserDAO userDAO;
+	private TwilioDbDAO twilioDbDAO;
 
 	@Autowired
-	public UserController(UserDAO userDAO) {
+	public UserController(UserDAO userDAO, TwilioDbDAO twilioDbDAO) {
 		this.userDAO = userDAO;
+		this.twilioDbDAO = twilioDbDAO;
 	}
 
 	@RequestMapping(path = "/users/new", method = RequestMethod.GET)
@@ -132,6 +139,19 @@ public class UserController {
 			System.out.println("Received phone value: " + phoneNumber);
 			
 			userDAO.updatePhone(currentUser.getUserName(), phoneNumber);
+			
+			TwilioDb twilioDb = twilioDbDAO.getCredentials();
+			
+	        Twilio.init(twilioDb.getAccountSid(), twilioDb.getAuthToken());
+
+	        Message message = Message
+	                .creator(new PhoneNumber("+1" + phoneNumber.replaceAll("[^\\d]", "").substring(1)), // to
+	                        new PhoneNumber(twilioDb.getFromPhone()), // from
+	                        "Thanks for registering your number, " + currentUser.getUserName() + "!\nLove, WeatherViz")
+	                .create();
+
+	        System.out.println(message.getSid());
+			
 		}
 
 
