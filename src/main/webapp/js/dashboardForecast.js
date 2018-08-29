@@ -1,3 +1,5 @@
+var visType = $("#userData").data("defaultviz");
+
 $( document ).ready(function() {
 	
 	//FOR DEMO PURPOSES: DUMMY DATA==========================================================
@@ -120,12 +122,15 @@ $( document ).ready(function() {
     
     //On every checkbox click, chart will be created
     $("input:checkbox").change(function(){
-    		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
+    		visType = $('#chartTypeSelection option:selected').val();	
+    		retrieveForecastFromAPI(39.00,-79.99,'si');	
+    		//initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     //On every change of the desired chart type, chart will be created
     $("#chartTypeSelection").change(function(){
     		visType = $('#chartTypeSelection option:selected').val();
-		initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
+    		retrieveForecastFromAPI(39.00,-79.99,'si');
+		//initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     });
     
     
@@ -306,7 +311,7 @@ function triggerForecastChartCreation(dataFromAPI) {
     console.log(weatherData);
     
     //var visType = $("#userData").data("defaultviz");
-    var visType = "column";
+    //var visType = "column";
     var defaultVisType = visType;
     var visTypeWasChanged = false;
     var visType1 = "spline";
@@ -340,6 +345,22 @@ function triggerCurrentConditions(dataFromAPI) {
     		visibility : 10, 
     		ozone : 320
     }
+	
+	var currentWeather = {
+    		//summary : dataFromAPI.summary[0],
+    		precipProbability : dataFromAPI.precipChance[0],
+    		temperature : dataFromAPI.highs[0],
+    		humidity : dataFromAPI.humidity[0] * 100,
+    		windSpeed : dataFromAPI.meanWind[0],
+    		windGust : dataFromAPI.gustWind[0],
+    		windBearing : dataFromAPI.windDirection[0],
+    		cloudCover : dataFromAPI.cloudCover[0] * 100,
+    }
+	
+	console.log("current weather: ");
+	console.log(currentWeather);
+	
+	outputCurrentConditions(currentWeather);
 	
 }
 
@@ -1441,7 +1462,7 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 function outputCurrentConditions(currentWeather) {
 	$('#temperatureLI').text(currentWeather.temperature + " F"); 
 	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
-	$('#humidityLI').text(currentWeather.humidity + "%");
+	$('#humidityLI').text(currentWeather.humidity + " %");
 	$('#windLI').text(currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
 	$('#windDirectionLI').text(currentWeather.windBearing);
 	$('#cloudCoverLI').text(currentWeather.cloudCover + " %");

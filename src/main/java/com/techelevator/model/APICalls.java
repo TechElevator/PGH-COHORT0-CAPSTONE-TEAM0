@@ -416,12 +416,12 @@ public class APICalls {
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
 				windGust.add((Integer) (int) (double) currentForecast.get("windGust"));
 				windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
-				precipChance.add((Double) (double) currentForecast.get("precipProbability"));
-				precipIntensity.add((Double) (double) currentForecast.get("precipIntensity"));
-				dewPoint.add((Integer) (int) (double) currentForecast.get("dewPoint"));
-				humidity.add((Double) (double) currentForecast.get("humidity"));
+				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
+				precipIntensity.add(((Number) currentForecast.get("precipIntensity")).doubleValue());
+				dewPoint.add(((Number) currentForecast.get("dewPoint")).intValue());
+				humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
 				pressure.add(((Number) currentForecast.get("pressure")).intValue());
-				cloudCover.add((Double) (double) currentForecast.get("cloudCover"));
+				cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue());
 				precipType.add((String) currentForecast.get("precipType"));
 				summary.add((String) currentForecast.get("summary"));
 				//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
@@ -521,6 +521,7 @@ public class APICalls {
 				
 				jsonObjNested = (JSONObject) jsonObj.get("currently");
 				
+				System.out.println("jsonObjNestedIs: ");
 				System.out.println(jsonObjNested.toJSONString());
 				
 				
@@ -557,12 +558,12 @@ public class APICalls {
 			
 			
 			//Iterate through forecast days
-			for (int i = 0; i < jsonObjNested.size(); i ++) {
+			//for (int i = 0; i < jsonObjNested.size(); i ++) {
 				//System.out.println(i);
-				JSONObject currentForecast = (JSONObject) jsonObjNested.get(i);
+				JSONObject currentForecast = (JSONObject) jsonObjNested;
 				//System.out.println(currentForecast.toJSONString());
 				//String test = (String) currentForecast.get("detailedForecast");
-				System.out.println(currentForecast);
+				System.out.println("current forecast is: " + currentForecast);
 				
 				//time.add((Integer) (int) (long) currentForecast.get("time"));
 				highTemp.add((Integer) (int) (double) currentForecast.get("temperature"));
@@ -570,7 +571,7 @@ public class APICalls {
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
 				windGust.add((Integer) (int) (double) currentForecast.get("windGust"));
 				windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
-				precipChance.add((Double) (double) currentForecast.get("precipProbability"));
+				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
 				//precipIntensity.add((Double) (double) currentForecast.get("precipIntensity"));
 				//dewPoint.add((Integer) (int) (double) currentForecast.get("dewPoint"));
 				humidity.add((Double) (double) currentForecast.get("humidity"));
@@ -580,9 +581,9 @@ public class APICalls {
 				summary.add((String) currentForecast.get("summary"));
 				//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
 				
-				System.out.println(highTemp.get(i));
+				System.out.println("high temp is: " + highTemp);
 				
-			}
+			//}
 			
 			//System.out.println("IN API CALLS, FORECASTDAYS LENGTH: " + forecastDays.size());
 			
@@ -604,7 +605,7 @@ public class APICalls {
 			//System.out.println(dailyForecast.getHighs().get(0));
 			//System.out.println(dailyForecast.getLow().get(0));
 			//System.out.println(dailyForecast.getHighs().get(1));
-			System.out.println(currentConditions.getLows().get(1));
+			//System.out.println(currentConditions.getLows().get(1));
 			
 			return currentConditions;
 			
