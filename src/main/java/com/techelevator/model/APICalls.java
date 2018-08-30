@@ -410,7 +410,7 @@ public class APICalls {
 				String test = (String) currentForecast.get("detailedForecast");
 				//System.out.println(test);
 				
-				time.add((Integer) (int) (long) currentForecast.get("time"));
+				time.add(((Number) currentForecast.get("time")).intValue());
 				highTemp.add(((Number) currentForecast.get("temperatureHigh")).intValue());
 				lowTemp.add(((Number) currentForecast.get("temperatureLow")).intValue());
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
@@ -541,6 +541,7 @@ public class APICalls {
 			}
 			
 			ArrayList<String> dayOfWeek = new ArrayList<String>();
+			ArrayList<String> icon = new ArrayList<String>();
 			ArrayList<Integer> time = new ArrayList<Integer>();
 			ArrayList<Integer> highTemp = new ArrayList<Integer>();
 			ArrayList<Integer> lowTemp = new ArrayList<Integer>();
@@ -579,6 +580,7 @@ public class APICalls {
 				cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue());
 				//precipType.add((String) currentForecast.get("precipType"));
 				summary.add((String) currentForecast.get("summary"));
+				icon.add((String) currentForecast.get("icon"));
 				//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
 				
 				System.out.println("high temp is: " + highTemp);
@@ -603,6 +605,7 @@ public class APICalls {
 			currentConditions.setCloudCover(cloudCover);
 			//currentConditions.setPrecipType(precipType);
 			//currentConditions.setTime(time);
+			currentConditions.setIcon(icon);
 
 			//System.out.println(dailyForecast.getHighs().get(0));
 			//System.out.println(dailyForecast.getLow().get(0));

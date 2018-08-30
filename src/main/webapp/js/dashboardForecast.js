@@ -378,6 +378,13 @@ function triggerForecastChartCreation(dataFromAPI) {
     		unitsImperial : "mb",			//Pressure will always be reported in millibars, mb
     		unitsSI : "mb"
     }
+	var time = {
+		seriesName : "unixTime",
+		seriesData : dataFromAPI.time,
+		type : "unix"
+	}
+		s
+	}
     
     var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
     var weatherSelections = determineSelected();
