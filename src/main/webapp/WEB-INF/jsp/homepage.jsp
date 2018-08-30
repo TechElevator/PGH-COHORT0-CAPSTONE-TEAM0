@@ -22,7 +22,7 @@
 				<option value="spline">Line Chart</option>
 				<option value="areaspline">Area Line Chart</option>
 				<option value="column">Bar Chart</option>
-				<option value="meteogram">WeatherViz5000&#8482;</option>
+			
 		  
 		</select>
 	</div>
