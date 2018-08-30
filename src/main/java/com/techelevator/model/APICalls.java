@@ -411,11 +411,11 @@ public class APICalls {
 				//System.out.println(test);
 				
 				time.add((Integer) (int) (long) currentForecast.get("time"));
-				highTemp.add((Integer) (int) (double) currentForecast.get("temperatureHigh"));
-				lowTemp.add((Integer) (int) (double) currentForecast.get("temperatureLow"));
+				highTemp.add(((Number) currentForecast.get("temperatureHigh")).intValue());
+				lowTemp.add(((Number) currentForecast.get("temperatureLow")).intValue());
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
-				windGust.add(((Number)currentForecast.get("windGust")).intValue());
-				windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
+				windGust.add(((Number) currentForecast.get("windGust")).intValue());
+				windDirection.add(((Number) currentForecast.get("windBearing")).intValue());
 				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
 				precipIntensity.add(((Number) currentForecast.get("precipIntensity")).doubleValue());
 				dewPoint.add(((Number) currentForecast.get("dewPoint")).intValue());
@@ -462,7 +462,7 @@ public class APICalls {
 			System.out.println("Now starting API call test for forecast!!: ");
 			
 			URL obj = null;
-			String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/39.00,-79.99";
+			String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + latLon;
 			try {
 				obj = new URL(url);
 			} catch (MalformedURLException e) {
@@ -566,17 +566,17 @@ public class APICalls {
 				System.out.println("current forecast is: " + currentForecast);
 				
 				//time.add((Integer) (int) (long) currentForecast.get("time"));
-				highTemp.add((Integer) (int) (double) currentForecast.get("temperature"));
-//				lowTemp.add(((Number) currentForecast.get("temperatureLow")).intValue());
+				highTemp.add(((Number) currentForecast.get("temperature")).intValue());
+				//lowTemp.add(((Number) currentForecast.get("temperatureLow")).intValue());
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
-				windGust.add((Integer) (int) (double) currentForecast.get("windGust"));
-				windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
+				windGust.add(((Number) currentForecast.get("windGust")).intValue());
+				windDirection.add(((Number) currentForecast.get("windBearing")).intValue());
 				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
 				//precipIntensity.add((Double) (double) currentForecast.get("precipIntensity"));
 				//dewPoint.add((Integer) (int) (double) currentForecast.get("dewPoint"));
-				humidity.add((Double) (double) currentForecast.get("humidity"));
+				humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
 				//pressure.add(((Number) currentForecast.get("pressure")).intValue());
-				cloudCover.add((Double) (double) currentForecast.get("cloudCover"));
+				cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue());
 				//precipType.add((String) currentForecast.get("precipType"));
 				summary.add((String) currentForecast.get("summary"));
 				//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
@@ -589,7 +589,9 @@ public class APICalls {
 			
 			//dailyForecast.setForecastDay(forecastDays);
 			currentConditions.setHighs(highTemp);
-//			currentConditions.setLows(lowTemp);
+
+			//currentConditions.setLows(lowTemp);
+
 			currentConditions.setMeanWind(meanWind);
 			currentConditions.setGustWind(windGust);
 			currentConditions.setWindDirection(windDirection);
@@ -610,6 +612,174 @@ public class APICalls {
 			return currentConditions;
 			
 		}
+
+		
+		public darkSkyForecast retrieveHistoricalConditionsFromDarkSky(String latLon, Long unixTime) {
+			darkSkyForecast historicalForecast = new darkSkyForecast();
+			ArrayList<Long> unixTimes = new ArrayList<Long>();
+			Long secondsInDay = (long) 86400;
+			
+			ArrayList<String> dayOfWeek = new ArrayList<String>();
+			ArrayList<Integer> time = new ArrayList<Integer>();
+			ArrayList<Integer> highTemp = new ArrayList<Integer>();
+			ArrayList<Integer> lowTemp = new ArrayList<Integer>();
+			ArrayList<Integer> meanWind = new ArrayList<Integer>();
+			ArrayList<Integer> windGust = new ArrayList<Integer>();
+			ArrayList<Integer> windDirection = new ArrayList<Integer>();
+			ArrayList<String> summary = new ArrayList<String>();
+			ArrayList<Double> precipChance = new ArrayList<Double>();
+			ArrayList<Double> precipIntensity = new ArrayList<Double>();
+			ArrayList<String> precipType = new ArrayList<String>();
+			ArrayList<Integer> dewPoint = new ArrayList<Integer>();
+			ArrayList<Double> humidity = new ArrayList<Double>();
+			ArrayList<Integer> pressure = new ArrayList<Integer>();
+			ArrayList<Double> cloudCover = new ArrayList<Double>();
+			
+			System.out.println("Now starting API call for historic data: ");
+			
+			for (int i = 1; i <= 7; i++) {
+			
+				URL obj = null;
+				String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + latLon + "," + (unixTime + (i * secondsInDay));
+				try {
+					obj = new URL(url);
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Malformed url exception");
+					e.printStackTrace();
+				}
+				HttpURLConnection con = null;
+				try {
+					con = (HttpURLConnection) obj.openConnection();
+				} catch (IOException e) {
+					System.out.println("IOE exception");
+					e.printStackTrace();
+				}
+				try {
+					con.setRequestMethod("GET");
+				} catch (ProtocolException e) {
+					System.out.println("Protocol exception");
+					e.printStackTrace();
+				}
+				
+				BufferedReader in = null;
+				try {
+					in = new BufferedReader( new InputStreamReader(con.getInputStream()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+				try {
+					while ((inputLine = in.readLine()) != null) {
+						response.append(inputLine);
+					}
+				} catch (IOException e1) {
+					System.out.println("OException when tyring while inputline = in.readline");
+					e1.printStackTrace();
+				}
+				try {
+					in.close();
+				} catch (IOException e) {
+					System.out.println("IOexception when trying to close in");
+					e.printStackTrace();
+				}
+				//System.out.println(response.toString());
+				
+				JSONParser parser = new JSONParser();
+				JSONObject jsonObj = null;
+				JSONArray jsonArr = null;
+				try {
+					jsonObj = (JSONObject) parser.parse(response.toString());
+					//System.out.println("SUCCESSFULLY GOT PAST JSON OBJ");
+					//System.out.println(jsonObj.get("properties"));
+					
+					System.out.println(jsonObj.toJSONString());
+					
+					JSONObject jsonObjNested = (JSONObject) jsonObj.get("daily");
+					jsonArr = (JSONArray) jsonObjNested.get("data");
+					
+					
+					//System.out.println("SUCCESSFULLY GOT PAST JSON Arr");
+					if (jsonArr == null) {
+						//System.out.println("nested object is null");
+					} else {
+						//System.out.println("nested object IS NOT NULL!");
+					}
+					System.out.println(jsonArr.toJSONString());
+					
+				} catch (ParseException e) {
+					System.out.println("Parse exception");
+					e.printStackTrace();
+				}
+				
+				
+				
+				
+				//Iterate through forecast days
+				for (int j = 0; j < jsonArr.size(); j ++) {
+					//System.out.println(i);
+					JSONObject currentForecast = (JSONObject) jsonArr.get(j);
+					//System.out.println(currentForecast.toJSONString());
+					String test = (String) currentForecast.get("detailedForecast");
+					//System.out.println(test);
+					System.out.println("======THIS IS THE JSON STRING:");
+					System.out.println(currentForecast.toJSONString());
+					
+					
+					time.add((Integer) (int) (long) currentForecast.get("time"));
+					highTemp.add((Integer) (int) (double) currentForecast.get("temperatureHigh"));
+					lowTemp.add((Integer) (int) (double) currentForecast.get("temperatureLow"));
+					meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
+					//windGust.add(((Number) currentForecast.get("windGust")).intValue());
+					//windGust.add(100);
+					windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
+					precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
+					precipIntensity.add(((Number) currentForecast.get("precipIntensity")).doubleValue());
+					dewPoint.add(((Number) currentForecast.get("dewPoint")).intValue());
+					humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
+					pressure.add(((Number) currentForecast.get("pressure")).intValue());
+					cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue());
+					precipType.add((String) currentForecast.get("precipType"));
+					summary.add((String) currentForecast.get("summary"));
+					//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
+					
+					System.out.println(highTemp.get(j));
+					
+				}
+				
+			}
+			
+			//System.out.println("IN API CALLS, FORECASTDAYS LENGTH: " + forecastDays.size());
+			
+			//dailyForecast.setForecastDay(forecastDays);
+			historicalForecast.setHighs(highTemp);
+			historicalForecast.setLows(lowTemp);
+			historicalForecast.setMeanWind(meanWind);
+			//historicalForecast.setGustWind(windGust);
+			historicalForecast.setWindDirection(windDirection);
+			historicalForecast.setPrecipChance(precipChance);
+			historicalForecast.setPrecipIntensity(precipIntensity);
+			historicalForecast.setDewPoint(dewPoint);
+			historicalForecast.setHumidity(humidity);
+			historicalForecast.setPressure(pressure);
+			historicalForecast.setCloudCover(cloudCover);
+			historicalForecast.setPrecipType(precipType);
+			historicalForecast.setTime(time);
+			historicalForecast.setSummary(summary);
+
+			//System.out.println(historicalForecast.getHighs().get(0));
+			//System.out.println(historicalForecast.getLow().get(0));
+			//System.out.println(historicalForecast.getHighs().get(1));
+			System.out.println(historicalForecast.getLows().get(1));
+			
+			return historicalForecast;
+			
+				
+			
+		}
+	
+
 }
 //		public darkSkyForecast retrieveHistoricalConditionsFromDarkSky(String latLon, Long unixTime) {
 //			darkSkyForecast historicalForecast = new darkSkyForecast();

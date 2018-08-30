@@ -5,7 +5,7 @@
 
 
  
- <form action="" method="post" name="form_citydetails" id="form_citydetails" >
+ <form name="form_citydetails" id="form_citydetails" >
  <div class="col-sm-3"></div>
  <div class = "col-sm-6">
  <h1>Search</h1>
@@ -37,15 +37,15 @@
 		<label class="form-check-label"  for = "startDate">Start Date:</label>
 		<input class="form-check-label"  type = "date" id = "startDate">
 		
-		
+		<!-- 
 		<label for = "endDate">End Date:</label>
 		<input class="form-check-label"  type = "date" id = "endDate">
-		
+		-->
 		</div>
 		
  
 		 <div>
-			<button type="submit" class="btn btn-default"><strong>Viz-ualize</strong></button>
+			<button id = "viz-ualize" type="button" class="btn btn-default"><strong>Viz-ualize</strong></button>
 		</div>
 		</div>
  
@@ -90,6 +90,7 @@
 				</div>
 			</form>
 			
+			<!--
 			<div id="chartTypeSelectionContainer" class="d-flex justify-content-center">
 				
 				<select class = "custom-select" id="chartTypeSelection" name="chartTypeSelection">
@@ -99,6 +100,7 @@
 			  		<option value="areaspline">Filled Line Plot</option>
 				</select>
 			</div>
+			-->
 			
 		</div>
 		
@@ -155,6 +157,62 @@ jQuery(function ()
 
 
 
+<script type="text/javascript">
+function getcitydetails(fqcn) {
+
+	if (typeof fqcn == "undefined") fqcn = jQuery("#f_elem_city").val();
+
+	cityfqcn = fqcn;
+
+	if (cityfqcn) {
+
+	    jQuery.getJSON(
+	                "http://gd.geobytes.com/GetCityDetails?callback=?&fqcn="+cityfqcn,
+                     function (data) {
+	            jQuery("#geobytesinternet").val(data.geobytesinternet);
+	            jQuery("#geobytescountry").val(data.geobytescountry);
+	            jQuery("#geobytesregionlocationcode").val(data.geobytesregionlocationcode);
+	            jQuery("#geobytesregion").val(data.geobytesregion);
+	            jQuery("#geobyteslocationcode").val(data.geobyteslocationcode);
+	            jQuery("#geobytescity").val(data.geobytescity);
+	            jQuery("#geobytescityid").val(data.geobytescityid);
+	            jQuery("#geobytesfqcn").val(data.geobytesfqcn);
+	            jQuery("#geobyteslatitude").val(data.geobyteslatitude);
+	            jQuery("#geobyteslongitude").val(data.geobyteslongitude);
+	            jQuery("#geobytescapital").val(data.geobytescapital);
+	            jQuery("#geobytestimezone").val(data.geobytestimezone);
+	            jQuery("#geobytesnationalitysingular").val(data.geobytesnationalitysingular);
+	            jQuery("#geobytespopulation").val(data.geobytespopulation);
+	            jQuery("#geobytesnationalityplural").val(data.geobytesnationalityplural);
+	            jQuery("#geobytesmapreference").val(data.geobytesmapreference);
+	            jQuery("#geobytescurrency").val(data.geobytescurrency);
+	            jQuery("#geobytescurrencycode").val(data.geobytescurrencycode);
+	            }
+	    );
+	}
+}
+</script>
+
+
+<div>
+<input id="geobytescity" readonly="readonly" size="30" name = "defaultCity" style = "display:none" >
+</div>
+<div>
+<input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" style = "display:none">
+</div>
+<div>
+<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude" style = "display:none">
+</div>
+<div>
+<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude" style = "display:none">
+</div>
+<div>
+<input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation" style = "display:none">
+</div>
+<div>
+<input id="geobytestimezone" readonly="readonly" size="30" name = "defaultTimezone" style = "display:none">
+</div>
+</form>
 
 
 <script src = "<c:url value = "/js/homepage.js"/>"></script>

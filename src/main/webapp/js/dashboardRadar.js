@@ -1,7 +1,14 @@
+var latitude = $("#userData").data("latitude");
+var longitude = $("#userData").data("longitude");
+
 function loadMapScenario() {
-                var map = new Microsoft.Maps.Map(document.getElementById('liveRadar'), {
+                
+				console.log(latitude);
+				console.log(longitude);
+	
+				var map = new Microsoft.Maps.Map(document.getElementById('liveRadar'), {
                     /* No need to set credentials if already passed in URL */
-                    center: new Microsoft.Maps.Location(40.4406, -79.9959),
+                    center: new Microsoft.Maps.Location(latitude, longitude),
                     zoom: 7,
                     mapTypeId: Microsoft.Maps.MapTypeId.canvasDark });
                 var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), { color: 'yellow'});

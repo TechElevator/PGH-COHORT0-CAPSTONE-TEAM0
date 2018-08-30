@@ -1,7 +1,28 @@
 var visType = $("#userData").data("defaultviz");
+var latitude;
+var longitude;
 
 $( document ).ready(function() {
 	
+	var onDashboard;
+	
+	if(window.location.pathname == "/capstone/"){
+		onDashboard = false;
+		latitude = 39.99;
+		longitude = -79;
+	} else {
+		onDashboard = true;
+		$("#currentConditionsHeader").text('Current Conditions in ' + $("#userData").data("city") + ', ' + $("#userData").data("region"));
+		$("#forecastHeader").text('Daily Forecast for ' + $("#userData").data("city") + ', ' + $("#userData").data("region"));
+		latitude = $("#userData").data("latitude");
+		longitude = $("#userData").data("longitude");
+		//Make API Call to get daily forecast data from our REST API
+	    retrieveForecastFromAPI(latitude,longitude,'si');
+	    retrieveCurrentConditionsFromAPI(latitude,longitude,'si');
+	}
+	
+	
+	/*
 	//FOR DEMO PURPOSES: DUMMY DATA==========================================================
     var hiTemp = {
     		seriesName : "High Temperature",
@@ -94,11 +115,9 @@ $( document ).ready(function() {
     
     //outputCurrentConditions(currentWeather);
     //END DUMMY DATA================================================================================
-	
+	*/
     
-	//Make API Call to get daily forecast data from our REST API
-    retrieveForecastFromAPI(39.00,-79.99,'si');
-    retrieveCurrentConditionsFromAPI(39.00,-79.99,'si');
+	
     
   //Make API Call to get daily forecast data from our REST API
   //var currentConditionsFromAPI = retrieveForecastFromAPI(39.00,-79.99,'si');
@@ -120,11 +139,23 @@ $( document ).ready(function() {
     }
     */
     
-    //On every checkbox click, chart will be created
+    //On every checkbox click when on dashboard, chart will be created
     $("input:checkbox").change(function() {
     		
-    		if ($("#historicalDateCheckbox").is(':checked')) {
-    			
+    		if (onDashboard) {
+    			retrieveForecastFromAPI(latitude,longitude,'si');
+    		}
+    			  		
+    });
+    
+    //On every "vis-ualize" button click when on home page, chart will be created
+    $("#viz-ualize").click(function() {
+    		//alert('sup');
+    		latitude = $('#geobyteslatitude').val();
+    		longitude = $('#geobyteslongitude').val();
+    	
+    	
+    		if ($("#historicalDateCheckbox").is(':checked')) {	
     			var startDate = $('#startDate').val();
     			//console.log('START DATE: ');
     			//console.log(startDate);
@@ -135,20 +166,19 @@ $( document ).ready(function() {
     			console.log(dateObj.getTime() / 1000);
     			var unixTime = dateObj.getTime() / 1000;
     			
-    			retrieveHistoricalFromAPI(39.00,-79.99, unixTime, 'si');
-    			
+    			retrieveHistoricalFromAPI(latitude,longitude, unixTime, 'si'); 			
     		} else {
-    			retrieveForecastFromAPI(39.00,-79.99,'si');
+    			visType = $('#chartTypeSelection option:selected').val();
+    			retrieveForecastFromAPI(latitude,longitude,'si');
+    			
     		}
-    	
-    	
-    			  		
     });
+    
     
     //On every change of the desired chart type, chart will be created
     $("#chartTypeSelection").change(function(){
     		visType = $('#chartTypeSelection option:selected').val();
-    		retrieveForecastFromAPI(39.00,-79.99,'si');
+    		retrieveForecastFromAPI(latitude,longitude,'si');
     });
     
     
@@ -191,7 +221,7 @@ function initiateChartCreation(visType, forecastDays, weatherParameters, weather
 
 //API Call - Request daily forecast data from DarkSky API (forecast.io)
 function retrieveForecastFromAPI(lat, lon, units) {
-	var endpoint = "http://localhost:8080/capstone/API/dailyForecast/40.455305,-80.019397";
+	var endpoint = "http://localhost:8080/capstone/API/dailyForecast/" + lat + "," + lon;
 	
 	var dataJSON = apiCallForDailyForecastWithAJAX(endpoint);
 	//console.log("dataJSON is: ");
@@ -203,7 +233,7 @@ function retrieveForecastFromAPI(lat, lon, units) {
 
 //API Call - Request current conditions from DarkSky API (forecast.io)
 function retrieveCurrentConditionsFromAPI(lat, lon, units) {
-	var endpoint = "http://localhost:8080/capstone/API/current/40.455305,-80.019397";
+	var endpoint = "http://localhost:8080/capstone/API/current/" + lat + "," + lon;
 	
 	var dataJSON = apiCallForCurrentConditionsWithAJAX(endpoint);
 	//console.log("dataJSON is: ");
@@ -215,11 +245,9 @@ function retrieveCurrentConditionsFromAPI(lat, lon, units) {
 
 //API Call - Request historical conditions from DarkSky API (forecast.io)
 function retrieveHistoricalFromAPI(lat, lon, unixTime, units) {
-	var endpoint = "http://localhost:8080/capstone/API/historical/40.455305,-80.019397,978325200";
+	var endpoint = "http://localhost:8080/capstone/API/historical/" + lat + "," + lon + "/" + unixTime;
 	
-	var dataJSON = apiCallForCurrentConditionsWithAJAX(endpoint);
-	//console.log("dataJSON is: ");
-	//console.log(dataJSON);
+	var dataJSON = apiCallForDailyForecastWithAJAX(endpoint);
 	
 	return dataJSON;
 	
@@ -227,6 +255,23 @@ function retrieveHistoricalFromAPI(lat, lon, unixTime, units) {
 
 //AJAX call to our REST service for daily forecast
 function apiCallForDailyForecastWithAJAX(endpoint) {
+	return $.ajax({
+		url: endpoint,
+		type:"GET",
+		success: function(result) {
+			//console.log("result is: ");
+			//console.log(result);
+			//console.log("now calling function to continue the program");
+			
+			//Trigger the rest of the program to continue
+			triggerForecastChartCreation(result);
+			
+		}
+	});
+}
+
+//AJAX call to our REST service for historical data
+function apiCallForHistoricalDataWithAJAX(endpoint) {
 	return $.ajax({
 		url: endpoint,
 		type:"GET",
@@ -1493,7 +1538,7 @@ function outputCurrentConditions(currentWeather) {
 	$('#temperatureLI').text(currentWeather.temperature + " F"); 
 	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
 	$('#humidityLI').text(currentWeather.humidity + " %");
-	$('#windLI').text(currentWeather.windSpeed + " m/s sustained with gusts up to " + currentWeather.windGust + "m/s");
+	$('#windLI').text(currentWeather.windSpeed + " m/s average with gusts up to " + currentWeather.windGust + "m/s");
 	$('#windDirectionLI').text(currentWeather.windBearing);
 	$('#cloudCoverLI').text(currentWeather.cloudCover + " %");
 }
