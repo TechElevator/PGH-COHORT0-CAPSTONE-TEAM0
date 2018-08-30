@@ -6,13 +6,17 @@ h1, h2{
 #dailyWeatherIcon{
 	width: 250px;
 	height: 250px;
-	margin:45px;
+	margin-left:45px;
+	margin-right:45px;
+	margin-top:20px;
+	margin-bottom:20px;
 }
 
 
+
 #weatherDetails{
-/* 	vertical-align: middle; */
-	margin-top:60px;
+
+	margin-top:42px;
 }
 
 #currentUser{
@@ -30,16 +34,22 @@ h1, h2{
 	justify-content:space-evenly;
 	margin:25px;
 	margin-bottom:50px;
+	margin-left:0px;
+	
+
 }
 
 .currentConditionsCard {
 	/*border: solid black;*/
 	border-radius:15px;
-	background:rgb(255, 255, 255,.2); */
-	padding:5px;
+	background:rgb(255, 255, 255,.2);
+	padding:10px;
+	
 }
 
 .card h1{
+	margin-left:25px;
+	margin-right:25px;
 	margin-top:10px;
 }
 
@@ -47,10 +57,10 @@ h1, h2{
 #weatherPropertiesForm{
 	margin: 25px;
 	
-}
+
 
 #chartTypeSelectionContainer{
-	margin: 25px;
+	
 	margin-bottom:50px;
 	width:693px;
 	margin:0 auto;
@@ -63,7 +73,10 @@ h1, h2{
 	margin-bottom:50px; 
 }
 
-.heavier{
+.heavier {
 	font-weight:500;
 }
 
+body{
+	background-color:red;
+}
