@@ -18,6 +18,7 @@ public class darkSkyForecast {
 	private ArrayList<Double> humidity;
 	private ArrayList<Integer> pressure;
 	private ArrayList<Double> cloudCover;
+	private ArrayList<String> icon;
 	
 	public ArrayList<Integer> getTime() {
 		return time;
@@ -61,6 +62,9 @@ public class darkSkyForecast {
 	public ArrayList<Double> getCloudCover() {
 		return cloudCover;
 	}
+	public ArrayList<String> getIcon() {
+		return icon;
+	}
 	public void setTime(ArrayList<Integer> time) {
 		this.time = time;
 	}
@@ -102,6 +106,9 @@ public class darkSkyForecast {
 	}
 	public void setCloudCover(ArrayList<Double> cloudCover) {
 		this.cloudCover = cloudCover;
+	}
+	public void setIcon(ArrayList<String> icon) {
+		this.icon = icon;
 	}
 	
 	
