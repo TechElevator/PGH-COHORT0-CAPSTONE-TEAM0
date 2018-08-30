@@ -52,6 +52,8 @@ h1, h2{
 #chartTypeSelectionContainer{
 	margin: 25px;
 	margin-bottom:50px;
+	width:693px;
+	margin:0 auto;
 }
 
 .weatherviz{
@@ -60,3 +62,8 @@ h1, h2{
 	height:500px;
 	margin-bottom:50px; 
 }
+
+.heavier{
+	font-weight:500;
+}
+
