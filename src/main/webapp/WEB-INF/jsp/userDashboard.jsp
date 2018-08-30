@@ -120,6 +120,7 @@
 <script src = "<c:url value = "/js/createMeteogram.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardRadar.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardForecast.js"/>"></script>	
+<script src = "<c:url value = "/js/moment.js"/>"></script>	
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />   
         

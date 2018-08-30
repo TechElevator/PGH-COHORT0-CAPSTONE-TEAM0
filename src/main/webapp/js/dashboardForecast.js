@@ -383,8 +383,6 @@ function triggerForecastChartCreation(dataFromAPI) {
 		seriesData : dataFromAPI.time,
 		type : "unix"
 	}
-		s
-	}
     
     var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
     var weatherSelections = determineSelected();
@@ -394,11 +392,23 @@ function triggerForecastChartCreation(dataFromAPI) {
     
     //var visType = $("#userData").data("defaultviz");
     //var visType = "column";
+    
+    var day1 = moment.unix(dataFromAPI.time[0]).format("MMM Do, YYYY");
+    var day2 = moment.unix(dataFromAPI.time[1]).format("MMM Do");
+    var day3 = moment.unix(dataFromAPI.time[2]).format("MMM Do");
+    var day4 = moment.unix(dataFromAPI.time[3]).format("MMM Do");
+    var day5 = moment.unix(dataFromAPI.time[4]).format("MMM Do");
+    var day6 = moment.unix(dataFromAPI.time[5]).format("MMM Do");
+    var day7 = moment.unix(dataFromAPI.time[6]).format("MMM Do");
+    var day8 = moment.unix(dataFromAPI.time[7]).format("MMM Do");    
+    var allDays = [day1, day2, day3, day4, day5, day6, day7, day8];
+
+    
     var defaultVisType = visType;
     var visTypeWasChanged = false;
     var visType1 = "spline";
     var visType2 = "column";
-    var forecastDays = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'];
+    var forecastDays = allDays;
     var weatherParameters = ["hiTemp", "loTemp", "dewPoint", "precipChance", "humidity", "cloudCoverage", "meanWind", "windGust", "pressure"];
     
     //On first page load, chart will be created

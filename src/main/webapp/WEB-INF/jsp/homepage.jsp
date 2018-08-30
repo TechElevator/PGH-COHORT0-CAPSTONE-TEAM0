@@ -218,6 +218,8 @@ function getcitydetails(fqcn) {
 <script src = "<c:url value = "/js/homepage.js"/>"></script>
 <script src = "<c:url value = "/js/createMeteogram.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardForecast.js"/>"></script>	
+<script src = "<c:url value = "/js/moment.js"/>"></script>	
+
  
 <!-- <script src = "js/homepage.js"/></script> -->
 
