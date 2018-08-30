@@ -416,7 +416,7 @@ public class APICalls {
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
 				windGust.add(((Number) currentForecast.get("windGust")).intValue());
 				windDirection.add(((Number) currentForecast.get("windBearing")).intValue());
-				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
+				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue() * 100);
 				precipIntensity.add(((Number) currentForecast.get("precipIntensity")).doubleValue());
 				dewPoint.add(((Number) currentForecast.get("dewPoint")).intValue());
 				humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
@@ -572,7 +572,7 @@ public class APICalls {
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
 				windGust.add(((Number) currentForecast.get("windGust")).intValue());
 				windDirection.add(((Number) currentForecast.get("windBearing")).intValue());
-				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
+				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue() * 100);
 				//precipIntensity.add((Double) (double) currentForecast.get("precipIntensity"));
 				//dewPoint.add((Integer) (int) (double) currentForecast.get("dewPoint"));
 				humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
@@ -737,7 +737,7 @@ public class APICalls {
 					//windGust.add(((Number) currentForecast.get("windGust")).intValue());
 					//windGust.add(100);
 					windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
-					precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
+					precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue() * 100);
 					precipIntensity.add(((Number) currentForecast.get("precipIntensity")).doubleValue());
 					dewPoint.add(((Number) currentForecast.get("dewPoint")).intValue());
 					humidity.add(((Number) currentForecast.get("humidity")).doubleValue());

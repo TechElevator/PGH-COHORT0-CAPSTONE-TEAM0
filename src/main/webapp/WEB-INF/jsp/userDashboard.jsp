@@ -35,7 +35,7 @@
     		<h1 id = "currentConditionsHeader" class = "text-center"></h1>
       <div class="row currentConditionsRow">
         <div class="col-md-6">
-            <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
+            <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "">
           </div>
           <div class="col-md-6 px-3" >	
              <ul class="list-unstyled align-middle" id = "weatherDetails">

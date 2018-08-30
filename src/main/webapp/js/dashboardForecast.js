@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 var visType = $("#userData").data("defaultviz");
 var latitude;
 var longitude;
@@ -12,6 +19,7 @@ $( document ).ready(function() {
 		longitude = -79;
 	} else {
 		onDashboard = true;
+		document.getElementById("dailyWeatherIcon").style.visibility = "hidden";
 		$("#currentConditionsHeader").text('Current Conditions in ' + $("#userData").data("city") + ', ' + $("#userData").data("region"));
 		$("#forecastHeader").text('Daily Forecast for ' + $("#userData").data("city") + ', ' + $("#userData").data("region"));
 		latitude = $("#userData").data("latitude");
@@ -306,29 +314,37 @@ function apiCallForCurrentConditionsWithAJAX(endpoint) {
 
 function triggerForecastChartCreation(dataFromAPI) {
 	
+	var temperatureUnits = $("#userData").data("units");
+	
 	var hiTemp = {
     		seriesName : "High Temperature",
-    		seriesData : dataFromAPI.highs,
+    		seriesData : temperatureArrayConverter(dataFromAPI.highs),
     		type : "temperature",
     		axisLabel : "Temperature",
-    		unitsImperial : "F",
-    		unitsSI : "C"
+    		//unitsImperial : "F",
+    		//unitsSI : "C"
+    		unitsImperial : temperatureUnits,		//This is a bit of a hack for the time being
+		unitsSI : temperatureUnits				//to set temperature units to user's desired units
     }
     var loTemp = {
     		seriesName : "Low Temperature",
-    		seriesData : dataFromAPI.lows,
+    		seriesData : temperatureArrayConverter(dataFromAPI.lows),
     		type : "temperature",
     		axisLabel : "Temperature",
-    		unitsImperial : "F",
-    		unitsSI : "C"
+    		//unitsImperial : "F",
+    		//unitsSI : "C"
+    		unitsImperial : temperatureUnits,		//This is a bit of a hack for the time being
+		unitsSI : temperatureUnits
     }
     var dewPoint = {
     		seriesName : "Dew Point",
-    		seriesData : dataFromAPI.dewPoint,
+    		seriesData : temperatureArrayConverter(dataFromAPI.dewPoint),
     		type : "temperature",
     		axisLabel : "Temperature",
-    		unitsImperial : "F",
-    		unitsSI : "C"
+    		//unitsImperial : "F",
+    		//unitsSI : "C"
+    		unitsImperial : temperatureUnits,		//This is a bit of a hack for the time being
+		unitsSI : temperatureUnits
     }
     var precipChance = {
     		seriesName : "Chance of Precipitation",
@@ -383,8 +399,7 @@ function triggerForecastChartCreation(dataFromAPI) {
 		seriesData : dataFromAPI.time,
 		type : "unix"
 	}
-		s
-	}
+	
     
     var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
     var weatherSelections = determineSelected();
@@ -405,6 +420,27 @@ function triggerForecastChartCreation(dataFromAPI) {
     //DEFINE VIS TYPE HERE BASED ON USER'S PREFERENCE, SAVED IN DATABASE
     initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections);
     
+}
+
+function temperatureConverter(temperatureInitial) {
+	if ($("#userData").data("units") == "F") {
+		temperatureConverted = temperatureInitial
+	} else {
+		temperatureConverted = (temperatureInitial - 32) * (5 / 9);
+	}
+	return temperatureConverted;
+}
+
+function temperatureArrayConverter(temperatureInitial) {
+	var temperatureConverted = [];
+	for (k = 0; k < temperatureInitial.length; k++)
+		if ($("#userData").data("units") == "F") {
+			temperatureConverted.push(temperatureInitial[k])
+		} else {
+			temperatureConverted.push((temperatureInitial[k] - 32) * (5 / 9));
+		}
+	console.log(temperatureConverted);
+	return temperatureConverted;
 }
 
 function triggerCurrentConditions(dataFromAPI) {
@@ -431,18 +467,80 @@ function triggerCurrentConditions(dataFromAPI) {
 	var currentWeather = {
     		//summary : dataFromAPI.summary[0],
     		precipProbability : dataFromAPI.precipChance[0],
-    		temperature : dataFromAPI.highs[0],
+    		temperature : temperatureConverter(dataFromAPI.highs[0]),
     		humidity : dataFromAPI.humidity[0] * 100,
     		windSpeed : dataFromAPI.meanWind[0],
     		windGust : dataFromAPI.gustWind[0],
-    		windBearing : dataFromAPI.windDirection[0],
+    		windBearingDegree : dataFromAPI.windDirection[0],
+    		windBearing : getWindBearingString(dataFromAPI.windDirection[0]),
     		cloudCover : dataFromAPI.cloudCover[0] * 100,
+    		icon : dataFromAPI.icon[0]
     }
+	
+	iconURL = getIconURL(dataFromAPI.icon[0]);
+	
+	
+	document.getElementById("dailyWeatherIcon").src="/capstone" + iconURL;
+	document.getElementById("dailyWeatherIcon").style.visibility = "visible";
 	
 	//console.log("current weather: ");
 	//console.log(currentWeather);
 	
 	outputCurrentConditions(currentWeather);
+	
+}
+
+function getWindBearingString(windDegrees) {
+	if (windDegrees < 45 || windDegrees > 315) {
+		wind = "Northerly";
+	} else if (windDegrees >= 45 && windDegrees < 135) {
+		wind = "Easterly";
+	} else if (windDegrees >=135 && windDegrees < 225) {
+		wind = "Southerly";
+	} else if (windDegrees >= 225 && windDegrees <= 315) {
+		wind = "Westerly";
+	}
+	
+	return wind;
+	
+}
+
+function getIconURL(iconText) {
+	
+	switch(iconText) {
+	case "clear-day":
+		iconURL = "/img/weatherIcons/png/sunny.png";
+		break;
+	case "clear-night":
+		iconURL = "/img/weatherIcons/png/moon-1.png";
+		break;
+	case "rain":
+		iconURL = "/img/weatherIcons/png/umbrellas.png";
+		break;
+	case "snow":
+		iconURL = "/img/weatherIcons/png/snowing.png";
+		break;
+	case "sleet":
+		iconURL = "/img/weatherIcons/png/raining.png";
+		break;
+	case "wind":
+		iconURL = "/img/weatherIcons/png/wind.png";
+		break;
+	case "fog":
+		iconURL = "/img/weatherIcons/png/haze.png";
+		break;
+	case "cloudy":
+		iconURL = "/img/weatherIcons/png/clouds.png";
+		break;
+	case "partly-cloudy-day":
+		iconURL = "/img/weatherIcons/png/clouds-1.png";
+		break;
+	case "partly-cloudy-night":
+		iconURL = "/img/weatherIcons/png/cloudy-night.png";
+		break;
+	}
+	
+	return iconURL;
 	
 }
 
@@ -497,7 +595,8 @@ function singleVariableChart(visType, forecastDays, weatherInfo1) {
             data: weatherParam1,
             color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
         }]
     });
@@ -538,14 +637,16 @@ function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) {
             data: weatherParam1,
             color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
         }, {
             name: seriesName2,
             data: weatherParam2,
             color: '#000105',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial,
+	            valueDecimals : 0
 	        }
         }]
     });
@@ -583,21 +684,24 @@ function threeVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, w
             data: weatherParam1,
             color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
         }, {
             name: seriesName2,
             data: weatherParam2,
             color: 'red',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial,
+	            valueDecimals : 0
 	        }
         }, {
             name: seriesName3,
             data: weatherParam3,
             color: 'black',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial,
+	            valueDecimals : 0
 	        }
         }]
     });
@@ -674,7 +778,8 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        data: weatherParam2,
 	        color: 'black',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    }, {
@@ -683,7 +788,8 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        data: weatherParam1,
             color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }]
 	});
@@ -810,7 +916,8 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	        data: weatherParam3,
 	        color: 'black',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    }, {
@@ -819,7 +926,8 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	        data: weatherParam2,
 	        color: 'red',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }, {
 	        name: seriesName1,
@@ -827,7 +935,8 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	        data: weatherParam1,
             color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }]
 	});
@@ -959,7 +1068,8 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam4,
 	        color: 'purple',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    }, {
@@ -968,7 +1078,8 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam3,
 	        color: 'red',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }, {
 	        name: seriesName2,
@@ -976,7 +1087,8 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam2,
 	        color: 'black',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }, {
 	        name: seriesName1,
@@ -984,7 +1096,8 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam1,
 	        color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }]
 	});
@@ -1117,7 +1230,8 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam5,
 	        color: '#e282ed',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo5.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo5.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    },{
@@ -1127,7 +1241,8 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam4,
 	        color: '#94f7c5',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    }, {
@@ -1136,7 +1251,8 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam3,
 	        color: 'red',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }, {
 	        name: seriesName2,
@@ -1144,7 +1260,8 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam2,
 	        color: 'black',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }, {
 	        name: seriesName1,
@@ -1152,7 +1269,8 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	        data: weatherParam1,
 	        color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }]
 	});
@@ -1289,7 +1407,8 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        data: weatherParam6,
 	        color: '#db9943',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo6.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo6.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    },{
@@ -1299,7 +1418,8 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        data: weatherParam5,
 	        color: '#e282ed',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo5.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo5.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    },{
@@ -1309,7 +1429,8 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        yAxis: 1,
 	        data: weatherParam4,
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo4.unitsImperial,
+	            valueDecimals : 0
 	        }
 	
 	    }, {
@@ -1318,7 +1439,8 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        data: weatherParam3,
 	        color: 'red',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo3.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }, {
 	        name: seriesName2,
@@ -1326,7 +1448,8 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        data: weatherParam2,
 	        color: 'black',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo2.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }, {
 	        name: seriesName1,
@@ -1334,7 +1457,8 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	        data: weatherParam1,
 	        color: '#025ef2',
 	        tooltip: {
-	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial
+	            valueSuffix: '{value} ' + weatherInfo1.unitsImperial,
+	            valueDecimals : 0
 	        }
 	    }]
 	});
@@ -1542,7 +1666,7 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 
 //WRITE CURRENT FORECAST
 function outputCurrentConditions(currentWeather) {
-	$('#temperatureLI').text(currentWeather.temperature + " F"); 
+	$('#temperatureLI').text(currentWeather.temperature.toFixed(0) + " " + $("#userData").data("units")); 
 	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
 	$('#humidityLI').text(currentWeather.humidity + " %");
 	$('#windLI').text(currentWeather.windSpeed + " m/s average with gusts up to " + currentWeather.windGust + "m/s");
