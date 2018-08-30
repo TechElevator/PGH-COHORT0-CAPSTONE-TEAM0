@@ -35,6 +35,19 @@ public class RESTController {
 		
 	}
 	
+	@RequestMapping(value = "API/historical/{latLon}/{date}", method = RequestMethod.GET, produces = "application/json")
+	public darkSkyForecast serveHistoricalForecastJSON(@PathVariable String latLon, @PathVariable String date) {
+
+		//latLon = latLon;
+		APICalls apiCalls = new APICalls();
+		
+		System.out.println("Great job, historically!");
+		System.out.println(date);
+		
+		return apiCalls.retrieveHistoricalConditionsFromDarkSky(latLon, Long.parseLong(date));
+		
+	}
+	
 	@RequestMapping(value = "API/current/{latLon}", method = RequestMethod.GET, produces = "application/json")
 	public darkSkyForecast serveCurrentConditionsJSON(@PathVariable String latLon) {
 
