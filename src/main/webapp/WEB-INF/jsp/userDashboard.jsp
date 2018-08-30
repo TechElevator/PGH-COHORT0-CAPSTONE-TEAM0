@@ -43,6 +43,7 @@
 			<li><span>Precipitation: </span><span id="precipChanceLI"></span></li>
 			<li><span>Humidity: </span><span id="humidityLI"></span></li>
 			<li><span>Wind Speed: </span><span id="windLI"></span></li>
+			<li><span>Wind Gusts: </span><span id="windLI2"></span></li>
 			<li><span>Wind Direction: </span><span id="windDirectionLI"></span></li>
 			<li><span>Cloud Cover: </span><span id="cloudCoverLI"></span></li>
 			</ul>
