@@ -4,53 +4,53 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/homepage.css"/>">
 
 
- 
- <form name="form_citydetails" id="form_citydetails" >
- <div class="col-sm-3"></div>
- <div class = "col-sm-6">
- <h1>Search</h1>
- <div class="form-group">
-			<div>
-				<label for="defaultCity">City: </label> 
+<div class = "container">
+	<div class = 'row'>
+		 <div class="col-sm-2"></div>
+		 <div class = "col-sm-8">
+			 <h1>Search</h1>
+			  <form name="form_citydetails" id="form_citydetails" >
+			 <div class="form-group">
+				<div>
+					<label for="defaultCity">City: </label> 
+					</div>
+					<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
 				</div>
-				<input type="text" class = "ff_elem form-control" name="ff_nm_from[]" id="f_elem_city" placeHolder="Pittsburgh, PA" class="form-control" />
+			 <div class = "form-group">
+				<label for = "defaultViz">Select a  default visualization type:</label>
+				<select id="chartTypeSelection" name = "defaultViz" class="custom-select custom-select-lg mb-3">
+					<option value="spline">Line Chart</option>
+					<option value="areaspline">Area Line Chart</option>
+					<option value="column">Bar Chart</option>
+				</select>
 			</div>
- <div class = "form-group">
-		<label for = "defaultViz">Select a  default visualization type:</label>
-		<select id="chartTypeSelection" name = "defaultViz" class="custom-select custom-select-lg mb-3">
-		 
-				<option value="spline">Line Chart</option>
-				<option value="areaspline">Area Line Chart</option>
-				<option value="column">Bar Chart</option>
-			
-		  
-		</select>
+			</form>
+			</div>
+		<div class="col-sm-2"></div>
 	</div>
-	
-		<div class="form-check">
-		<label class="form-check-label" for="defaultCheck1">Historical Weather Search:</label>
-		  <input class="form-check-input" type="checkbox" value="historical" id="historicalDateCheckbox">
-		  
+</div>
+
+
+
+
+<!-- class for the form class = "d-flex justify-content-center" -->
+<form  id = "weatherPropertiesForm">
+
+<div class = "container">	
+	<div class ="row">
+		<div class = "col-sm-2"></div>
+		<div class = "col-sm-8">
+			 <h1 id = "forecastHeader" class = "text-center">Forecast for Your Location</h1>
 		</div>
-		
-		<div id = "historicalDateSearch">
-		<label class="form-check-label"  for = "startDate">Start Date:</label>
-		<input class="form-check-label"  type = "date" id = "startDate">
-		
-		<!-- 
-		<label for = "endDate">End Date:</label>
-		<input class="form-check-label"  type = "date" id = "endDate">
-		-->
-		</div>
-		
- 
-		 <div>
-			<button id = "viz-ualize" type="button" class="btn btn-default"><strong>Viz-ualize</strong></button>
-		</div>
-		</div>
- 
-		 <div id="checkboxFormContainer">
-			<form class = "d-flex justify-content-center" id = "weatherPropertiesForm">
+		<div class = "col-sm-2"></div>
+	</div>		 
+</div>
+<div class = "container">
+	<div class = "row">	
+		<div class = "col-sm-1">	</div>	 	
+		<div class = "col-sm-10">	
+			<div id="checkboxFormContainer" class = "text-center">
+			
 				<div class="form-check form-check-inline">
 				  <input class="form-check-input" type="checkbox" id="hiTemp" value="option1" checked>
 				  <label class="form-check-label" for="hiTemp">High Temperature</label>
@@ -80,7 +80,7 @@
 				  <input class="form-check-input" type="checkbox" id="meanWind" value="option3" >
 				  <label class="form-check-label" for="meanWind">Mean Wind Speed</label>
 				</div>	
-				<div class="form-check form-check-inline">
+				<div class="form-check form-check-inline ">
 				  <input class="form-check-input" type="checkbox" id="windGust" value="option3" >
 				  <label class="form-check-label" for="windGust">Peak Wind Gust</label>
 				</div>	
@@ -88,7 +88,42 @@
 				  <input class="form-check-input" type="checkbox" id="pressure" value="option3" >
 				  <label class="form-check-label" for="pressure">Pressure</label>
 				</div>
-			</form>
+			</div>
+		</div>
+		<div class = "col-sm-1"></div>	
+	</div>
+</div>
+<div class = "container">
+	<div class = "row">
+		<div class = "col-sm-1"></div>	
+		<div class="form-check form-check-inline col-sm-8">
+			<div id = "yesNoHistorical">
+				<input class="form-check-input" type="checkbox" value="historical" id="historicalDateCheckbox">
+				<label class="form-check-label" for="defaultCheck1">Historical Weather Search</label>
+			</div>
+		</div>
+		<div class = "col-sm-2 justify-content-end">
+			<button id = "viz-ualize" type="button" class="btn btn-default" style= "display:inline"><strong>Viz-ualize</strong></button>
+		</div>
+	</div>
+</div>
+<div class = "container">
+	<div class = "row">
+		<div class = "col-sm-1"></div>
+		<div class = "col-sm-10">
+			<div id = "historicalDateSearch">
+				<label class="form-check-label"  for = "startDate">Start Date:</label>
+				<input class="form-check-label"  type = "date" id = "startDate">
+			</div>
+		</div>	
+		<div class = "col-sm-1"></div>
+	</div>
+</div>
+		
+		
+
+</form>
+
 			
 			<!--
 			<div id="chartTypeSelectionContainer" class="d-flex justify-content-center">
@@ -102,15 +137,15 @@
 			</div>
 			-->
 			
-		</div>
+
 		
 		<!-- The below pulls in the forecast visualization -->
 		<div>
-			<div class = "weatherviz img-fluid center-block" id="forecastChart"></div>
+			<div class = "weatherviz img-fluid center-block" id="forecastChart" style = "margin-bottom:25px;"></div>
 		</div>
  
 
- <div class="col-sm-3"></div>
+<!--  <div class="col-sm-2"></div> -->
 <script type="text/javascript">
  
 jQuery(function () 
@@ -147,7 +182,7 @@ jQuery(function ()
 
 
 
-</form>
+
 
 
 
@@ -218,6 +253,8 @@ function getcitydetails(fqcn) {
 <script src = "<c:url value = "/js/homepage.js"/>"></script>
 <script src = "<c:url value = "/js/createMeteogram.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardForecast.js"/>"></script>	
+<script src = "<c:url value = "/js/moment.js"/>"></script>	
+
  
 <!-- <script src = "js/homepage.js"/></script> -->
 

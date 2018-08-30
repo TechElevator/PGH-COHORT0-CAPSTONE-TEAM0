@@ -31,20 +31,21 @@
 </div>
 
  <div class="container py-3" id="currentConditionsContainer">
-    <div class="card currentConditionsCard">
+    <div class="card currentConditionsCard col-sm-8">
     		<h1 id = "currentConditionsHeader" class = "text-center"></h1>
       <div class="row currentConditionsRow">
         <div class="col-md-6">
             <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "">
           </div>
-          <div class="col-md-6 px-3" >	
+          <div class="col-md-5 px-3 mx-auto d-block align-middle" >	
              <ul class="list-unstyled align-middle" id = "weatherDetails">
-			<li ><span>Temperature: </span><span id="temperatureLI"></span></li>
-			<li><span>Precipitation: </span><span id="precipChanceLI"></span></li>
-			<li><span>Humidity: </span><span id="humidityLI"></span></li>
-			<li><span>Wind Speed: </span><span id="windLI"></span></li>
-			<li><span>Wind Direction: </span><span id="windDirectionLI"></span></li>
-			<li><span>Cloud Cover: </span><span id="cloudCoverLI"></span></li>
+			<li><span class = "heavier">Temperature: </span><span id="temperatureLI"></span></li>
+			<li><span class = "heavier">Precipitation: </span><span id="precipChanceLI"></span></li>
+			<li><span class = "heavier">Humidity: </span><span id="humidityLI"></span></li>
+			<li><span class = "heavier">Wind Speed: </span><span id="windLI"></span></li>
+			<li><span class = "heavier">Wind Gusts: </span><span id="windLI2"></span></li>
+			<li><span class = "heavier">Wind Direction: </span><span id="windDirectionLI"></span></li>
+			<li><span class = "heavier">Cloud Cover: </span><span id="cloudCoverLI"></span></li>
 			</ul>
             </div>
           </div>
@@ -120,6 +121,7 @@
 <script src = "<c:url value = "/js/createMeteogram.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardRadar.js"/>"></script>
 <script src = "<c:url value = "/js/dashboardForecast.js"/>"></script>	
+<script src = "<c:url value = "/js/moment.js"/>"></script>	
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />   
         

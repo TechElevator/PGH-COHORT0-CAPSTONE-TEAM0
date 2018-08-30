@@ -397,11 +397,22 @@ function triggerForecastChartCreation(dataFromAPI) {
 	var time = {
 		seriesName : "unixTime",
 		seriesData : dataFromAPI.time,
-		type : "unix"
+		type : "unix",
+		axisLabel : "Unix Time",
+		unitsImperial : "Unix Time",
+		unitsSI : "Unix Time"
 	}
-	
+	var windDirection = {
+		seriesName : "Wind Direction",
+		seriesData : dataFromAPI.windDirection,
+		type : "degree",
+		axisLabel : "Degrees",
+		unitsImperial : "Degrees",
+		unitsSI : "Degrees"
+	}
+
     
-    var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure];
+    var weatherData = [hiTemp, loTemp, dewPoint, precipChance, humidity, cloudCoverage, meanWind, windGust, pressure, windDirection];
     var weatherSelections = determineSelected();
     
     ////console.log("In doThings, weatherData is: ");
@@ -409,11 +420,23 @@ function triggerForecastChartCreation(dataFromAPI) {
     
     //var visType = $("#userData").data("defaultviz");
     //var visType = "column";
+    
+    var day1 = moment.unix(dataFromAPI.time[0]).format("MMM Do, YYYY");
+    var day2 = moment.unix(dataFromAPI.time[1]).format("MMM Do");
+    var day3 = moment.unix(dataFromAPI.time[2]).format("MMM Do");
+    var day4 = moment.unix(dataFromAPI.time[3]).format("MMM Do");
+    var day5 = moment.unix(dataFromAPI.time[4]).format("MMM Do");
+    var day6 = moment.unix(dataFromAPI.time[5]).format("MMM Do");
+    var day7 = moment.unix(dataFromAPI.time[6]).format("MMM Do");
+    var day8 = moment.unix(dataFromAPI.time[7]).format("MMM Do");    
+    var allDays = [day1, day2, day3, day4, day5, day6, day7, day8];
+
+    
     var defaultVisType = visType;
     var visTypeWasChanged = false;
     var visType1 = "spline";
     var visType2 = "column";
-    var forecastDays = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'];
+    var forecastDays = allDays;
     var weatherParameters = ["hiTemp", "loTemp", "dewPoint", "precipChance", "humidity", "cloudCoverage", "meanWind", "windGust", "pressure"];
     
     //On first page load, chart will be created
@@ -1658,7 +1681,7 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 	} else {
 		$("#chartTypeSelection").hide();
 		$("#dropdownLabel").hide();
-		initiateMeteogram(weatherData, weatherSelections);
+		initiateMeteogram(weatherData, weatherSelections, forecastDays);
 	}	
 		
 		
@@ -1668,8 +1691,9 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 function outputCurrentConditions(currentWeather) {
 	$('#temperatureLI').text(currentWeather.temperature.toFixed(0) + " " + $("#userData").data("units")); 
 	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
-	$('#humidityLI').text(currentWeather.humidity + " %");
-	$('#windLI').text(currentWeather.windSpeed + " m/s average with gusts up to " + currentWeather.windGust + "m/s");
+	$('#humidityLI').text(currentWeather.humidity.toFixed(0) + " %");
+	$('#windLI').text(currentWeather.windSpeed + " m/s average");
+	$('#windLI2').text(currentWeather.windGust + "m/s max");
 	$('#windDirectionLI').text(currentWeather.windBearing);
 	$('#cloudCoverLI').text(currentWeather.cloudCover + " %");
 }

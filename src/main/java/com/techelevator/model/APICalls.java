@@ -419,9 +419,9 @@ public class APICalls {
 				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue() * 100);
 				precipIntensity.add(((Number) currentForecast.get("precipIntensity")).doubleValue());
 				dewPoint.add(((Number) currentForecast.get("dewPoint")).intValue());
-				humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
+				humidity.add(((Number) currentForecast.get("humidity")).doubleValue() * 100);
 				pressure.add(((Number) currentForecast.get("pressure")).intValue());
-				cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue());
+				cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue() * 100);
 				precipType.add((String) currentForecast.get("precipType"));
 				summary.add((String) currentForecast.get("summary"));
 				//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
@@ -640,7 +640,7 @@ public class APICalls {
 			
 			System.out.println("Now starting API call for historic data: ");
 			
-			for (int i = 1; i <= 7; i++) {
+			for (int i = 1; i <= 8; i++) {
 			
 				URL obj = null;
 				String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + latLon + "," + (unixTime + (i * secondsInDay));
@@ -731,18 +731,18 @@ public class APICalls {
 					
 					
 					time.add((Integer) (int) (long) currentForecast.get("time"));
-					highTemp.add((Integer) (int) (double) currentForecast.get("temperatureHigh"));
-					lowTemp.add((Integer) (int) (double) currentForecast.get("temperatureLow"));
+					highTemp.add(((Number) currentForecast.get("temperatureHigh")).intValue());
+					lowTemp.add(((Number) currentForecast.get("temperatureLow")).intValue());
 					meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
-					//windGust.add(((Number) currentForecast.get("windGust")).intValue());
+					windGust.add(((Number) currentForecast.get("windGust")).intValue());
 					//windGust.add(100);
-					windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
+					windDirection.add(((Number) currentForecast.get("windBearing")).intValue());
 					precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue() * 100);
 					precipIntensity.add(((Number) currentForecast.get("precipIntensity")).doubleValue());
 					dewPoint.add(((Number) currentForecast.get("dewPoint")).intValue());
-					humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
+					humidity.add(((Number) currentForecast.get("humidity")).doubleValue() * 100);
 					pressure.add(((Number) currentForecast.get("pressure")).intValue());
-					cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue());
+					cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue() * 100);
 					precipType.add((String) currentForecast.get("precipType"));
 					summary.add((String) currentForecast.get("summary"));
 					//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
@@ -759,7 +759,7 @@ public class APICalls {
 			historicalForecast.setHighs(highTemp);
 			historicalForecast.setLows(lowTemp);
 			historicalForecast.setMeanWind(meanWind);
-			//historicalForecast.setGustWind(windGust);
+			historicalForecast.setGustWind(windGust);
 			historicalForecast.setWindDirection(windDirection);
 			historicalForecast.setPrecipChance(precipChance);
 			historicalForecast.setPrecipIntensity(precipIntensity);

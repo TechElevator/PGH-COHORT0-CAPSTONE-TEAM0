@@ -1,7 +1,13 @@
 body{
-background: #83a4d4;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+/* background: #83a4d4;  fallback for old browsers
+background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);  Chrome 10-25, Safari 5.1-6
+background: linear-gradient(to right, #b6fbff, #83a4d4); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+ */
+/*background-image: url("https://images.unsplash.com/photo-1517094857443-80776ddd155c?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=paxson-woelber-534784-unsplash.jpg&s=2376d34979fca6d6ba28801eabf6fb88, ");
+*/
+background-image: url("/capstone/img/backgrounds/bg5.jpg");
+background-repeat: no-repeat;
+background-size: cover;
 
 footer{
 	margin-top: 20px;

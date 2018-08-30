@@ -11,7 +11,7 @@
     var pressureVisibility;
 
 
-	function initiateMeteogram(weatherData, weatherSelections) {
+	function initiateMeteogram(weatherData, weatherSelections, forecastDays) {
 	    console.log("-----In Meteogram creation-----");
 		console.log(weatherSelections);
 	    
@@ -51,7 +51,25 @@
 	    this.cloudCover = [20, 25, 23, 47, 52, 13, 12];
 	    this.humidity = [47, 53, 73, 77, 39, 40, 42];
 	
+	    console.log("winds, dummy data:");
+	    console.log(this.meanWinds);
 	    
+	    console.log("idk");
+	    console.log(weatherData[6].seriesData[0]);
+	    
+	    this.precipitations = weatherData[3].seriesData;
+	    this.meanWinds = [[weatherData[6].seriesData[0],weatherData[9].seriesData[0]],[weatherData[6].seriesData[1],weatherData[9].seriesData[1]],[weatherData[6].seriesData[2],weatherData[9].seriesData[2]],[weatherData[6].seriesData[3],weatherData[9].seriesData[3]],[weatherData[6].seriesData[4],weatherData[9].seriesData[4]],[weatherData[6].seriesData[5],weatherData[9].seriesData[5]],[weatherData[6].seriesData[6],weatherData[9].seriesData[6]],[weatherData[6].seriesData[7],weatherData[9].seriesData[7]]];
+	    this.windGusts = [[weatherData[7].seriesData[0],weatherData[9].seriesData[0]],[weatherData[7].seriesData[1],weatherData[9].seriesData[1]],[weatherData[7].seriesData[2],weatherData[9].seriesData[2]],[weatherData[7].seriesData[3],weatherData[9].seriesData[3]],[weatherData[7].seriesData[4],weatherData[9].seriesData[4]],[weatherData[7].seriesData[5],weatherData[9].seriesData[5]],[weatherData[7].seriesData[6],weatherData[9].seriesData[6]],[weatherData[7].seriesData[7],weatherData[9].seriesData[7]]];
+	    this.hiTemperatures = weatherData[0].seriesData;
+	    this.loTemperatures = weatherData[1].seriesData;
+	    this.dewPoint = weatherData[2].seriesData;
+	    this.pressures = weatherData[8].seriesData;
+	    this.cloudCover = weatherData[5].seriesData;
+	    this.humidity = weatherData[4].seriesData;
+	    this.forecastDays = forecastDays;
+	    
+	    console.log("forecast days:");
+	    console.log(this.forecastDays);
 	
 	    // Run
 	    createMGram()
@@ -63,6 +81,7 @@
 	 * which makes the line graph look jagged. So we apply a running mean on it, but preserve
 	 * the unaltered value in the tooltip.
 	 */
+	/*
 	Meteogram.prototype.smoothLine = function (data) {
 	    var i = data.length,
 	        sum,
@@ -77,12 +96,13 @@
 	        data[i].y = Math.max(value - 0.5, Math.min(sum / 3, value + 0.5));
 	    }
 	};
-	
+	*/
 	/**
 	 * Draw the weather symbols on top of the temperature series. The symbols are
 	 * fetched from yr.no's MIT licensed weather symbol collection.
 	 * https://github.com/YR/weather-symbols
 	 */
+	/*
 	Meteogram.prototype.drawWeatherSymbols = function (chart) {
 	    var meteogram = this;
 	
@@ -105,7 +125,7 @@
 	        }
 	    });
 	};
-	
+	*/
 	
 	/**
 	 * Draw blocks around wind arrows, below the plot area
@@ -235,6 +255,8 @@
 	            type: 'linear',
 	            //tickInterval: 2 * 36e5, // two hours
 	            //minorTickInterval: 36e5, // one hour
+	            //categories: ["1", "test", "4", "yes","1", "test", "5", "hi"],
+	            categories : this.forecastDays,
 	            tickLength: 0,
 	            gridLineWidth: 1,
 	            gridLineColor: (Highcharts.theme && Highcharts.theme.background2) || '#F0F0F0',
@@ -245,7 +267,7 @@
 	            offset: 30,
 	            showLastLabel: true,
 	            labels: {
-	            		format: 'Day {value}',
+	            		//format: 'Day {value}',
 		            align: 'left',
 		            x: 0,
 		            y: -5,
@@ -574,13 +596,14 @@
 	    });
 	};
 	
+	/*
 	Meteogram.prototype.error = function () {
 	    $('#loading').html('<i class="fa fa-frown-o"></i> Failed loading data, please try again later');
 	};
+	*/
 	
 	
-	
-	
+	/*
 	
 	 // On DOM ready...
 	
@@ -609,8 +632,8 @@
 	    success: function (xml) {
 	        window.meteogram = new Meteogram(xml, 'container');
 	    },
-	    error: Meteogram.prototype.error
+	    //error: Meteogram.prototype.error
 	});
-
+*/
 	
 	
