@@ -24,6 +24,7 @@
 <h1 class = "text-center" id = "mydashboard">My Dashboard</h1>
 </div>
 
+
 <div class="container py-3" id="currentConditionsContainer">
    <div class="card currentConditionsCard">
    	<h1 id = "currentConditionsHeader" class = "text-center"></h1>
@@ -45,6 +46,30 @@
 
      </div>
    </div>
+
+ <div class="container py-3" id="currentConditionsContainer">
+    <div class="card currentConditionsCard">
+    		<h1 id = "currentConditionsHeader" class = "text-center"></h1>
+      <div class="row currentConditionsRow">
+        <div class="col-md-6">
+            <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
+          </div>
+          <div class="col-md-6 px-3" >	
+             <ul class="list-unstyled align-middle" id = "weatherDetails">
+			<li ><span>Temperature: </span><span id="temperatureLI"></span></li>
+			<li><span>Precipitation: </span><span id="precipChanceLI"></span></li>
+			<li><span>Humidity: </span><span id="humidityLI"></span></li>
+			<li><span>Wind Speed: </span><span id="windLI"></span></li>
+			<li><span>Wind Gusts: </span><span id="windLI2"></span></li>
+			<li><span>Wind Direction: </span><span id="windDirectionLI"></span></li>
+			<li><span>Cloud Cover: </span><span id="cloudCoverLI"></span></li>
+			</ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+>>>>>>> a7fe0eee233c4233f9f8f05ebbbc80c1b04954e2
     
 <h1 id = "forecastHeader" class = "text-center">Forecast for Your Location</h1>
 <div id="checkboxFormContainer">

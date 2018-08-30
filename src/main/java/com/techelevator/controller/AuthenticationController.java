@@ -76,6 +76,10 @@ public class AuthenticationController {
 		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
 		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
 		 */
+
+		
+		//this was our twilio test
+		/*
 		try {
 		String phoneNumber = currentUser.getPhone();
 		TwilioDb twilioDb = twilioDbDAO.getCredentials();
@@ -92,6 +96,8 @@ public class AuthenticationController {
 			System.out.println("There wasn't a phone number for: " + currentUser.getUserName());
 			
 		}
+		*/
+		
 		return "userDashboard";
 		
 	}
