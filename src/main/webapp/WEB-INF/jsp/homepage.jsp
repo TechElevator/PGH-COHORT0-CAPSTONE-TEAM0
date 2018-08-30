@@ -37,10 +37,10 @@
 		<label class="form-check-label"  for = "startDate">Start Date:</label>
 		<input class="form-check-label"  type = "date" id = "startDate">
 		
-		
+		<!-- 
 		<label for = "endDate">End Date:</label>
 		<input class="form-check-label"  type = "date" id = "endDate">
-		
+		-->
 		</div>
 		
  
@@ -201,10 +201,10 @@ function getcitydetails(fqcn) {
 <input id="geobytesregion" readonly="readonly" size="30" name = "defaultRegion" style = "display:none">
 </div>
 <div>
-<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude" >
+<input id="geobyteslatitude" readonly="readonly" size="30" name = "defaultLatitude" style = "display:none">
 </div>
 <div>
-<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude" >
+<input id="geobyteslongitude" readonly="readonly" size="30" name = "defaultLongitude" style = "display:none">
 </div>
 <div>
 <input id="geobytespopulation" readonly="readonly" size="30" name = "defaultPopulation" style = "display:none">

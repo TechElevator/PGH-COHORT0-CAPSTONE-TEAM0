@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/dashboard.css"/>">
 
 
-<div id="userData" data-latitude="${currentUser.defaultLatitude }" data-longitude="${currentUser.defaultLongitude}" data-units="${currentUser.defaultUnits}" data-defaultviz="${currentUser.defaultVisualization}"></div>
+<div id="userData" data-latitude="${currentUser.defaultLatitude }" data-longitude="${currentUser.defaultLongitude}" data-units="${currentUser.defaultUnits}" data-city="${currentUser.defaultCity }" data-region="${currentUser.defaultRegion }" data-defaultviz="${currentUser.defaultVisualization}"></div>
 
 
 <%-- <div>
@@ -32,7 +32,7 @@
 
  <div class="container py-3" id="currentConditionsContainer">
     <div class="card currentConditionsCard">
-    		<h1 class = "text-center">Current Conditions in Pittsburgh, PA</h1>
+    		<h1 id = "currentConditionsHeader" class = "text-center"></h1>
       <div class="row currentConditionsRow">
         <div class="col-md-6">
             <img id="dailyWeatherIcon" class = "rounded mx-auto d-block align-middle" src = "<c:url value = "/img/weatherIcons/png/clouds-and-sun.png"/>">
@@ -52,7 +52,7 @@
         </div>
       </div>
     
-<h1 class = "text-center">Forecast for Pittsburgh, PA</h1>
+<h1 id = "forecastHeader" class = "text-center">Forecast for Your Location</h1>
 <div id="checkboxFormContainer">
 	<form class = "d-flex justify-content-center" id = "weatherPropertiesForm">
 	<div class="form-check form-check-inline">

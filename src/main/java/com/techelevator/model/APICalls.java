@@ -462,7 +462,7 @@ public class APICalls {
 			System.out.println("Now starting API call test for forecast!!: ");
 			
 			URL obj = null;
-			String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/39.00,-79.99";
+			String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + latLon;
 			try {
 				obj = new URL(url);
 			} catch (MalformedURLException e) {
@@ -566,17 +566,17 @@ public class APICalls {
 				System.out.println("current forecast is: " + currentForecast);
 				
 				//time.add((Integer) (int) (long) currentForecast.get("time"));
-				highTemp.add((Integer) (int) (double) currentForecast.get("temperature"));
+				highTemp.add(((Number) currentForecast.get("temperature")).intValue());
 				//lowTemp.add(((Number) currentForecast.get("temperatureLow")).intValue());
 				meanWind.add(((Number) currentForecast.get("windSpeed")).intValue());
-				windGust.add((Integer) (int) (double) currentForecast.get("windGust"));
-				windDirection.add((Integer) (int) (long) currentForecast.get("windBearing"));
+				windGust.add(((Number) currentForecast.get("windGust")).intValue());
+				windDirection.add(((Number) currentForecast.get("windBearing")).intValue());
 				precipChance.add(((Number) currentForecast.get("precipProbability")).doubleValue());
 				//precipIntensity.add((Double) (double) currentForecast.get("precipIntensity"));
 				//dewPoint.add((Integer) (int) (double) currentForecast.get("dewPoint"));
-				humidity.add((Double) (double) currentForecast.get("humidity"));
+				humidity.add(((Number) currentForecast.get("humidity")).doubleValue());
 				//pressure.add(((Number) currentForecast.get("pressure")).intValue());
-				cloudCover.add((Double) (double) currentForecast.get("cloudCover"));
+				cloudCover.add(((Number) currentForecast.get("cloudCover")).doubleValue());
 				//precipType.add((String) currentForecast.get("precipType"));
 				summary.add((String) currentForecast.get("summary"));
 				//dayOfWeek.add((String) currentForecast.get("temperatureHigh"));
@@ -637,7 +637,7 @@ public class APICalls {
 			for (int i = 1; i <= 7; i++) {
 			
 				URL obj = null;
-				String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/40.440624, -79.995888," + (unixTime + (i * secondsInDay));
+				String url = "https://api.darksky.net/forecast/7dd0bbccb34922418a87a9089a43068e/" + latLon + "," + (unixTime + (i * secondsInDay));
 				try {
 					obj = new URL(url);
 				} catch (MalformedURLException e) {
