@@ -19,16 +19,12 @@
 </div>
  --%>
  
- 
 
-
-
-
- 
- 
 <div>
 <h1 class = "text-center" id = "mydashboard">My Dashboard</h1>
 </div>
+
+
 
  <div class="container py-3" id="currentConditionsContainer">
     <div class="card currentConditionsCard col-sm-8">
