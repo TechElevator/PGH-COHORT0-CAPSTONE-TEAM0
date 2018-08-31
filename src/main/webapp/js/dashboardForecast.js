@@ -1851,7 +1851,7 @@ function outputCurrentConditions(currentWeather) {
 	$('#precipChanceLI').text(currentWeather.precipProbability + "% chance");
 	$('#humidityLI').text(currentWeather.humidity.toFixed(0) + " %");
 	$('#windLI').text(currentWeather.windSpeed + " m/s average");
-	$('#windLI2').text(currentWeather.windGust + "m/s max");
+	$('#windLI2').text(currentWeather.windGust + " m/s max");
 	$('#windDirectionLI').text(currentWeather.windBearing);
 	$('#cloudCoverLI').text(currentWeather.cloudCover + " %");
 }

@@ -92,12 +92,12 @@ public class RESTController {
 	                        new PhoneNumber(twilioDb.getFromPhone()), // from
 	                        "Current Temp: " + currentConditions.getHighs().get(0) + "\u00b0" + "F\n" +
 	                        "Precipitation: " + currentConditions.getPrecipChance().get(0) + "% chance \n"+ 
-	                        "Humidity: " + currentConditions.getHumidity().get(0).intValue() + "%\n" + 
+	                        "Humidity: " + currentConditions.getHumidity().get(0)*100 + "%\n" + 
 	                        "Mean Wind: " + currentConditions.getMeanWind().get(0) + " m/s \n" + 
 	                        "Wind Gust: " + currentConditions.getGustWind().get(0) + " m/s \n" +
 	                        "Wind Direction: " + currentConditions.getWindDirection().get(0) + "\u00b0" +
 	                        "\nCloud cover: " + currentConditions.getCloudCover().get(0)*100 + "%\n"
-	                        		+ "-WeatherViz-")
+	                        		+ "Love, WeatherViz")
 	                .create();
 		
 		System.out.println("code after the rest controller text message");

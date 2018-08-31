@@ -76,22 +76,27 @@ public class AuthenticationController {
 		DailyForecast dailyForecast2 = apiCalls.retrieveDailyForecast("40.4406,-79.9959", dailyForecast);
 		BarChartForecastGenerator barChartGenerator = new BarChartForecastGenerator(chartTitle, dailyForecast2);
 		 */
-		try {
-		String phoneNumber = currentUser.getPhone();
-		TwilioDb twilioDb = twilioDbDAO.getCredentials();
-		Twilio.init(twilioDb.getAccountSid(), twilioDb.getAuthToken());
-
-        Message message = Message
-                .creator(new PhoneNumber("+1" + phoneNumber.replaceAll("[^\\d]", "")), // to
-                        new PhoneNumber(twilioDb.getFromPhone()), // from
-                        "You are on the dashboard" + currentUser.getUserName() + "!\nLove, WeatherViz")
-                .create();
 		
-		}
-		catch (NullPointerException e){
-			System.out.println("There wasn't a phone number for: " + currentUser.getUserName());
-			
-		}
+		//twilio dashboard test
+		
+//		try {
+//		String phoneNumber = currentUser.getPhone();
+//		TwilioDb twilioDb = twilioDbDAO.getCredentials();
+//		Twilio.init(twilioDb.getAccountSid(), twilioDb.getAuthToken());
+//
+//        Message message = Message
+//                .creator(new PhoneNumber("+1" + phoneNumber.replaceAll("[^\\d]", "")), // to
+//                        new PhoneNumber(twilioDb.getFromPhone()), // from
+//                        "You are on the dashboard" + currentUser.getUserName() + "!\nLove, WeatherViz")
+//                .create();
+//		
+//		}
+//		catch (NullPointerException e){
+//			System.out.println("There wasn't a phone number for: " + currentUser.getUserName());
+//			
+//		}
+		
+		
 		return "userDashboard";
 		
 	}
