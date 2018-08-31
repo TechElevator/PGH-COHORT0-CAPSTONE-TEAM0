@@ -11,9 +11,12 @@ var longitude;
 
 $( document ).ready(function() {
 	
+	loadRandomBackgroundImage();
+	
 	var onDashboard;
 	
 	if(window.location.pathname == "/capstone/"){
+		$('#forecastChart').hide();
 		onDashboard = false;
 		latitude = 39.99;
 		longitude = -79;
@@ -198,6 +201,26 @@ $( document ).ready(function() {
 //FUNCTIONS
 //================================================================================================
 
+//Choose random background image
+function loadRandomBackgroundImage() {
+	var bgImages = [];
+	bgImages[0] = "bg1";
+	bgImages[1] = "bg2";
+	bgImages[2] = "bg3";
+	bgImages[3] = "bg4";
+	bgImages[4] = "bg5";
+	bgImages[5] = "bg6";
+	bgImages[6] = "bg7";
+	bgImages[7] = "bg8";
+	
+	var randomNumber = Math.floor(Math.random() * (bgImages.length - 1));
+	console.log(randomNumber);
+	console.log("/capstone/img/backgrounds/bg" + randomNumber + ".jpg");
+	
+	$("#siteBody").css("background-image", "url('/capstone/img/backgrounds/" + bgImages[randomNumber] + ".jpg')");
+	
+}
+
 //Chart creation
 function initiateChartCreation(visType, forecastDays, weatherParameters, weatherData, weatherSelections) {
 	//console.log("Right after initiateChartCreation: ");
@@ -315,6 +338,17 @@ function apiCallForCurrentConditionsWithAJAX(endpoint) {
 function triggerForecastChartCreation(dataFromAPI) {
 	
 	var temperatureUnits = $("#userData").data("units");
+	
+	if(typeof temperatureUnits == 'undefined') {
+		console.log('I should see this on homepage but not on dashboard');
+		temperatureUnits = "F";
+	} else {
+		console.log('I should see this on dashboard, not on homepage');
+	}
+	
+	console.log(dataFromAPI.highs);
+	console.log(dataFromAPI.lows);
+	console.log(dataFromAPI.dewPoint);
 	
 	var hiTemp = {
     		seriesName : "High Temperature",
@@ -446,23 +480,43 @@ function triggerForecastChartCreation(dataFromAPI) {
 }
 
 function temperatureConverter(temperatureInitial) {
+	
 	if ($("#userData").data("units") == "F") {
-		temperatureConverted = temperatureInitial
+		temperatureConverted = temperatureInitial;
 	} else {
 		temperatureConverted = (temperatureInitial - 32) * (5 / 9);
 	}
 	return temperatureConverted;
+	
 }
 
 function temperatureArrayConverter(temperatureInitial) {
 	var temperatureConverted = [];
-	for (k = 0; k < temperatureInitial.length; k++)
-		if ($("#userData").data("units") == "F") {
-			temperatureConverted.push(temperatureInitial[k])
+	
+	console.log('temperatureInitial is');
+	console.log(temperatureInitial);
+	console.log(temperatureInitial.length);
+	var temperatureUnits = $("#userData").data("units");
+	
+	
+	for (m = 0; m < temperatureInitial.length - 1; m++) {
+	
+		
+		console.log("temperatureUnits:");
+		console.log(temperatureUnits);
+		
+		if (typeof temperatureUnits == 'undefined' || temperatureUnits == 'F') {
+			temperatureConverted = temperatureInitial;
 		} else {
-			temperatureConverted.push((temperatureInitial[k] - 32) * (5 / 9));
+			console.log('here');
+			console.log(temperatureInitial[m]);
+			temperatureConverted.push((temperatureInitial[m] - 32) * (5 / 9));
 		}
+		
+	}
+	console.log("temperatureConverted is ");
 	console.log(temperatureConverted);
+		
 	return temperatureConverted;
 }
 
@@ -606,12 +660,28 @@ function singleVariableChart(visType, forecastDays, weatherInfo1) {
             text: ''
         },
         xAxis: {
-            categories: forecastDays
+            categories: forecastDays,
+            labels: {
+            		style: {
+            			color: 'black',
+            			fontSize: '16px'
+            		}
+            }
         },
         yAxis: {
             title: {
-                text: yAxis
-            }
+                text: yAxis,
+                style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+            },
+            labels: {
+        		style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+        }
         },
         series: [{
             name: seriesName1,
@@ -648,12 +718,28 @@ function twoVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2) {
             text: ''
         },
         xAxis: {
-            categories: forecastDays
+            categories: forecastDays,
+            labels: {
+	        		style: {
+	        			color: 'black',
+	        			fontSize: '16px'
+	        		}
+            }
         },
         yAxis: {
             title: {
-                text: yAxis
-            }
+                text: yAxis,
+                style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+            },
+            labels: {
+        		style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+        }
         },
         series: [{
             name: seriesName1,
@@ -695,12 +781,28 @@ function threeVariableChart(visType, forecastDays, weatherInfo1, weatherInfo2, w
             text: ''
         },
         xAxis: {
-            categories: forecastDays
+            categories: forecastDays,
+            labels: {
+        		style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+        }
         },
         yAxis: {
             title: {
-                text: yAxis
-            }
+                text: yAxis,
+                style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+            },
+            labels: {
+        		style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+        }
         },
         series: [{
             name: seriesName1,
@@ -751,32 +853,46 @@ function twoVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
-	        crosshair: true
+	        crosshair: true,
+            labels: {
+        		style: {
+        			color: 'black',
+        			fontSize: '16px'
+        		}
+        }
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
 	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                //color: Highcharts.getOptions().colors[1]
+	            		color: 'black',
+	            		fontSize: '16px'
 	            }
 	        },
 	        title: {
 	            text: weatherInfo1.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                //color: Highcharts.getOptions().colors[1]
+	            		color: 'black',
+	            		fontSize: '16px'
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
 	            text: weatherInfo2.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                //color: Highcharts.getOptions().colors[0]
+	            	color: 'black',
+	            	fontSize: '16px'
 	            }
 	        },
 	        labels: {
 	            format: '{value} ' + weatherInfo2.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                //color: Highcharts.getOptions().colors[0]
+	            		color: 'black',
+	            		fontSize: '16px'
 	            }
 	        },
 	        opposite: true
@@ -889,32 +1005,42 @@ function threeVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weath
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
-	        crosshair: true
+	        crosshair: true,
+	        labels: {
+	        	style: {
+    			color: 'black',
+    			fontSize: '16px'
+	        	}
+        	}
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
 	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        title: {
 	            text: weatherInfo1.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
 	            text: weatherInfo3.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        labels: {
 	            format: '{value} ' + weatherInfo3.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        opposite: true
@@ -1041,32 +1167,42 @@ function fourVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
-	        crosshair: true
+	        crosshair: true,
+	        labels: {
+	        	style: {
+    			color: 'black',
+    			fontSize: '16px'
+	        	}
+        	}
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
 	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        title: {
 	            text: weatherInfo1.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: weatherInfo3.axisLabel,
+	            text: weatherInfo4.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        labels: {
-	            format: '{value} ' + weatherInfo3.unitsImperial,
+	            format: '{value} ' + weatherInfo4.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        opposite: true
@@ -1203,32 +1339,42 @@ function fiveVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weathe
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
-	        crosshair: true
+	        crosshair: true,
+	        labels: {
+	        	style: {
+    			color: 'black',
+    			fontSize: '16px'
+	        	}
+        	}
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
 	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        title: {
 	            text: weatherInfo1.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: weatherInfo3.axisLabel,
+	            text: weatherInfo5.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        labels: {
-	            format: '{value} ' + weatherInfo3.unitsImperial,
+	            format: '{value} ' + weatherInfo5.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        opposite: true
@@ -1380,32 +1526,42 @@ function sixVariableDualAxis(yAxis1, yAxis2, forecastDays, weatherInfo1, weather
 	    },
 	    xAxis: [{
 	        categories: forecastDays,
-	        crosshair: true
+	        crosshair: true,
+	        labels: {
+	        	style: {
+    			color: 'black',
+    			fontSize: '16px'
+	        	}
+        	}
 	    }],
 	    yAxis: [{ // Primary yAxis
 	        labels: {
 	            format: '{value} ' + weatherInfo1.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        title: {
 	            text: weatherInfo1.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[1]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        }
 	    }, { // Secondary yAxis
 	        title: {
-	            text: weatherInfo3.axisLabel,
+	            text: weatherInfo6.axisLabel,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        labels: {
-	            format: '{value} ' + weatherInfo3.unitsImperial,
+	            format: '{value} ' + weatherInfo6.unitsImperial,
 	            style: {
-	                color: Highcharts.getOptions().colors[0]
+	                color: 'black',
+	                fontSize: '16px'
 	            }
 	        },
 	        opposite: true
@@ -1596,6 +1752,8 @@ function createChart(visType, forecastDays, chartCategory, chartContent, weather
 	//console.log(chartContent[0]);
 	//console.log("2nd one in content: ");
 	//console.log(chartContent[1]);
+	$('#forecastChart').show();
+	
 	
 	//If chartCategory is a single-axis chart, we have it easy! Just determine the number of variables
 	//and pass it its contents

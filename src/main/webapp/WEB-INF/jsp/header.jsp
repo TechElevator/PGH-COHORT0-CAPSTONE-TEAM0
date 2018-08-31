@@ -52,7 +52,7 @@
 		</script>
 		
 	</head>
-	<body>
+	<body id="siteBody">
 		<%-- <header>
 			<c:url var="homePageHref" value="/" />
 			<c:url var="imgSrc" value="/img/logo.png" />
